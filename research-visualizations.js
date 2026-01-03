@@ -3,6 +3,7 @@
 
 class ResearchVisualizations {
     constructor() {
+        this.theme = this.getTheme();
         this.initResearchGraphs();
         this.initPointCloudVisualization();
         this.initGNNArchitecture();
@@ -31,7 +32,9 @@ class ResearchVisualizations {
             { id: 'Point_Clouds', name: '3D Point\nClouds', area: '3D Processing', year: 2023, impact: 14, citations: 42 },
             { id: 'Graph_Attention', name: 'Graph\nAttention\nMechanisms', area: 'ML', year: 2023, impact: 16, citations: 50 },
             { id: 'Autonomous_Driving', name: 'Autonomous\nDriving', area: 'Applications', year: 2022, impact: 10, citations: 32 },
-            { id: 'Shape_Tracking', name: 'Shape\nTracking', area: 'Computer Vision', year: 2020, impact: 5, citations: 15 }
+            { id: 'Shape_Tracking', name: 'Shape\nTracking', area: 'Computer Vision', year: 2020, impact: 5, citations: 15 },
+            { id: 'Vision_3D', name: '3D Vision\nPipeline', area: '3D Vision', year: 2022, impact: 9, citations: 30 },
+            { id: 'ML_Core', name: 'ML\nFoundations', area: 'ML', year: 2021, impact: 7, citations: 20 }
         ];
 
         const links = [
@@ -41,8 +44,8 @@ class ResearchVisualizations {
             { source: 'LiDAR_GNN', target: 'Graph_Attention', strength: 0.7, type: 'methodology' },
             { source: 'Dynamic_Weights', target: 'Graph_Attention', strength: 0.8, type: 'optimization' },
             { source: 'Video_Analysis', target: 'Shape_Tracking', strength: 0.9, type: 'technique' },
-            { source: 'Point_Clouds', target: '3D Vision', strength: 1.0, type: 'domain' },
-            { source: 'Graph_Attention', target: 'ML', strength: 1.0, type: 'foundation' }
+            { source: 'Point_Clouds', target: 'Vision_3D', strength: 1.0, type: 'domain' },
+            { source: 'Graph_Attention', target: 'ML_Core', strength: 1.0, type: 'foundation' }
         ];
 
         const simulation = d3.forceSimulation(nodes)
@@ -55,7 +58,7 @@ class ResearchVisualizations {
             .selectAll('line')
             .data(links)
             .enter().append('line')
-            .attr('stroke', '#00ff41')
+            .attr('stroke', this.theme.secondary)
             .attr('stroke-opacity', 0.6)
             .attr('stroke-width', d => d.strength * 3);
 
@@ -71,7 +74,7 @@ class ResearchVisualizations {
         node.append('circle')
             .attr('r', d => 15 + (d.citations / 10))
             .attr('fill', d => this.getAreaColor(d.area))
-            .attr('stroke', '#fff')
+            .attr('stroke', '#ffffff')
             .attr('stroke-width', 2)
             .attr('opacity', 0.8);
 
@@ -85,7 +88,7 @@ class ResearchVisualizations {
         node.append('text')
             .attr('dy', 4)
             .attr('text-anchor', 'middle')
-            .attr('fill', '#0ff0ff')
+            .attr('fill', this.theme.secondary)
             .attr('font-size', '8px')
             .text(d => `Citations: ${d.citations}`);
 
@@ -159,7 +162,7 @@ class ResearchVisualizations {
         const clusters = d3.groups(points, d => d.cluster);
         
         clusters.forEach((cluster, index) => {
-            const color = d3.interpolateViridis(index / clusters.length);
+            const color = d3.interpolateRgb(this.theme.secondary, this.theme.primary)(index / clusters.length);
             
             g.selectAll(`.cluster-${index}`)
                 .data(cluster[1])
@@ -205,11 +208,11 @@ class ResearchVisualizations {
 
         // GNN layers visualization
         const layers = [
-            { name: 'Input Layer\n(Point Cloud)', nodes: 50, color: '#00ff41' },
-            { name: 'Graph\nConstruction', nodes: 40, color: '#0ff0ff' },
-            { name: 'Attention\nMechanism', nodes: 30, color: '#ff0055' },
-            { name: 'Feature\nExtraction', nodes: 25, color: '#22d3ee' },
-            { name: 'Classification\nHead', nodes: 10, color: '#7c3aed' }
+            { name: 'Input Layer\n(Point Cloud)', nodes: 50, color: this.theme.primary },
+            { name: 'Graph\nConstruction', nodes: 40, color: this.theme.secondary },
+            { name: 'Attention\nMechanism', nodes: 30, color: this.theme.accent },
+            { name: 'Feature\nExtraction', nodes: 25, color: this.theme.secondarySoft },
+            { name: 'Classification\nHead', nodes: 10, color: this.theme.primarySoft }
         ];
 
         const layerWidth = width / layers.length;
@@ -298,7 +301,7 @@ class ResearchVisualizations {
             .attr('y1', 0)
             .attr('x2', d => Math.cos(d.angle * Math.PI / 180) * d.distance)
             .attr('y2', d => Math.sin(d.angle * Math.PI / 180) * d.distance)
-            .attr('stroke', d => d3.interpolateViridis(d.intensity))
+            .attr('stroke', d => d3.interpolateRgb(this.theme.secondary, this.theme.primary)(d.intensity))
             .attr('stroke-width', 1)
             .attr('opacity', 0.6);
 
@@ -317,7 +320,7 @@ class ResearchVisualizations {
                 .attr('width', obj.width)
                 .attr('height', obj.height)
                 .attr('fill', 'none')
-                .attr('stroke', '#ff0055')
+                .attr('stroke', this.theme.accent)
                 .attr('stroke-width', 2)
                 .attr('stroke-dasharray', '5,5')
                 .attr('opacity', 0.8);
@@ -327,7 +330,7 @@ class ResearchVisualizations {
                 .attr('cx', obj.x + obj.width/2)
                 .attr('cy', obj.y - 10)
                 .attr('r', obj.confidence * 10)
-                .attr('fill', '#00ff41')
+                .attr('fill', this.theme.primary)
                 .attr('opacity', 0.7);
 
             // Label
@@ -335,7 +338,7 @@ class ResearchVisualizations {
                 .attr('x', obj.x + obj.width/2)
                 .attr('y', obj.y - 20)
                 .attr('text-anchor', 'middle')
-                .attr('fill', '#fff')
+                .attr('fill', '#ffffff')
                 .attr('font-size', '10px')
                 .text(`${obj.label} (${Math.round(obj.confidence * 100)}%)`);
         });
@@ -360,15 +363,26 @@ class ResearchVisualizations {
 
     getAreaColor(area) {
         const colors = {
-            'GNN': '#00ff41',
-            '3D Vision': '#0ff0ff',
-            'Optimization': '#ff0055',
-            'Computer Vision': '#22d3ee',
-            '3D Processing': '#7c3aed',
-            'ML': '#f59e0b',
-            'Applications': '#10b981'
+            'GNN': this.theme.primary,
+            '3D Vision': this.theme.secondary,
+            'Optimization': this.theme.accent,
+            'Computer Vision': this.theme.secondarySoft,
+            '3D Processing': this.theme.primarySoft,
+            'ML': '#f6bd60',
+            'Applications': '#7bd389'
         };
         return colors[area] || '#888888';
+    }
+
+    getTheme() {
+        const styles = getComputedStyle(document.documentElement);
+        return {
+            primary: styles.getPropertyValue('--primary-color').trim(),
+            secondary: styles.getPropertyValue('--secondary-color').trim(),
+            accent: styles.getPropertyValue('--accent-color').trim(),
+            secondarySoft: '#9ad1d0',
+            primarySoft: '#f9d7a1'
+        };
     }
 }
 
