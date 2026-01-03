@@ -697,6 +697,33 @@ a:hover {
     flex-wrap: wrap;
 }
 
+/* Project Visualization Enhancements */
+.project-card .graph-visualization {
+    background: linear-gradient(135deg, rgba(255, 0, 85, 0.1), rgba(0, 240, 255, 0.05));
+}
+
+/* Cyber Pink Theme for Project Visualizations */
+.project-card:hover .graph-visualization {
+    background: linear-gradient(135deg, rgba(255, 0, 85, 0.2), rgba(0, 240, 255, 0.1));
+    box-shadow: 0 0 20px rgba(255, 0, 85, 0.3);
+}
+
+/* Enhanced Project Visualization Styles */
+.project-card .graph-visualization svg {
+    filter: drop-shadow(0 0 5px rgba(255, 0, 85, 0.5));
+}
+
+/* Cyber Pink Animation Effects */
+@keyframes cyber-pink-pulse {
+    0% { box-shadow: 0 0 5px rgba(255, 0, 85, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(255, 0, 85, 0.8); }
+    100% { box-shadow: 0 0 5px rgba(255, 0, 85, 0.5); }
+}
+
+.project-card .graph-visualization {
+    animation: cyber-pink-pulse 3s ease-in-out infinite;
+}
+
 /* Contact Section */
 .contact {
     padding: 8rem 0;
