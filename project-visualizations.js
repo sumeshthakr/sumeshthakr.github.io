@@ -3,6 +3,7 @@
 
 class ProjectVisualizations {
     constructor() {
+        this.theme = this.getTheme();
         this.initProjectGraphs();
         this.initMeshPipelineVisualization();
         this.initCurrencyDetectionVisualization();
@@ -50,7 +51,7 @@ class ProjectVisualizations {
             .selectAll('line')
             .data(links)
             .enter().append('line')
-            .attr('stroke', '#ff0055') // Cyber pink
+            .attr('stroke', this.theme.accent)
             .attr('stroke-opacity', 0.6)
             .attr('stroke-width', d => d.weight * 4);
 
@@ -65,7 +66,7 @@ class ProjectVisualizations {
 
         node.append('circle')
             .attr('r', d => 12 + (d.connections / 2))
-            .attr('fill', '#ff0055') // Cyber pink
+            .attr('fill', this.theme.accent)
             .attr('stroke', '#fff')
             .attr('stroke-width', 2)
             .attr('opacity', 0.8);
@@ -80,7 +81,7 @@ class ProjectVisualizations {
         node.append('text')
             .attr('dy', 4)
             .attr('text-anchor', 'middle')
-            .attr('fill', '#0ff0ff')
+            .attr('fill', this.theme.secondary)
             .attr('font-size', '8px')
             .text(d => d.tech);
 
@@ -138,11 +139,11 @@ class ProjectVisualizations {
 
         // Create currency detection simulation
         const currencies = [
-            { value: '20', color: '#FFD700', x: 100, y: 150 },
-            { value: '50', color: '#FF6B6B', x: 200, y: 120 },
-            { value: '100', color: '#4ECDC4', x: 300, y: 180 },
-            { value: '500', color: '#45B7D1', x: 150, y: 220 },
-            { value: '2000', color: '#96CEB4', x: 250, y: 200 }
+            { value: '20', color: this.theme.primary, x: 100, y: 150 },
+            { value: '50', color: this.theme.accent, x: 200, y: 120 },
+            { value: '100', color: this.theme.secondary, x: 300, y: 180 },
+            { value: '500', color: '#7bd389', x: 150, y: 220 },
+            { value: '2000', color: '#f6bd60', x: 250, y: 200 }
         ];
 
         // Draw currency notes
@@ -180,7 +181,7 @@ class ProjectVisualizations {
             .attr('rx', 8)
             .attr('ry', 8)
             .attr('fill', 'none')
-            .attr('stroke', '#ff0055')
+            .attr('stroke', this.theme.accent)
             .attr('stroke-width', 2)
             .attr('stroke-dasharray', '5,5')
             .attr('opacity', 0.7)
@@ -194,7 +195,7 @@ class ProjectVisualizations {
             .attr('cx', d => d.x)
             .attr('cy', d => d.y - 30)
             .attr('r', 8)
-            .attr('fill', '#00ff41')
+            .attr('fill', this.theme.primary)
             .attr('opacity', 0.8);
 
         // Confidence text
@@ -205,7 +206,7 @@ class ProjectVisualizations {
             .attr('x', d => d.x)
             .attr('y', d => d.y - 40)
             .attr('text-anchor', 'middle')
-            .attr('fill', '#00ff41')
+            .attr('fill', this.theme.primary)
             .attr('font-size', '10px')
             .text('95%');
 
@@ -216,7 +217,7 @@ class ProjectVisualizations {
                 d3.select(confidenceText.nodes()[index])
                     .transition()
                     .duration(1000)
-                    .attr('fill', Math.random() > 0.5 ? '#00ff41' : '#ff0055')
+                    .attr('fill', Math.random() > 0.5 ? this.theme.primary : this.theme.accent)
                     .text(`${Math.floor(90 + Math.random() * 10)}%`);
             });
         }, 2000);
@@ -237,11 +238,11 @@ class ProjectVisualizations {
 
         // CNN-LSTM architecture visualization
         const layers = [
-            { name: 'Input\nVideo', type: 'CNN', nodes: 20, color: '#ff0055', x: 50 },
-            { name: 'Feature\nExtraction', type: 'CNN', nodes: 15, color: '#0ff0ff', x: 150 },
-            { name: 'Temporal\nFeatures', type: 'LSTM', nodes: 12, color: '#00ff41', x: 250 },
-            { name: 'Sequence\nGeneration', type: 'LSTM', nodes: 10, color: '#7c3aed', x: 350 },
-            { name: 'Caption\nOutput', type: 'Output', nodes: 8, color: '#f59e0b', x: 450 }
+            { name: 'Input\nVideo', type: 'CNN', nodes: 20, color: this.theme.accent, x: 50 },
+            { name: 'Feature\nExtraction', type: 'CNN', nodes: 15, color: this.theme.secondary, x: 150 },
+            { name: 'Temporal\nFeatures', type: 'LSTM', nodes: 12, color: this.theme.primary, x: 250 },
+            { name: 'Sequence\nGeneration', type: 'LSTM', nodes: 10, color: this.theme.primarySoft, x: 350 },
+            { name: 'Caption\nOutput', type: 'Output', nodes: 8, color: '#f6bd60', x: 450 }
         ];
 
         // Draw layers
@@ -306,7 +307,7 @@ class ProjectVisualizations {
             .attr('x', width / 2)
             .attr('y', height - 20)
             .attr('text-anchor', 'middle')
-            .attr('fill', '#00ff41')
+            .attr('fill', this.theme.primary)
             .attr('font-size', '12px')
             .text('Generating caption...');
 
@@ -394,7 +395,7 @@ class ProjectVisualizations {
             .attr('y1', d => meshPoints[d.source].y)
             .attr('x2', d => meshPoints[d.target].x)
             .attr('y2', d => meshPoints[d.target].y)
-            .attr('stroke', '#ff0055') // Cyber pink
+            .attr('stroke', this.theme.accent)
             .attr('stroke-opacity', d => 0.1 + (d.distance / 400))
             .attr('stroke-width', 1);
 
@@ -405,7 +406,7 @@ class ProjectVisualizations {
             .attr('cx', d => d.x)
             .attr('cy', d => d.y)
             .attr('r', 2)
-            .attr('fill', '#00ff41')
+            .attr('fill', this.theme.primary)
             .attr('opacity', 0.8);
 
         // Animation for mesh processing
@@ -430,6 +431,16 @@ class ProjectVisualizations {
                 .attr('cx', d => d.x)
                 .attr('cy', d => d.y);
         }, 100);
+    }
+
+    getTheme() {
+        const styles = getComputedStyle(document.documentElement);
+        return {
+            primary: styles.getPropertyValue('--primary-color').trim(),
+            secondary: styles.getPropertyValue('--secondary-color').trim(),
+            accent: styles.getPropertyValue('--accent-color').trim(),
+            primarySoft: '#f9d7a1'
+        };
     }
 }
 

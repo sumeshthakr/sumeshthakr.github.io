@@ -1,25 +1,27 @@
-/* CSS Custom Properties for Cyberpunk Hacker Theme */
+/* CSS Custom Properties for a personal, playful aesthetic */
 :root {
-    --primary-color: #00ff41; /* Hacker green */
-    --secondary-color: #0ff0ff; /* Cyber cyan */
-    --background-color: #050505; /* Deep black */
-    --surface-color: #111111; /* Dark surface */
-    --text-primary: #ffffff; /* White text */
-    --text-secondary: #888888; /* Gray text */
-    --accent-color: #ff0055; /* Cyber pink */
-    --success-color: #00ff41;
-    --warning-color: #ffaa00;
-    --danger-color: #ff0055;
+    --primary-color: #f6c177; /* Warm sand */
+    --secondary-color: #82c7c4; /* Coastal teal */
+    --background-color: #0b0f14; /* Midnight ink */
+    --surface-color: #141a22; /* Soft slate */
+    --text-primary: #f8fafc; /* Cloud white */
+    --text-secondary: #b6c2cf; /* Mist gray */
+    --accent-color: #f28482; /* Coral */
+    --success-color: #7bd389;
+    --warning-color: #f6bd60;
+    --danger-color: #f76c6c;
     --font-family: 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
-    --glitch-color: #0044ff; /* Blue for glitches */
+    --glitch-color: #8aa1ff; /* Soft indigo */
 }
 
 /* Cyberpunk Hacker Elements */
 .hero {
     position: relative;
-    background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
-    background-blend-mode: multiply;
+    background: radial-gradient(circle at top left, rgba(130, 199, 196, 0.15), transparent 60%),
+        radial-gradient(circle at 70% 30%, rgba(246, 193, 119, 0.2), transparent 55%),
+        var(--background-color);
+    background-blend-mode: screen;
 }
 
 .hacker-avatar {
@@ -30,7 +32,7 @@
     margin: 0 auto 2rem auto;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+    box-shadow: 0 0 30px rgba(246, 193, 119, 0.3);
     border: 2px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -100,18 +102,18 @@
     width: 100%;
     height: 100%;
     background-image: 
-        linear-gradient(rgba(0, 255, 65, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
+        linear-gradient(rgba(130, 199, 196, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(130, 199, 196, 0.1) 1px, transparent 1px);
     background-size: 50px 50px;
-    opacity: 0.3;
+    opacity: 0.35;
     pointer-events: none;
 }
 
 .terminal-line {
     margin: 2rem 0;
     padding: 1rem;
-    background: rgba(0, 0, 0, 0.5);
-    border-left: 4px solid var(--primary-color);
+    background: rgba(10, 15, 20, 0.55);
+    border-left: 4px solid var(--secondary-color);
     font-family: var(--font-mono);
     font-size: 0.9rem;
     color: var(--text-secondary);
@@ -175,9 +177,9 @@ body {
     color: var(--text-primary);
     overflow-x: hidden;
     background-image: 
-        radial-gradient(circle at 25% 25%, rgba(34, 211, 238, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 75% 75%, rgba(124, 58, 237, 0.1) 0%, transparent 50%),
-        linear-gradient(135deg, rgba(0, 240, 255, 0.05) 0%, transparent 50%);
+        radial-gradient(circle at 25% 25%, rgba(130, 199, 196, 0.18) 0%, transparent 55%),
+        radial-gradient(circle at 75% 75%, rgba(246, 193, 119, 0.12) 0%, transparent 45%),
+        linear-gradient(135deg, rgba(130, 199, 196, 0.08) 0%, transparent 50%);
 }
 
 /* Container */
@@ -238,7 +240,7 @@ a:hover {
     font-weight: 700;
     font-size: 1.5rem;
     color: var(--primary-color);
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+    text-shadow: 0 0 10px rgba(130, 199, 196, 0.3);
 }
 
 .logo-text {
@@ -268,7 +270,7 @@ a:hover {
 
 .nav-link:hover {
     color: var(--text-primary);
-    text-shadow: 0 0 5px rgba(0, 240, 255, 0.3);
+    text-shadow: 0 0 5px rgba(130, 199, 196, 0.3);
 }
 
 .nav-link::after {
@@ -339,6 +341,24 @@ a:hover {
     font-weight: 400;
 }
 
+.hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 2rem;
+}
+
+.hero-badge {
+    padding: 0.4rem 1rem;
+    border-radius: 999px;
+    background: rgba(130, 199, 196, 0.15);
+    color: var(--secondary-color);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 1px solid rgba(130, 199, 196, 0.3);
+}
+
 .hero-stats {
     display: flex;
     gap: 3rem;
@@ -354,7 +374,7 @@ a:hover {
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--primary-color);
-    text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+    text-shadow: 0 0 10px rgba(246, 193, 119, 0.3);
 }
 
 .stat-label {
@@ -375,12 +395,19 @@ a:hover {
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: all 0.3s ease;
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.3);
+    box-shadow: 0 0 20px rgba(130, 199, 196, 0.3);
 }
 
 .cta-button:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 30px rgba(0, 240, 255, 0.5);
+    box-shadow: 0 0 30px rgba(130, 199, 196, 0.5);
+}
+
+.hero-note {
+    margin: 1.5rem 0 2rem;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    max-width: 520px;
 }
 
 .hero-visual {
@@ -409,6 +436,14 @@ a:hover {
     background-clip: text;
 }
 
+.section-lede {
+    text-align: center;
+    max-width: 720px;
+    margin: -2rem auto 3rem;
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+}
+
 /* About Section */
 .about {
     padding: 8rem 0;
@@ -428,6 +463,7 @@ a:hover {
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(10px);
+    box-shadow: 0 20px 40px rgba(11, 15, 20, 0.4);
 }
 
 .about-text {
@@ -562,8 +598,8 @@ a:hover {
 
 .research-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(0, 240, 255, 0.3);
-    box-shadow: 0 10px 30px rgba(0, 240, 255, 0.1);
+    border-color: rgba(130, 199, 196, 0.3);
+    box-shadow: 0 10px 30px rgba(130, 199, 196, 0.1);
 }
 
 .research-card:hover::before {
@@ -583,8 +619,8 @@ a:hover {
 }
 
 .research-year {
-    background: rgba(0, 240, 255, 0.2);
-    color: var(--primary-color);
+    background: rgba(130, 199, 196, 0.2);
+    color: var(--secondary-color);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
     font-size: 0.8rem;
@@ -604,13 +640,13 @@ a:hover {
 }
 
 .tech-tag {
-    background: rgba(124, 58, 237, 0.2);
-    color: var(--secondary-color);
+    background: rgba(246, 193, 119, 0.15);
+    color: var(--primary-color);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
     font-size: 0.8rem;
     font-family: var(--font-mono);
-    border: 1px solid rgba(124, 58, 237, 0.3);
+    border: 1px solid rgba(246, 193, 119, 0.3);
 }
 
 .research-links {
@@ -622,9 +658,9 @@ a:hover {
 .research-link {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background: rgba(0, 240, 255, 0.1);
-    color: var(--primary-color);
-    border: 1px solid rgba(0, 240, 255, 0.3);
+    background: rgba(130, 199, 196, 0.12);
+    color: var(--secondary-color);
+    border: 1px solid rgba(130, 199, 196, 0.3);
     border-radius: 4px;
     text-decoration: none;
     font-size: 0.8rem;
@@ -632,7 +668,7 @@ a:hover {
 }
 
 .research-link:hover {
-    background: rgba(0, 240, 255, 0.3);
+    background: rgba(130, 199, 196, 0.3);
     transform: translateY(-1px);
 }
 
@@ -658,13 +694,13 @@ a:hover {
 
 .project-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(0, 240, 255, 0.3);
-    box-shadow: 0 10px 30px rgba(0, 240, 255, 0.1);
+    border-color: rgba(130, 199, 196, 0.3);
+    box-shadow: 0 10px 30px rgba(130, 199, 196, 0.1);
 }
 
 .project-image {
     height: 200px;
-    background: linear-gradient(135deg, rgba(0, 240, 255, 0.1), rgba(124, 58, 237, 0.1));
+    background: linear-gradient(135deg, rgba(130, 199, 196, 0.15), rgba(246, 193, 119, 0.1));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -699,29 +735,92 @@ a:hover {
 
 /* Project Visualization Enhancements */
 .project-card .graph-visualization {
-    background: linear-gradient(135deg, rgba(255, 0, 85, 0.1), rgba(0, 240, 255, 0.05));
+    background: linear-gradient(135deg, rgba(242, 132, 130, 0.1), rgba(130, 199, 196, 0.05));
 }
 
 /* Cyber Pink Theme for Project Visualizations */
 .project-card:hover .graph-visualization {
-    background: linear-gradient(135deg, rgba(255, 0, 85, 0.2), rgba(0, 240, 255, 0.1));
-    box-shadow: 0 0 20px rgba(255, 0, 85, 0.3);
+    background: linear-gradient(135deg, rgba(242, 132, 130, 0.2), rgba(130, 199, 196, 0.1));
+    box-shadow: 0 0 20px rgba(242, 132, 130, 0.3);
 }
 
 /* Enhanced Project Visualization Styles */
 .project-card .graph-visualization svg {
-    filter: drop-shadow(0 0 5px rgba(255, 0, 85, 0.5));
+    filter: drop-shadow(0 0 5px rgba(242, 132, 130, 0.5));
 }
 
 /* Cyber Pink Animation Effects */
 @keyframes cyber-pink-pulse {
-    0% { box-shadow: 0 0 5px rgba(255, 0, 85, 0.5); }
-    50% { box-shadow: 0 0 20px rgba(255, 0, 85, 0.8); }
-    100% { box-shadow: 0 0 5px rgba(255, 0, 85, 0.5); }
+    0% { box-shadow: 0 0 5px rgba(242, 132, 130, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(242, 132, 130, 0.8); }
+    100% { box-shadow: 0 0 5px rgba(242, 132, 130, 0.5); }
 }
 
 .project-card .graph-visualization {
     animation: cyber-pink-pulse 3s ease-in-out infinite;
+}
+
+/* Fun Section */
+.fun-section {
+    padding: 8rem 0;
+    background: linear-gradient(to bottom, var(--surface-color), var(--background-color));
+}
+
+.fun-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+}
+
+.fun-card {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fun-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(11, 15, 20, 0.4);
+}
+
+.fun-visual {
+    height: 220px;
+    background: linear-gradient(135deg, rgba(130, 199, 196, 0.12), rgba(246, 193, 119, 0.12));
+    position: relative;
+}
+
+.fun-visual canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.fun-content {
+    padding: 1.5rem;
+}
+
+.fun-content h3 {
+    margin-bottom: 0.5rem;
+    color: var(--text-primary);
+}
+
+.fun-content p {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+.fun-tag {
+    display: inline-block;
+    padding: 0.35rem 0.8rem;
+    border-radius: 999px;
+    background: rgba(246, 193, 119, 0.15);
+    color: var(--primary-color);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border: 1px solid rgba(246, 193, 119, 0.3);
 }
 
 /* Contact Section */
@@ -803,12 +902,12 @@ a:hover {
     letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+    box-shadow: 0 0 10px rgba(130, 199, 196, 0.3);
 }
 
 .submit-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+    box-shadow: 0 0 20px rgba(130, 199, 196, 0.5);
 }
 
 /* Footer */
@@ -873,6 +972,14 @@ a:hover {
     }
 
     .contact-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-badges {
+        justify-content: center;
+    }
+
+    .fun-grid {
         grid-template-columns: 1fr;
     }
 }

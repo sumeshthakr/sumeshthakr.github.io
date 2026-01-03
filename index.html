@@ -32,6 +32,9 @@
                     <a href="#projects" class="nav-link">Projects</a>
                 </li>
                 <li class="nav-item">
+                    <a href="#fun" class="nav-link">Fun</a>
+                </li>
+                <li class="nav-item">
                     <a href="#contact" class="nav-link">Contact</a>
                 </li>
             </ul>
@@ -55,6 +58,11 @@
             <p class="hero-subtitle">
                 Research and Technology Advisor | ML Engineer | Computer Vision Specialist
             </p>
+            <div class="hero-badges">
+                <span class="hero-badge">Graph Intelligence</span>
+                <span class="hero-badge">3D Perception</span>
+                <span class="hero-badge">Human-Centered ML</span>
+            </div>
             <div class="hero-stats">
                 <div class="stat-item">
                     <span class="stat-number">5+</span>
@@ -71,8 +79,12 @@
             </div>
             <div class="terminal-line">
                 <span class="cursor">></span>
-                <span class="command">cd /portfolio && ./explore.sh</span>
+                <span class="command">cd /portfolio && ./explore.sh --visionary-mode</span>
             </div>
+            <p class="hero-note">
+                I build intelligent vision systems that help robots, cities, and humans interpret
+                complex 3D environments with clarity and creativity.
+            </p>
             <a href="#about" class="cta-button">Access System</a>
         </div>
         <div class="hero-visual">
@@ -170,6 +182,10 @@
     <section id="research" class="research">
         <div class="container">
             <h2 class="section-title">Research & Publications</h2>
+            <p class="section-lede">
+                Each paper becomes a playful artifact: a living diagram that mirrors the core idea,
+                from graph attention to LiDAR perception.
+            </p>
             <div class="research-stats">
                 <div class="stat-item">
                     <span class="stat-number">8+</span>
@@ -186,27 +202,27 @@
             </div>
             <div class="research-visualizations">
                 <div class="visualization-card">
-                    <h3>Research Collaboration Network</h3>
+                    <h3>GAGAT Constellation Map</h3>
                     <div class="visualization-container" id="research-network"></div>
-                    <p class="viz-description">Interactive network showing connections between your research areas, publications, and their impact metrics</p>
+                    <p class="viz-description">A constellation of your papers where citation gravity pulls ideas into focus.</p>
                 </div>
                 
                 <div class="visualization-card">
-                    <h3>3D Point Cloud Processing</h3>
+                    <h3>Point Cloud Fireflies</h3>
                     <div class="visualization-container" id="point-cloud-viz"></div>
-                    <p class="viz-description">Real-time point cloud clustering and processing visualization based on your GAGAT research</p>
+                    <p class="viz-description">Swarming points cluster like fireflies to echo your 3D segmentation research.</p>
                 </div>
                 
                 <div class="visualization-card">
-                    <h3>Graph Neural Network Architecture</h3>
+                    <h3>Attention Flow Orchestra</h3>
                     <div class="visualization-container" id="gnn-architecture"></div>
-                    <p class="viz-description">Interactive GNN architecture showing layers and connections from your attention mechanism research</p>
+                    <p class="viz-description">Layered rings that pulse to represent your global-aware attention mechanics.</p>
                 </div>
                 
                 <div class="visualization-card">
-                    <h3>LiDAR Object Detection</h3>
+                    <h3>LiDAR Pulse Theater</h3>
                     <div class="visualization-container" id="lidar-viz"></div>
-                    <p class="viz-description">Real-time LiDAR scanning and object detection simulation from your autonomous driving research</p>
+                    <p class="viz-description">A playful radar scene that turns your LiDAR detection papers into motion.</p>
                 </div>
             </div>
 
@@ -300,6 +316,9 @@
     <section id="projects" class="projects">
         <div class="container">
             <h2 class="section-title">Featured Projects</h2>
+            <p class="section-lede">
+                Applied research brought to life with interactive stories from my product work.
+            </p>
             <div class="projects-grid">
                 <div class="project-card">
                     <div class="project-image">
@@ -350,10 +369,65 @@
         </div>
     </section>
 
+    <!-- Fun Section -->
+    <section id="fun" class="fun-section">
+        <div class="container">
+            <h2 class="section-title">Fun Section</h2>
+            <p class="section-lede">
+                A playful lab where graph games, ray tracing, and arcade experiments live alongside my research.
+            </p>
+            <div class="fun-grid">
+                <div class="fun-card">
+                    <div class="fun-visual">
+                        <canvas id="fun-graph-game"></canvas>
+                    </div>
+                    <div class="fun-content">
+                        <h3>Graph Quest</h3>
+                        <p>Navigate glowing nodes to build the shortest path. Every pulse is a clue.</p>
+                        <span class="fun-tag">Graph Visualization Game</span>
+                    </div>
+                </div>
+                <div class="fun-card">
+                    <div class="fun-visual">
+                        <canvas id="fun-raytracer"></canvas>
+                    </div>
+                    <div class="fun-content">
+                        <h3>Soft Ray Tracer</h3>
+                        <p>A dreamy 3D ray-marcher that paints volumetric light in motion.</p>
+                        <span class="fun-tag">3D Ray Tracer</span>
+                    </div>
+                </div>
+                <div class="fun-card">
+                    <div class="fun-visual">
+                        <canvas id="fun-pingpong"></canvas>
+                    </div>
+                    <div class="fun-content">
+                        <h3>Ping Pong Arena</h3>
+                        <p>Retro paddles, neon trails, and physics-inspired bounces.</p>
+                        <span class="fun-tag">Ping Pong Game</span>
+                    </div>
+                </div>
+                <div class="fun-card">
+                    <div class="fun-visual">
+                        <canvas id="fun-arcade"></canvas>
+                    </div>
+                    <div class="fun-content">
+                        <h3>Signal Sprint</h3>
+                        <p>Capture drifting particles to unlock a kinetic soundtrack.</p>
+                        <span class="fun-tag">Experimental Game</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Contact Section -->
     <section id="contact" class="contact">
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
+            <p class="section-lede">
+                Open to collaborations in perception, spatial computing, and applied ML systems.
+            </p>
             <div class="contact-grid">
                 <div class="contact-info">
                 <div class="contact-item">
