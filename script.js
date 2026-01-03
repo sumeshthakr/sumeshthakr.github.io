@@ -332,11 +332,16 @@ class GraphPortfolio {
 
 // Initialize the portfolio when DOM is loaded
 document.addEventListener('DOMContentLoaded', () => {
-    // Load D3.js for mini graphs
+    // Load D3.js for mini graphs and research visualizations
     const script = document.createElement('script');
     script.src = 'https://d3js.org/d3.v7.min.js';
     script.onload = () => {
         new GraphPortfolio();
+        
+        // Initialize research visualizations
+        const researchScript = document.createElement('script');
+        researchScript.src = 'research-visualizations.js';
+        document.head.appendChild(researchScript);
     };
     document.head.appendChild(script);
 });
