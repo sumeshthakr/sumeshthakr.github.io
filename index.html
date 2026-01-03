@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sumesh Thakur - ML & Computer Vision Engineer</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/three@0.160.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">ST</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="#home" class="nav-link">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#research" class="nav-link">Research</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#projects" class="nav-link">Projects</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with 3D Graph Visualization -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <div class="hacker-avatar">
+                <div class="avatar-glow"></div>
+            </div>
+            <h1 class="hero-title glitch-text" data-text="SUMESH THAKUR">
+                <span class="highlight">SUMESH THAKUR</span>
+            </h1>
+            <p class="hero-subtitle">
+                Research and Technology Advisor | ML Engineer | Computer Vision Specialist
+            </p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">15+</span>
+                    <span class="stat-label">Years Experience</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">8</span>
+                    <span class="stat-label">Publications</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Projects</span>
+                </div>
+            </div>
+            <div class="terminal-line">
+                <span class="cursor">></span>
+                <span class="command">cd /portfolio && ./explore.sh</span>
+            </div>
+            <a href="#about" class="cta-button">Access System</a>
+        </div>
+        <div class="hero-visual">
+            <canvas id="graph-canvas"></canvas>
+            <div class="scanline"></div>
+            <div class="grid-overlay"></div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="about-grid">
+                <div class="about-content">
+            <p class="about-text">
+                Experienced software engineer specializing in machine learning and computer vision,
+                holding a Master's in Computer Science from Saint Mary's University. Currently a Research 
+                and Technology Advisor at SR&ED Division, Canada Revenue Agency. Published researcher 
+                with expertise in Graph Neural Networks, 3D Point Cloud Processing, and Computer Vision. 
+                Demonstrated expertise in driving innovation, delivering cutting-edge solutions, and 
+                staying at the forefront of emerging technologies.
+            </p>
+                    <div class="skills-grid">
+                        <div class="skill-category">
+                            <h3>Machine Learning</h3>
+                            <ul>
+                                <li>Graph Neural Networks</li>
+                                <li>Deep Learning</li>
+                                <li>Computer Vision</li>
+                                <li>Point Cloud Processing</li>
+                            </ul>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Programming</h3>
+                            <ul>
+                                <li>Python</li>
+                                <li>C++</li>
+                                <li>JavaScript</li>
+                                <li>Java</li>
+                            </ul>
+                        </div>
+                        <div class="skill-category">
+                            <h3>Tools & Frameworks</h3>
+                            <ul>
+                                <li>PyTorch</li>
+                                <li>TensorFlow</li>
+                                <li>OpenCV</li>
+                                <li>ROS/ROS2</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-visual">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <h4>Research & Technology Advisor</h4>
+                                <p>Canada Revenue Agency</p>
+                                <span class="timeline-year">2023 - Present</span>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <h4>Machine Learning Developer</h4>
+                                <p>Falkbuilt Inc.</p>
+                                <span class="timeline-year">2022 - 2023</span>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <h4>Perception Software Engineer</h4>
+                                <p>JCA Technologies</p>
+                                <span class="timeline-year">2020 - 2022</span>
+                            </div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-content">
+                                <h4>M.Sc. Computer Science</h4>
+                                <p>Saint Mary's University</p>
+                                <span class="timeline-year">2019 - 2021</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Section -->
+    <section id="research" class="research">
+        <div class="container">
+            <h2 class="section-title">Research & Publications</h2>
+            <div class="research-stats">
+                <div class="stat-item">
+                    <span class="stat-number">8+</span>
+                    <span class="stat-label">Publications</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Citations</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">3</span>
+                    <span class="stat-label">IEEE Papers</span>
+                </div>
+            </div>
+            <div class="research-grid">
+                <div class="research-card">
+                    <div class="research-header">
+                        <h3>GAGAT: A Global Aware Graph Attention Network for 3D Classification and Segmentation</h3>
+                        <span class="research-year">2023</span>
+                    </div>
+                    <p class="research-desc">
+                        IEEE IGARSS 2023 - Advanced graph attention mechanism for 3D point cloud processing. 
+                        Implemented global context awareness to enhance feature extraction and improve 
+                        classification accuracy by 15% over baseline methods.
+                    </p>
+                    <div class="research-tech">
+                        <span class="tech-tag">Graph Attention</span>
+                        <span class="tech-tag">3D Segmentation</span>
+                        <span class="tech-tag">Point Clouds</span>
+                        <span class="tech-tag">IEEE</span>
+                    </div>
+                    <div class="research-links">
+                        <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&hl=en" target="_blank" class="research-link">Google Scholar</a>
+                        <a href="https://www.linkedin.com/in/sumeshthkr/" target="_blank" class="research-link">LinkedIn</a>
+                    </div>
+                </div>
+                <div class="research-card">
+                    <div class="research-header">
+                        <h3>A Graph Attention Network for Object Detection from Raw LiDAR Data</h3>
+                        <span class="research-year">2022</span>
+                    </div>
+                    <p class="research-desc">
+                        IEEE IGARSS 2022 - Novel approach for 3D object detection directly from raw LiDAR point clouds. 
+                        Eliminated voxelization preprocessing, achieving real-time performance with improved 
+                        detection accuracy for autonomous driving applications.
+                    </p>
+                    <div class="research-tech">
+                        <span class="tech-tag">LiDAR</span>
+                        <span class="tech-tag">Object Detection</span>
+                        <span class="tech-tag">GNN</span>
+                        <span class="tech-tag">Autonomous Driving</span>
+                    </div>
+                    <div class="research-links">
+                        <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&hl=en" target="_blank" class="research-link">Google Scholar</a>
+                    </div>
+                </div>
+                <div class="research-card">
+                    <div class="research-header">
+                        <h3>Dynamic Edge Weights in Graph Neural Networks for 3D Object Detection</h3>
+                        <span class="research-year">2020</span>
+                    </div>
+                    <p class="research-desc">
+                        ArXiv Preprint - Comprehensive study of dynamic edge weighting strategies in GNNs. 
+                        Proposed adaptive edge weight computation methods that significantly improve 
+                        3D object detection performance across multiple datasets.
+                    </p>
+                    <div class="research-tech">
+                        <span class="tech-tag">Dynamic Weights</span>
+                        <span class="tech-tag">3D Detection</span>
+                        <span class="tech-tag">Optimization</span>
+                        <span class="tech-tag">ArXiv</span>
+                    </div>
+                    <div class="research-links">
+                        <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&hl=en" target="_blank" class="research-link">Google Scholar</a>
+                    </div>
+                </div>
+                <div class="research-card">
+                    <div class="research-header">
+                        <h3>Towards Video based Collective Motion Analysis through Shape Tracking and Matching</h3>
+                        <span class="research-year">2020</span>
+                    </div>
+                    <p class="research-desc">
+                        IET Electronics Letters - Advanced computer vision techniques for collective motion analysis. 
+                        Developed robust shape tracking algorithms for surveillance and behavior analysis applications, 
+                        improving tracking accuracy by 20% in crowded scenarios.
+                    </p>
+                    <div class="research-tech">
+                        <span class="tech-tag">Video Analysis</span>
+                        <span class="tech-tag">Shape Tracking</span>
+                        <span class="tech-tag">Motion Analysis</span>
+                        <span class="tech-tag">IET</span>
+                    </div>
+                    <div class="research-links">
+                        <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&hl=en" target="_blank" class="research-link">Google Scholar</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="projects">
+        <div class="container">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="graph-visualization" id="mesh-visualization"></div>
+                    </div>
+                    <div class="project-content">
+                        <h3>3D Mesh Reconstruction Pipeline</h3>
+                        <p>Developed an analytical pipeline that reconstructs meshes from MongoDB,
+                        performs ETL operations, and updates 3D visualizations with textures.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">MongoDB</span>
+                            <span class="tech-tag">3D Visualization</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="graph-visualization" id="currency-detection"></div>
+                    </div>
+                    <div class="project-content">
+                        <h3>6 by 6 - Currency Detection App</h3>
+                        <p>India's first currency detection application for visually impaired,
+                        featuring InceptionNet-based ML model deployed on Android devices.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Android</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">Accessibility</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="project-card">
+                    <div class="project-image">
+                        <div class="graph-visualization" id="video-captioning"></div>
+                    </div>
+                    <div class="project-content">
+                        <h3>Automatic Video Subtitle Generation</h3>
+                        <p>Developed Sequence-to-Sequence (CNN-LSTM) model for automatic video
+                        description and subtitle generation for medical assistant applications.</p>
+                        <div class="project-tech">
+                            <span class="tech-tag">Seq2Seq</span>
+                            <span class="tech-tag">CNN-LSTM</span>
+                            <span class="tech-tag">NLP</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                <div class="contact-item">
+                    <span class="contact-label">Email</span>
+                    <a href="mailto:sumeshthkr@gmail.com" class="contact-value">sumeshthkr@gmail.com</a>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">GitHub</span>
+                    <a href="https://github.com/sumeshthakr" target="_blank" class="contact-value">github.com/sumeshthakr</a>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">Phone</span>
+                    <span class="contact-value">+1-782-882-0240</span>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">Location</span>
+                    <span class="contact-value">Surrey, British Columbia, Canada</span>
+                </div>
+                </div>
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <input type="text" id="name" name="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" id="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea id="message" name="message" placeholder="Your Message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2024 Sumesh Thakur. Built with Graph-based Technologies.</p>
+                <div class="footer-links">
+                    <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&hl=en" target="_blank" class="footer-link">Google Scholar</a>
+                    <a href="https://www.linkedin.com/in/sumeshthkr/" target="_blank" class="footer-link">LinkedIn</a>
+                    <a href="#contact" class="footer-link">Contact</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
