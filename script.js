@@ -31,9 +31,9 @@ class GraphPortfolio {
         // Scroll effect on navbar
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                navbar.style.background = 'rgba(15, 23, 42, 0.95)';
+                navbar.style.background = 'rgba(11, 15, 20, 0.95)';
             } else {
-                navbar.style.background = 'rgba(15, 23, 42, 0.8)';
+                navbar.style.background = 'rgba(11, 15, 20, 0.8)';
             }
         });
     }
@@ -53,7 +53,7 @@ class GraphPortfolio {
             });
         }, observerOptions);
 
-        document.querySelectorAll('.research-card, .project-card, .skill-category, .timeline-item').forEach(el => {
+        document.querySelectorAll('.research-card, .project-card, .skill-category, .timeline-item, .fun-card').forEach(el => {
             el.classList.add('fade-in');
             observer.observe(el);
         });
@@ -78,7 +78,7 @@ class GraphPortfolio {
             const originalText = submitBtn.textContent;
             
             submitBtn.textContent = 'Message Sent!';
-            submitBtn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
+            submitBtn.style.background = 'linear-gradient(135deg, #7bd389, #4bb97d)';
             
             setTimeout(() => {
                 submitBtn.textContent = originalText;
@@ -307,7 +307,7 @@ class GraphPortfolio {
         const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
         
         const geometry = new THREE.SphereGeometry(0.2, 16, 16);
-        const material = new THREE.MeshBasicMaterial({ color: 0x22c55e });
+        const material = new THREE.MeshBasicMaterial({ color: 0xf6c177 });
         const node = new THREE.Mesh(geometry, material);
         
         node.position.set(
@@ -343,10 +343,13 @@ document.addEventListener('DOMContentLoaded', () => {
         researchScript.src = 'research-visualizations.js';
         document.head.appendChild(researchScript);
         
-        // Initialize project visualizations
         const projectScript = document.createElement('script');
         projectScript.src = 'project-visualizations.js';
         document.head.appendChild(projectScript);
+
+        const funScript = document.createElement('script');
+        funScript.src = 'fun-visualizations.js';
+        document.head.appendChild(funScript);
     };
     document.head.appendChild(script);
 });
