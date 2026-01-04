@@ -348,10 +348,10 @@ document.addEventListener('DOMContentLoaded', () => {
         projectScript.src = 'project-visualizations.js';
         document.head.appendChild(projectScript);
 
-        // Initialize fun visualizations
-        const funScript = document.createElement('script');
-        funScript.src = 'fun-visualizations.js';
-        document.head.appendChild(funScript);
+        // Initialize interactive labs
+        const labScript = document.createElement('script');
+        labScript.src = 'interactive-labs.js';
+        document.head.appendChild(labScript);
     };
     document.head.appendChild(script);
 });

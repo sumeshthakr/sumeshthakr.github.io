@@ -202,27 +202,27 @@
             </div>
             <div class="research-visualizations">
                 <div class="visualization-card">
-                    <h3>GAGAT Constellation Map</h3>
+                    <h3>GAGAT Attention Map</h3>
                     <div class="visualization-container" id="research-network"></div>
-                    <p class="viz-description">A constellation of your papers where citation gravity pulls ideas into focus.</p>
+                    <p class="viz-description">Node-wise attention scores and weighted edges inspired by the GAGAT architecture.</p>
                 </div>
                 
                 <div class="visualization-card">
-                    <h3>Point Cloud Fireflies</h3>
+                    <h3>Point Cloud Segmentation</h3>
                     <div class="visualization-container" id="point-cloud-viz"></div>
-                    <p class="viz-description">Swarming points cluster like fireflies to echo your 3D segmentation research.</p>
+                    <p class="viz-description">Clustered LiDAR points colored by semantic region, echoing 3D segmentation figures.</p>
                 </div>
                 
                 <div class="visualization-card">
-                    <h3>Attention Flow Orchestra</h3>
+                    <h3>Dynamic Edge Weights</h3>
                     <div class="visualization-container" id="gnn-architecture"></div>
-                    <p class="viz-description">Layered rings that pulse to represent your global-aware attention mechanics.</p>
+                    <p class="viz-description">Edge weight evolution and aggregation layers modeled after the dynamic weighting study.</p>
                 </div>
                 
                 <div class="visualization-card">
-                    <h3>LiDAR Pulse Theater</h3>
+                    <h3>Collective Motion Tracking</h3>
                     <div class="visualization-container" id="lidar-viz"></div>
-                    <p class="viz-description">A playful radar scene that turns your LiDAR detection papers into motion.</p>
+                    <p class="viz-description">Trajectory trails and motion vectors inspired by video-based motion analysis.</p>
                 </div>
             </div>
 
@@ -369,52 +369,64 @@
         </div>
     </section>
 
-    <!-- Fun Section -->
+    <!-- Interactive Lab Section -->
     <section id="fun" class="fun-section">
         <div class="container">
-            <h2 class="section-title">Fun Section</h2>
+            <h2 class="section-title">Interactive Lab</h2>
             <p class="section-lede">
-                A playful lab where graph games, ray tracing, and arcade experiments live alongside my research.
+                Glassy, hands-on demos that turn research ideas into tactile experiments. Tap “Run sample”
+                to kick off each mini-simulation.
             </p>
             <div class="fun-grid">
-                <div class="fun-card">
-                    <div class="fun-visual">
-                        <canvas id="fun-graph-game"></canvas>
+                <div class="fun-card lab-card">
+                    <div class="fun-visual lab-visual">
+                        <canvas id="cornell-lab"></canvas>
+                        <div class="lab-overlay">
+                            <span class="lab-label">WebGL Cornell Box</span>
+                        </div>
                     </div>
-                    <div class="fun-content">
-                        <h3>Graph Quest</h3>
-                        <p>Navigate glowing nodes to build the shortest path. Every pulse is a clue.</p>
-                        <span class="fun-tag">Graph Visualization Game</span>
-                    </div>
-                </div>
-                <div class="fun-card">
-                    <div class="fun-visual">
-                        <canvas id="fun-raytracer"></canvas>
-                    </div>
-                    <div class="fun-content">
-                        <h3>Soft Ray Tracer</h3>
-                        <p>A dreamy 3D ray-marcher that paints volumetric light in motion.</p>
-                        <span class="fun-tag">3D Ray Tracer</span>
+                    <div class="fun-content lab-content">
+                        <div>
+                            <h3>Raytraced Cornell Box</h3>
+                            <p>Physically-inspired lighting with soft shadows, reflected off glassy walls.</p>
+                            <span class="fun-tag">WebGL Raymarching</span>
+                        </div>
+                        <button class="cta-button lab-button" data-lab="cornell">Run sample</button>
                     </div>
                 </div>
-                <div class="fun-card">
-                    <div class="fun-visual">
-                        <canvas id="fun-pingpong"></canvas>
+                <div class="fun-card lab-card">
+                    <div class="fun-visual lab-visual">
+                        <canvas id="cnn-input"></canvas>
+                        <canvas id="cnn-output"></canvas>
+                        <div class="lab-overlay">
+                            <span class="lab-label">CNN Filters</span>
+                        </div>
                     </div>
-                    <div class="fun-content">
-                        <h3>Ping Pong Arena</h3>
-                        <p>Retro paddles, neon trails, and physics-inspired bounces.</p>
-                        <span class="fun-tag">Ping Pong Game</span>
+                    <div class="fun-content lab-content">
+                        <div>
+                            <h3>Digit CNN Playground</h3>
+                            <p>Watch convolution filters respond to a handwritten digit and predict the output.</p>
+                            <span class="fun-tag">CNN + Softmax Demo</span>
+                            <div class="lab-result" id="cnn-result">Prediction: —</div>
+                        </div>
+                        <button class="cta-button lab-button" data-lab="cnn">Run sample</button>
                     </div>
                 </div>
-                <div class="fun-card">
-                    <div class="fun-visual">
-                        <canvas id="fun-arcade"></canvas>
+                <div class="fun-card lab-card">
+                    <div class="fun-visual lab-visual">
+                        <canvas id="graph-aggregation"></canvas>
+                        <div class="lab-overlay">
+                            <span class="lab-label">Graph Aggregation</span>
+                        </div>
                     </div>
-                    <div class="fun-content">
-                        <h3>Signal Sprint</h3>
-                        <p>Capture drifting particles to unlock a kinetic soundtrack.</p>
-                        <span class="fun-tag">Experimental Game</span>
+                    <div class="fun-content lab-content">
+                        <div>
+                            <h3>Graph Message Aggregation</h3>
+                            <p>Nodes collect neighbor features, update embeddings, and glow as they converge.</p>
+                            <span class="fun-tag">GNN Aggregation</span>
+                            <div class="lab-result" id="graph-result">Aggregation: ready</div>
+                        </div>
+                        <button class="cta-button lab-button" data-lab="graph">Run sample</button>
                     </div>
                 </div>
             </div>
