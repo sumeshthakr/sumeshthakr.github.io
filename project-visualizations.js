@@ -445,12 +445,25 @@ class ProjectVisualizations {
 }
 
 // Initialize when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    // Load D3.js
+const initProjectVisualizations = () => {
+    if (window.__projectVisualizationsInitialized) return;
+    window.__projectVisualizationsInitialized = true;
+    new ProjectVisualizations();
+};
+
+const loadProjectD3 = () => {
+    if (window.d3) {
+        initProjectVisualizations();
+        return;
+    }
     const script = document.createElement('script');
     script.src = 'https://d3js.org/d3.v7.min.js';
-    script.onload = () => {
-        new ProjectVisualizations();
-    };
+    script.onload = initProjectVisualizations;
     document.head.appendChild(script);
-});
+};
+
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', loadProjectD3);
+} else {
+    loadProjectD3();
+}
