@@ -344,8 +344,8 @@ class ResearchVisualizations {
             'Optimization': this.theme.accent,
             'Computer Vision': this.theme.secondarySoft,
             '3D Processing': this.theme.primarySoft,
-            'ML': '#f6bd60',
-            'Applications': '#7bd389'
+            'ML': '#f59e0b',
+            'Applications': '#22c55e'
         };
         return colors[area] || '#888888';
     }
@@ -356,8 +356,8 @@ class ResearchVisualizations {
             primary: styles.getPropertyValue('--primary-color').trim(),
             secondary: styles.getPropertyValue('--secondary-color').trim(),
             accent: styles.getPropertyValue('--accent-color').trim(),
-            secondarySoft: '#9ad1d0',
-            primarySoft: '#f9d7a1'
+            secondarySoft: '#a5b4fc',
+            primarySoft: '#93c5fd'
         };
     }
 }

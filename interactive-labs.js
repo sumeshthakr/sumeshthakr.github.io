@@ -346,7 +346,7 @@ class InteractiveLabs {
             ctx.fillStyle = 'rgba(12, 18, 30, 0.8)';
             ctx.fillRect(0, 0, width, height);
 
-            ctx.strokeStyle = 'rgba(125, 211, 252, 0.3)';
+            ctx.strokeStyle = 'rgba(79, 140, 255, 0.3)';
             ctx.lineWidth = 1.5;
             edges.forEach(([a, b]) => {
                 ctx.beginPath();
@@ -358,7 +358,7 @@ class InteractiveLabs {
             nodes.forEach(node => {
                 const intensity = node.feature;
                 ctx.beginPath();
-                ctx.fillStyle = `rgba(125, 211, 252, ${0.3 + intensity * 0.7})`;
+                ctx.fillStyle = `rgba(79, 140, 255, ${0.3 + intensity * 0.7})`;
                 ctx.arc(node.x, node.y, 8 + intensity * 6, 0, Math.PI * 2);
                 ctx.fill();
             });

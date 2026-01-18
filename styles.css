@@ -1,43 +1,42 @@
-/* CSS Custom Properties for a personal, playful aesthetic */
+/* CSS Custom Properties for a refined, material-inspired aesthetic */
 :root {
-    --primary-color: #7dd3fc; /* Frosted blue */
-    --secondary-color: #c4b5fd; /* Soft lilac */
-    --background-color: #0b0f14; /* Midnight ink */
-    --surface-color: rgba(17, 25, 40, 0.72); /* Glass */
+    --primary-color: #4f8cff; /* MUI blue */
+    --secondary-color: #7c5dff; /* Indigo */
+    --background-color: #0b111c; /* Deep slate */
+    --surface-color: rgba(15, 23, 42, 0.85); /* Glass */
     --text-primary: #f8fafc; /* Cloud white */
-    --text-secondary: #cbd5f5; /* Mist */
-    --accent-color: #f97316; /* Warm accent */
-    --success-color: #34d399;
-    --warning-color: #fbbf24;
-    --danger-color: #fb7185;
+    --text-secondary: #b6c2d6; /* Mist */
+    --accent-color: #00c2a8; /* Graph accent */
+    --success-color: #22c55e;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
     --font-family: 'Inter', sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
-    --glitch-color: #8aa1ff; /* Soft indigo */
-    --glass-bg: rgba(255, 255, 255, 0.08);
-    --glass-border: rgba(255, 255, 255, 0.18);
-    --glass-shadow: 0 20px 40px rgba(15, 23, 42, 0.35);
+    --glitch-color: #7c5dff; /* Indigo */
+    --glass-bg: rgba(15, 23, 42, 0.6);
+    --glass-border: rgba(148, 163, 184, 0.2);
+    --glass-shadow: 0 24px 60px rgba(15, 23, 42, 0.45);
 }
 
 /* Cyberpunk Hacker Elements */
 .hero {
     position: relative;
-    background: radial-gradient(circle at top left, rgba(125, 211, 252, 0.18), transparent 60%),
-        radial-gradient(circle at 70% 30%, rgba(196, 181, 253, 0.2), transparent 55%),
-        radial-gradient(circle at 30% 80%, rgba(249, 115, 22, 0.12), transparent 50%),
+    background: radial-gradient(circle at 15% 20%, rgba(79, 140, 255, 0.18), transparent 55%),
+        radial-gradient(circle at 70% 25%, rgba(124, 93, 255, 0.16), transparent 55%),
+        radial-gradient(circle at 40% 85%, rgba(0, 194, 168, 0.12), transparent 60%),
         var(--background-color);
-    background-blend-mode: screen;
 }
 
 .hacker-avatar {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    width: 110px;
+    height: 110px;
+    border-radius: 32px;
+    background: linear-gradient(145deg, rgba(79, 140, 255, 0.9), rgba(124, 93, 255, 0.9));
     margin: 0 auto 2rem auto;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 0 30px rgba(246, 193, 119, 0.3);
-    border: 2px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.4);
+    border: 1px solid rgba(248, 250, 252, 0.2);
 }
 
 .avatar-glow {
@@ -54,32 +53,15 @@
 
 .glitch-text {
     position: relative;
-    font-family: var(--font-mono);
-    color: transparent;
-    text-shadow: 0 0 5px var(--primary-color);
-    animation: glitch 2s infinite;
+    font-family: var(--font-family);
+    color: var(--text-primary);
+    text-shadow: 0 16px 36px rgba(15, 23, 42, 0.45);
+    animation: none;
 }
 
 .glitch-text::before,
 .glitch-text::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background: transparent;
-}
-
-.glitch-text::before {
-    animation: glitch-1 0.2s infinite;
-    color: var(--primary-color);
-    z-index: -1;
-}
-
-.glitch-text::after {
-    animation: glitch-2 0.3s infinite;
-    color: var(--secondary-color);
-    z-index: -2;
+    display: none;
 }
 
 .scanline {
@@ -91,11 +73,12 @@
     background: linear-gradient(
         to bottom,
         rgba(255, 255, 255, 0),
-        rgba(255, 255, 255, 0.05),
+        rgba(255, 255, 255, 0.04),
         rgba(255, 255, 255, 0)
     );
-    background-size: 100% 2px;
-    animation: scanline 8s linear infinite;
+    background-size: 100% 6px;
+    animation: none;
+    opacity: 0.12;
     pointer-events: none;
 }
 
@@ -106,18 +89,19 @@
     width: 100%;
     height: 100%;
     background-image: 
-        linear-gradient(rgba(130, 199, 196, 0.15) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(130, 199, 196, 0.1) 1px, transparent 1px);
-    background-size: 50px 50px;
-    opacity: 0.35;
+        linear-gradient(rgba(148, 163, 184, 0.16) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(148, 163, 184, 0.12) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.22;
     pointer-events: none;
 }
 
 .terminal-line {
     margin: 2rem 0;
-    padding: 1rem;
-    background: rgba(10, 15, 20, 0.55);
-    border-left: 4px solid var(--secondary-color);
+    padding: 1rem 1.5rem;
+    background: rgba(15, 23, 42, 0.6);
+    border-left: 4px solid var(--accent-color);
+    border-radius: 12px;
     font-family: var(--font-mono);
     font-size: 0.9rem;
     color: var(--text-secondary);
@@ -181,9 +165,9 @@ body {
     color: var(--text-primary);
     overflow-x: hidden;
     background-image: 
-        radial-gradient(circle at 20% 20%, rgba(125, 211, 252, 0.18) 0%, transparent 55%),
-        radial-gradient(circle at 80% 30%, rgba(196, 181, 253, 0.16) 0%, transparent 50%),
-        radial-gradient(circle at 50% 80%, rgba(249, 115, 22, 0.12) 0%, transparent 45%);
+        radial-gradient(circle at 20% 20%, rgba(79, 140, 255, 0.12) 0%, transparent 55%),
+        radial-gradient(circle at 80% 30%, rgba(124, 93, 255, 0.12) 0%, transparent 50%),
+        radial-gradient(circle at 50% 80%, rgba(0, 194, 168, 0.08) 0%, transparent 45%);
 }
 
 /* Container */
@@ -214,7 +198,6 @@ a {
 
 a:hover {
     color: var(--accent-color);
-    text-shadow: 0 8px 16px rgba(125, 211, 252, 0.35);
 }
 
 /* Navigation */
@@ -222,11 +205,11 @@ a:hover {
     position: fixed;
     top: 0;
     width: 100%;
-    background: rgba(15, 23, 42, 0.55);
-    backdrop-filter: blur(18px);
+    background: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(24px);
     z-index: 1000;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    box-shadow: 0 12px 40px rgba(15, 23, 42, 0.4);
+    border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+    box-shadow: 0 16px 40px rgba(15, 23, 42, 0.45);
 }
 
 .nav-container {
@@ -245,7 +228,7 @@ a:hover {
     font-weight: 700;
     font-size: 1.5rem;
     color: var(--primary-color);
-    text-shadow: 0 0 10px rgba(130, 199, 196, 0.3);
+    text-shadow: 0 12px 30px rgba(15, 23, 42, 0.4);
 }
 
 .logo-text {
@@ -268,14 +251,13 @@ a:hover {
     font-weight: 500;
     position: relative;
     transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-size: 0.9rem;
+    letter-spacing: 0.04em;
+    font-size: 0.95rem;
 }
 
 .nav-link:hover {
     color: var(--text-primary);
-    text-shadow: 0 0 5px rgba(130, 199, 196, 0.3);
+    text-shadow: none;
 }
 
 .nav-link::after {
@@ -326,7 +308,7 @@ a:hover {
 }
 
 .hero-title {
-    font-size: 4rem;
+    font-size: 3.6rem;
     margin-bottom: 1rem;
     background: linear-gradient(135deg, var(--text-primary), var(--primary-color));
     -webkit-background-clip: text;
@@ -355,13 +337,12 @@ a:hover {
 
 .hero-badge {
     padding: 0.4rem 1rem;
-    border-radius: 999px;
-    background: rgba(130, 199, 196, 0.15);
-    color: var(--secondary-color);
+    border-radius: 12px;
+    background: rgba(79, 140, 255, 0.12);
+    color: var(--primary-color);
     font-size: 0.85rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    border: 1px solid rgba(130, 199, 196, 0.3);
+    letter-spacing: 0.06em;
+    border: 1px solid rgba(79, 140, 255, 0.24);
 }
 
 .hero-stats {
@@ -379,7 +360,7 @@ a:hover {
     font-size: 2.5rem;
     font-weight: 700;
     color: var(--primary-color);
-    text-shadow: 0 0 10px rgba(246, 193, 119, 0.3);
+    text-shadow: 0 16px 40px rgba(15, 23, 42, 0.4);
 }
 
 .stat-label {
@@ -392,24 +373,22 @@ a:hover {
 .cta-button {
     display: inline-block;
     padding: 1rem 2rem;
-    background: linear-gradient(135deg, rgba(125, 211, 252, 0.9), rgba(196, 181, 253, 0.9));
-    color: #0b0f14;
+    background: linear-gradient(135deg, rgba(79, 140, 255, 0.95), rgba(124, 93, 255, 0.95));
+    color: #0b111c;
     text-decoration: none;
-    border-radius: 999px;
+    border-radius: 14px;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.3s ease;
-    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.4);
+    letter-spacing: 0.08em;
+    transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 14px 36px rgba(15, 23, 42, 0.35);
+    border: 1px solid rgba(248, 250, 252, 0.4);
     cursor: pointer;
-    border: 1px solid rgba(255, 255, 255, 0.4);
     outline: none;
 }
 
 .cta-button:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 18px 36px rgba(15, 23, 42, 0.45);
+    transform: translateY(-3px);
+    box-shadow: 0 22px 50px rgba(15, 23, 42, 0.5);
 }
 
 .hero-note {
@@ -443,6 +422,7 @@ a:hover {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+    letter-spacing: -0.02em;
 }
 
 .section-lede {
@@ -467,10 +447,10 @@ a:hover {
 }
 
 .about-content {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--glass-bg);
     padding: 2rem;
     border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
     backdrop-filter: blur(10px);
     box-shadow: 0 20px 40px rgba(11, 15, 20, 0.4);
 }
@@ -487,10 +467,10 @@ a:hover {
 }
 
 .skill-category {
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(15, 23, 42, 0.55);
     padding: 1.5rem;
     border-radius: 12px;
-    border-left: 4px solid var(--primary-color);
+    border-left: 3px solid var(--primary-color);
 }
 
 .skill-category h3 {
@@ -555,7 +535,7 @@ a:hover {
     border: 1px solid var(--glass-border);
     box-shadow: var(--glass-shadow);
     backdrop-filter: blur(14px);
-    transition: transform 0.3s ease;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s ease;
 }
 
 .timeline-content:hover {
@@ -592,7 +572,7 @@ a:hover {
     border: 1px solid var(--glass-border);
     backdrop-filter: blur(18px);
     box-shadow: var(--glass-shadow);
-    transition: all 0.3s ease;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease, border-color 0.6s ease;
     position: relative;
     overflow: hidden;
 }
@@ -604,14 +584,14 @@ a:hover {
     left: 0;
     width: 100%;
     height: 4px;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
     transform: scaleX(0);
     transition: transform 0.3s ease;
 }
 
 .research-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(125, 211, 252, 0.35);
+    border-color: rgba(79, 140, 255, 0.35);
     box-shadow: 0 20px 45px rgba(15, 23, 42, 0.45);
 }
 
@@ -632,7 +612,7 @@ a:hover {
 }
 
 .research-year {
-    background: rgba(125, 211, 252, 0.2);
+    background: rgba(79, 140, 255, 0.2);
     color: var(--primary-color);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
@@ -653,13 +633,13 @@ a:hover {
 }
 
 .tech-tag {
-    background: rgba(125, 211, 252, 0.15);
+    background: rgba(79, 140, 255, 0.15);
     color: var(--primary-color);
     padding: 0.35rem 0.75rem;
     border-radius: 999px;
     font-size: 0.8rem;
     font-family: var(--font-mono);
-    border: 1px solid rgba(125, 211, 252, 0.35);
+    border: 1px solid rgba(79, 140, 255, 0.35);
 }
 
 .research-links {
@@ -671,9 +651,9 @@ a:hover {
 .research-link {
     display: inline-block;
     padding: 0.5rem 1rem;
-    background: rgba(125, 211, 252, 0.12);
+    background: rgba(79, 140, 255, 0.12);
     color: var(--primary-color);
-    border: 1px solid rgba(125, 211, 252, 0.35);
+    border: 1px solid rgba(79, 140, 255, 0.35);
     border-radius: 999px;
     text-decoration: none;
     font-size: 0.8rem;
@@ -681,7 +661,7 @@ a:hover {
 }
 
 .research-link:hover {
-    background: rgba(125, 211, 252, 0.3);
+    background: rgba(79, 140, 255, 0.3);
     transform: translateY(-1px);
 }
 
@@ -704,18 +684,18 @@ a:hover {
     border: 1px solid var(--glass-border);
     backdrop-filter: blur(18px);
     box-shadow: var(--glass-shadow);
-    transition: all 0.3s ease;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease, border-color 0.6s ease;
 }
 
 .project-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(125, 211, 252, 0.35);
+    border-color: rgba(79, 140, 255, 0.35);
     box-shadow: 0 20px 45px rgba(15, 23, 42, 0.45);
 }
 
 .project-image {
     height: 200px;
-    background: linear-gradient(135deg, rgba(125, 211, 252, 0.2), rgba(196, 181, 253, 0.1));
+    background: linear-gradient(135deg, rgba(79, 140, 255, 0.15), rgba(124, 93, 255, 0.1));
     display: flex;
     align-items: center;
     justify-content: center;
@@ -750,35 +730,25 @@ a:hover {
 
 /* Project Visualization Enhancements */
 .project-card .graph-visualization {
-    background: linear-gradient(135deg, rgba(242, 132, 130, 0.1), rgba(130, 199, 196, 0.05));
+    background: linear-gradient(135deg, rgba(79, 140, 255, 0.12), rgba(0, 194, 168, 0.08));
+    animation: none;
 }
 
 /* Cyber Pink Theme for Project Visualizations */
 .project-card:hover .graph-visualization {
-    background: linear-gradient(135deg, rgba(242, 132, 130, 0.2), rgba(130, 199, 196, 0.1));
-    box-shadow: 0 0 20px rgba(242, 132, 130, 0.3);
+    background: linear-gradient(135deg, rgba(79, 140, 255, 0.18), rgba(0, 194, 168, 0.12));
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.35);
 }
 
 /* Enhanced Project Visualization Styles */
 .project-card .graph-visualization svg {
-    filter: drop-shadow(0 0 5px rgba(242, 132, 130, 0.5));
-}
-
-/* Cyber Pink Animation Effects */
-@keyframes cyber-pink-pulse {
-    0% { box-shadow: 0 0 5px rgba(242, 132, 130, 0.5); }
-    50% { box-shadow: 0 0 20px rgba(242, 132, 130, 0.8); }
-    100% { box-shadow: 0 0 5px rgba(242, 132, 130, 0.5); }
-}
-
-.project-card .graph-visualization {
-    animation: cyber-pink-pulse 3s ease-in-out infinite;
+    filter: drop-shadow(0 16px 24px rgba(15, 23, 42, 0.3));
 }
 
 /* Fun Section */
 .fun-section {
     padding: 8rem 0;
-    background: linear-gradient(to bottom, rgba(12, 18, 30, 0.9), var(--background-color));
+    background: linear-gradient(to bottom, rgba(12, 18, 30, 0.85), var(--background-color));
 }
 
 .fun-grid {
@@ -792,7 +762,7 @@ a:hover {
     border-radius: 24px;
     border: 1px solid var(--glass-border);
     overflow: hidden;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease;
     backdrop-filter: blur(18px);
     box-shadow: var(--glass-shadow);
 }
@@ -804,7 +774,7 @@ a:hover {
 
 .fun-visual {
     height: 240px;
-    background: linear-gradient(135deg, rgba(125, 211, 252, 0.15), rgba(196, 181, 253, 0.12));
+    background: linear-gradient(135deg, rgba(79, 140, 255, 0.12), rgba(124, 93, 255, 0.1));
     position: relative;
 }
 
@@ -832,12 +802,12 @@ a:hover {
     display: inline-block;
     padding: 0.35rem 0.8rem;
     border-radius: 999px;
-    background: rgba(125, 211, 252, 0.18);
+    background: rgba(79, 140, 255, 0.18);
     color: var(--primary-color);
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
-    border: 1px solid rgba(125, 211, 252, 0.35);
+    border: 1px solid rgba(79, 140, 255, 0.35);
 }
 
 .lab-card {
@@ -912,10 +882,10 @@ a:hover {
 }
 
 .contact-info {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--glass-bg);
     padding: 2rem;
     border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
 }
 
 .contact-item {
@@ -938,10 +908,10 @@ a:hover {
 }
 
 .contact-form {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--glass-bg);
     padding: 2rem;
     border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
 }
 
 .form-group {
@@ -952,8 +922,8 @@ a:hover {
 .form-group textarea {
     width: 100%;
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(15, 23, 42, 0.45);
+    border: 1px solid rgba(148, 163, 184, 0.2);
     border-radius: 8px;
     color: var(--text-primary);
     font-family: var(--font-family);
@@ -964,12 +934,12 @@ a:hover {
 .form-group textarea:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 10px rgba(0, 240, 255, 0.2);
+    box-shadow: 0 0 16px rgba(79, 140, 255, 0.2);
 }
 
 .submit-btn {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-    color: var(--background-color);
+    color: #0b111c;
     border: none;
     padding: 1rem 2rem;
     border-radius: 8px;
@@ -978,12 +948,12 @@ a:hover {
     letter-spacing: 1px;
     cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 0 10px rgba(130, 199, 196, 0.3);
+    box-shadow: 0 0 16px rgba(79, 140, 255, 0.3);
 }
 
 .submit-btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 0 20px rgba(130, 199, 196, 0.5);
+    box-shadow: 0 0 24px rgba(79, 140, 255, 0.5);
 }
 
 /* Footer */
@@ -1114,7 +1084,7 @@ a:hover {
     border: 1px solid var(--glass-border);
     border-radius: 16px;
     padding: 1.5rem;
-    transition: all 0.3s ease;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.6s ease, border-color 0.6s ease;
     position: relative;
     overflow: hidden;
     backdrop-filter: blur(18px);
@@ -1123,7 +1093,7 @@ a:hover {
 
 .visualization-card:hover {
     transform: translateY(-5px);
-    border-color: rgba(125, 211, 252, 0.35);
+    border-color: rgba(79, 140, 255, 0.35);
     box-shadow: 0 20px 45px rgba(15, 23, 42, 0.45);
 }
 

@@ -86,8 +86,8 @@ A modern, graph-based portfolio website showcasing expertise in Machine Learning
 Edit the CSS custom properties in `styles.css`:
 ```css
 :root {
-    --primary-color: #00f0ff;
-    --secondary-color: #7c3aed;
+    --primary-color: #4f8cff;
+    --secondary-color: #7c5dff;
     --background-color: #0f172a;
     /* ... other colors */
 }
