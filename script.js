@@ -31,9 +31,9 @@ class GraphPortfolio {
         // Scroll effect on navbar
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
-                navbar.style.background = 'rgba(11, 15, 20, 0.95)';
+                navbar.style.background = 'rgba(15, 23, 42, 0.92)';
             } else {
-                navbar.style.background = 'rgba(11, 15, 20, 0.8)';
+                navbar.style.background = 'rgba(15, 23, 42, 0.72)';
             }
         });
     }
@@ -78,7 +78,7 @@ class GraphPortfolio {
             const originalText = submitBtn.textContent;
             
             submitBtn.textContent = 'Message Sent!';
-            submitBtn.style.background = 'linear-gradient(135deg, #7bd389, #4bb97d)';
+            submitBtn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
             
             setTimeout(() => {
                 submitBtn.textContent = originalText;
@@ -92,7 +92,7 @@ class GraphPortfolio {
     initThreeJS() {
         const canvas = document.getElementById('graph-canvas');
         const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x050505); // Cyberpunk black
+        scene.background = new THREE.Color(0x0b111c); // Deep slate
         
         // Camera setup
         const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
@@ -104,18 +104,18 @@ class GraphPortfolio {
         renderer.setPixelRatio(window.devicePixelRatio);
         
         // Cyberpunk Lighting
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.35);
         scene.add(ambientLight);
         
-        const hackerLight = new THREE.PointLight(0x00ff41, 2, 100); // Hacker green
+        const hackerLight = new THREE.PointLight(0x4f8cff, 1.6, 100); // Primary blue
         hackerLight.position.set(10, 10, 10);
         scene.add(hackerLight);
         
-        const cyberLight = new THREE.PointLight(0x0ff0ff, 1.5, 100); // Cyber cyan
+        const cyberLight = new THREE.PointLight(0x7c5dff, 1.3, 100); // Secondary indigo
         cyberLight.position.set(-10, -10, -10);
         scene.add(cyberLight);
         
-        const glitchLight = new THREE.PointLight(0xff0055, 1, 50); // Cyber pink
+        const glitchLight = new THREE.PointLight(0x00c2a8, 0.9, 50); // Accent teal
         glitchLight.position.set(0, 0, 10);
         scene.add(glitchLight);
 
@@ -123,7 +123,7 @@ class GraphPortfolio {
         const nodes = [];
         const links = [];
         const nodeGeometry = new THREE.SphereGeometry(0.1, 16, 16);
-        const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x00f0ff });
+        const nodeMaterial = new THREE.MeshBasicMaterial({ color: 0x4f8cff });
         
         // Create nodes (representing skills and technologies)
         const skills = [
@@ -147,7 +147,7 @@ class GraphPortfolio {
         // Create links between related skills
         const linkGeometry = new THREE.BufferGeometry();
         const linkMaterial = new THREE.LineBasicMaterial({ 
-            color: 0x94a3b8, 
+            color: 0x64748b, 
             transparent: true, 
             opacity: 0.3 
         });
@@ -206,21 +206,21 @@ class GraphPortfolio {
         this.createMiniGraph('mesh-visualization', {
             nodes: 8,
             connections: 12,
-            color: '#00f0ff'
+            color: '#4f8cff'
         });
 
         // Currency Detection
         this.createMiniGraph('currency-detection', {
             nodes: 6,
             connections: 8,
-            color: '#7c3aed'
+            color: '#7c5dff'
         });
 
         // Video Captioning
         this.createMiniGraph('video-captioning', {
             nodes: 10,
             connections: 15,
-            color: '#22d3ee'
+            color: '#00c2a8'
         });
     }
 
@@ -307,7 +307,7 @@ class GraphPortfolio {
         const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
         
         const geometry = new THREE.SphereGeometry(0.2, 16, 16);
-        const material = new THREE.MeshBasicMaterial({ color: 0xf6c177 });
+        const material = new THREE.MeshBasicMaterial({ color: 0x00c2a8 });
         const node = new THREE.Mesh(geometry, material);
         
         node.position.set(

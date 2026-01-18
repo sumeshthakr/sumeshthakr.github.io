@@ -142,8 +142,8 @@ class ProjectVisualizations {
             { value: '20', color: this.theme.primary, x: 100, y: 150 },
             { value: '50', color: this.theme.accent, x: 200, y: 120 },
             { value: '100', color: this.theme.secondary, x: 300, y: 180 },
-            { value: '500', color: '#7bd389', x: 150, y: 220 },
-            { value: '2000', color: '#f6bd60', x: 250, y: 200 }
+            { value: '500', color: '#22c55e', x: 150, y: 220 },
+            { value: '2000', color: '#f59e0b', x: 250, y: 200 }
         ];
 
         // Draw currency notes
@@ -242,7 +242,7 @@ class ProjectVisualizations {
             { name: 'Feature\nExtraction', type: 'CNN', nodes: 15, color: this.theme.secondary, x: 150 },
             { name: 'Temporal\nFeatures', type: 'LSTM', nodes: 12, color: this.theme.primary, x: 250 },
             { name: 'Sequence\nGeneration', type: 'LSTM', nodes: 10, color: this.theme.primarySoft, x: 350 },
-            { name: 'Caption\nOutput', type: 'Output', nodes: 8, color: '#f6bd60', x: 450 }
+            { name: 'Caption\nOutput', type: 'Output', nodes: 8, color: '#f59e0b', x: 450 }
         ];
 
         // Draw layers
@@ -439,7 +439,7 @@ class ProjectVisualizations {
             primary: styles.getPropertyValue('--primary-color').trim(),
             secondary: styles.getPropertyValue('--secondary-color').trim(),
             accent: styles.getPropertyValue('--accent-color').trim(),
-            primarySoft: '#f9d7a1'
+            primarySoft: '#93c5fd'
         };
     }
 }
