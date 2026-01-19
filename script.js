@@ -104,8 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     z: Math.random() * 100,
                     baseX: Math.random() * canvas.width,
                     baseY: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 0.3,
-                    vy: (Math.random() - 0.5) * 0.3,
                     size: Math.random() * 2 + 1,
                     color: `hsla(${220 + Math.random() * 40}, 70%, 60%, ${0.3 + Math.random() * 0.4})`
                 });
@@ -118,6 +116,8 @@ document.addEventListener('DOMContentLoaded', () => {
             
             const scrollFactor = scrollY * 0.0005;
             const maxDist = 120;
+            const maxDistSq = maxDist * maxDist; // Avoid sqrt for performance
+            const maxConnections = 3; // Limit connections per particle
 
             particles.forEach((p, i) => {
                 // Update position based on scroll
@@ -137,14 +137,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 ctx.fillStyle = p.color;
                 ctx.fill();
 
-                // Draw connections to nearby particles
-                for (let j = i + 1; j < particles.length; j++) {
+                // Draw connections to nearby particles (limited for performance)
+                let connections = 0;
+                const checkLimit = Math.min(i + 15, particles.length); // Only check nearby indices
+                for (let j = i + 1; j < checkLimit && connections < maxConnections; j++) {
                     const p2 = particles[j];
                     const dx = p.x - p2.x;
                     const dy = p.y - p2.y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    const distSq = dx * dx + dy * dy;
 
-                    if (dist < maxDist) {
+                    if (distSq < maxDistSq) {
+                        const dist = Math.sqrt(distSq);
                         const opacity = (1 - dist / maxDist) * 0.15;
                         ctx.beginPath();
                         ctx.moveTo(p.x, p.y);
@@ -152,6 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         ctx.strokeStyle = `rgba(59, 130, 246, ${opacity})`;
                         ctx.lineWidth = 0.5;
                         ctx.stroke();
+                        connections++;
                     }
                 }
             });
@@ -159,10 +163,10 @@ document.addEventListener('DOMContentLoaded', () => {
             animationId = requestAnimationFrame(draw);
         }
 
-        // Track scroll position
+        // Track scroll position (updates on next animation frame)
         window.addEventListener('scroll', () => {
             scrollY = window.pageYOffset;
-        });
+        }, { passive: true });
 
         // Handle resize
         window.addEventListener('resize', resizeCanvas);

@@ -1111,11 +1111,14 @@ button:focus-visible {
     animation: point-scatter 1.5s ease-in-out infinite;
 }
 
+/* Point scatter animation with grid-based displacement */
 @keyframes point-scatter {
     0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(calc((var(--i, 0) - 4) * 2px), calc((var(--j, 0) - 4) * 2px)); }
+    /* Points scatter based on grid position (--i, --j) relative to center (4,4) */
+    50% { transform: translate(calc((var(--i, 0) - var(--scatter-center, 4)) * var(--scatter-distance, 2px)), calc((var(--j, 0) - var(--scatter-center, 4)) * var(--scatter-distance, 2px))); }
 }
 
+/* Grid positions for each point (1-6 range, centered at 4) */
 .point-cloud-svg .point:nth-child(1) { --i: 1; --j: 2; }
 .point-cloud-svg .point:nth-child(2) { --i: 3; --j: 1; }
 .point-cloud-svg .point:nth-child(3) { --i: 5; --j: 2; }
