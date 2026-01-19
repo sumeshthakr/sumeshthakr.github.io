@@ -201,8 +201,9 @@ document.addEventListener('DOMContentLoaded', () => {
             nodes.forEach((node, i) => {
                 const baseR = parseFloat(node.getAttribute('r')) || 10;
                 const scale = 1 + scrollProgress * 0.3 * Math.sin(i * 0.5);
-                node.style.transform = `scale(${scale})`;
-                node.style.transformOrigin = 'center';
+                const cx = parseFloat(node.getAttribute('cx'));
+                const cy = parseFloat(node.getAttribute('cy'));
+                node.setAttribute('transform', `translate(${cx}, ${cy}) scale(${scale}) translate(${-cx}, ${-cy})`);
             });
         }
 
