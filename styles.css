@@ -631,7 +631,7 @@ a:hover {
     font-size: 1rem;
 }
 
-.publication-content h3 {
+.publication-content h4 {
     font-size: 1.1rem;
     margin-bottom: 8px;
     color: var(--text-primary);
@@ -937,6 +937,14 @@ a.contact-value:hover {
 /* Focus states for accessibility */
 a:focus-visible,
 button:focus-visible {
-    outline: 2px solid var(--primary-color);
+    outline: 2px solid #1e40af;
     outline-offset: 2px;
+    border-radius: 2px;
+}
+
+/* High contrast focus for buttons */
+.btn:focus-visible {
+    outline: 3px solid #1e40af;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.2);
 }
