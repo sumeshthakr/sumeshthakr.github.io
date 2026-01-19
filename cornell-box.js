@@ -582,9 +582,9 @@ class Raytracer {
         let b = Math.sqrt(color.z * scale);
 
         // Clamp and convert to 0-255
-        r = Math.floor(256 * Math.max(0, Math.min(0.999, r)));
-        g = Math.floor(256 * Math.max(0, Math.min(0.999, g)));
-        b = Math.floor(256 * Math.max(0, Math.min(0.999, b)));
+        r = Math.min(255, Math.floor(256 * Math.max(0, Math.min(0.999, r))));
+        g = Math.min(255, Math.floor(256 * Math.max(0, Math.min(0.999, g))));
+        b = Math.min(255, Math.floor(256 * Math.max(0, Math.min(0.999, b))));
 
         const index = (y * this.width + x) * 4;
         this.imageData.data[index] = r;
