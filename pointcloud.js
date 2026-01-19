@@ -272,8 +272,13 @@ class DownsamplingAlgorithms {
     static distanceAwareSampling(points, threshold) {
         if (points.length === 0) return [];
         
+        // Constants for distance-aware sampling
+        const K_NEIGHBORS = 10;
+        const BASE_KEEP_PROBABILITY = 0.1;
+        const MAX_CURVATURE_BONUS = 0.9;
+        const MAX_REDUCTION_FACTOR = 0.5;
+        
         // Compute local curvature/density for each point
-        const kNeighbors = 10;
         const curvatures = new Array(points.length).fill(0);
         
         for (let i = 0; i < points.length; i++) {
@@ -284,12 +289,14 @@ class DownsamplingAlgorithms {
             }));
             
             distances.sort((a, b) => a.dist - b.dist);
-            const neighbors = distances.slice(1, kNeighbors + 1);
+            const neighbors = distances.slice(1, K_NEIGHBORS + 1);
             
             // Compute variance of distances (proxy for curvature)
-            const avgDist = neighbors.reduce((sum, n) => sum + n.dist, 0) / neighbors.length;
-            const variance = neighbors.reduce((sum, n) => sum + Math.pow(n.dist - avgDist, 2), 0) / neighbors.length;
-            curvatures[i] = variance;
+            if (neighbors.length > 0) {
+                const avgDist = neighbors.reduce((sum, n) => sum + n.dist, 0) / neighbors.length;
+                const variance = neighbors.reduce((sum, n) => sum + Math.pow(n.dist - avgDist, 2), 0) / neighbors.length;
+                curvatures[i] = variance;
+            }
         }
         
         // Normalize curvatures
@@ -304,7 +311,7 @@ class DownsamplingAlgorithms {
         const sampled = [];
         for (let i = 0; i < points.length; i++) {
             // Probability of keeping point based on curvature
-            const keepProb = 0.1 + curvatures[i] * 0.9; // 10% base + up to 90% more for high curvature
+            const keepProb = BASE_KEEP_PROBABILITY + curvatures[i] * MAX_CURVATURE_BONUS;
             
             if (Math.random() < keepProb) {
                 sampled.push(points[i]);
@@ -312,8 +319,8 @@ class DownsamplingAlgorithms {
         }
         
         // Ensure we don't keep too many points
-        if (sampled.length > points.length * 0.5) {
-            return this.randomSampling(sampled, Math.floor(points.length * 0.5));
+        if (sampled.length > points.length * MAX_REDUCTION_FACTOR) {
+            return this.randomSampling(sampled, Math.floor(points.length * MAX_REDUCTION_FACTOR));
         }
         
         return sampled;
@@ -377,7 +384,9 @@ class SegmentationAlgorithms {
     }
 
     static ransacMultiPlane(points, numPlanes, iterations, threshold) {
+        const MIN_POINTS_FOR_PLANE = 10;
         let remainingPoints = points.map(p => new Point(p.position, p.color));
+        const allPoints = points.map(p => new Point(p.position, p.color));
         const colors = [
             new Vec3(1, 0, 0),   // Red
             new Vec3(0, 1, 0),   // Green
@@ -387,7 +396,7 @@ class SegmentationAlgorithms {
         ];
         
         for (let planeIdx = 0; planeIdx < numPlanes; planeIdx++) {
-            if (remainingPoints.length < 10) break;
+            if (remainingPoints.length < MIN_POINTS_FOR_PLANE) break;
             
             let bestPlane = null;
             let bestInliers = [];
@@ -430,24 +439,27 @@ class SegmentationAlgorithms {
                 }
             }
             
-            // Mark inliers and remove from remaining
-            const newRemaining = [];
-            for (let i = 0; i < remainingPoints.length; i++) {
-                if (bestInliers.includes(i)) {
-                    remainingPoints[i].segment = planeIdx;
-                    remainingPoints[i].color = colors[planeIdx % colors.length];
-                } else {
-                    newRemaining.push(remainingPoints[i]);
+            // Mark inliers in all points array
+            const EPSILON = 1e-6;
+            for (const idx of bestInliers) {
+                const point = remainingPoints[idx];
+                // Find this point in allPoints by position (with epsilon tolerance)
+                for (const p of allPoints) {
+                    if (Math.abs(p.position.x - point.position.x) < EPSILON && 
+                        Math.abs(p.position.y - point.position.y) < EPSILON && 
+                        Math.abs(p.position.z - point.position.z) < EPSILON) {
+                        p.segment = planeIdx;
+                        p.color = colors[planeIdx % colors.length];
+                        break;
+                    }
                 }
             }
             
-            remainingPoints = newRemaining;
+            // Remove inliers from remaining
+            remainingPoints = remainingPoints.filter((_, i) => !bestInliers.includes(i));
         }
         
-        return points.map((p, i) => {
-            const processed = points.find(pt => pt === p);
-            return processed || p;
-        });
+        return allPoints;
     }
 }
 
@@ -721,9 +733,9 @@ class PointCloudRenderer {
         // Draw points
         for (const { screen, point } of projected) {
             if (this.showColors && point.color) {
-                const r = Math.floor(point.color.x * 255);
-                const g = Math.floor(point.color.y * 255);
-                const b = Math.floor(point.color.z * 255);
+                const r = Math.max(0, Math.min(255, Math.floor(point.color.x * 255)));
+                const g = Math.max(0, Math.min(255, Math.floor(point.color.y * 255)));
+                const b = Math.max(0, Math.min(255, Math.floor(point.color.z * 255)));
                 this.ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
             } else {
                 this.ctx.fillStyle = '#ffffff';
