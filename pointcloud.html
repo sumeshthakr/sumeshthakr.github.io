@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Point Cloud Processing | Sumesh Thakur</title>
+    <meta name="description" content="Interactive browser-based point cloud processing with downsampling, segmentation, and clustering techniques including distance-aware downsampling.">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="pointcloud.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Sumesh Thakur</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">← Back to Portfolio</a></li>
+                <li><a href="cornell-box.html" class="nav-link">Cornell Box</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Point Cloud Section -->
+    <section class="pointcloud-section">
+        <div class="pointcloud-container">
+            <div class="pointcloud-header">
+                <h1 class="pointcloud-title">Interactive Point Cloud Processing</h1>
+                <p class="pointcloud-subtitle">
+                    Real-time 3D point cloud processing algorithms in your browser.
+                    Featuring distance-aware downsampling and advanced segmentation techniques.
+                </p>
+            </div>
+
+            <div class="pointcloud-content">
+                <!-- Canvas Area -->
+                <div class="canvas-container">
+                    <canvas id="pointcloud-canvas" width="800" height="600"></canvas>
+                    <div class="canvas-overlay">
+                        <div class="view-controls">
+                            <button id="reset-view-btn" class="control-btn" title="Reset View">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+                                    <path d="M21 3v5h-5"/>
+                                </svg>
+                            </button>
+                            <div class="view-help">
+                                <small>Drag: Rotate | Scroll: Zoom</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="render-info">
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <span class="info-label">Original Points:</span>
+                                <span id="original-points" class="info-value">0</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Processed Points:</span>
+                                <span id="processed-points" class="info-value">0</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Processing Time:</span>
+                                <span id="processing-time" class="info-value">0.0ms</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Reduction:</span>
+                                <span id="reduction-ratio" class="info-value">0%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Controls Panel -->
+                <div class="controls-panel">
+                    <div class="controls-tabs">
+                        <button class="tab-btn active" data-tab="dataset">Dataset</button>
+                        <button class="tab-btn" data-tab="downsampling">Downsampling</button>
+                        <button class="tab-btn" data-tab="segmentation">Segmentation</button>
+                        <button class="tab-btn" data-tab="clustering">Clustering</button>
+                        <button class="tab-btn" data-tab="performance">Performance</button>
+                    </div>
+
+                    <!-- Dataset Tab -->
+                    <div class="tab-content active" data-tab="dataset">
+                        <h3 class="controls-title">Point Cloud Dataset</h3>
+                        
+                        <div class="control-group">
+                            <label for="dataset-select">Select Dataset:</label>
+                            <select id="dataset-select">
+                                <option value="indoor">Indoor Scene (Living Room)</option>
+                                <option value="outdoor">Outdoor Scene (Street)</option>
+                                <option value="object">Object (Car)</option>
+                            </select>
+                            <p class="control-hint">Choose from publicly available point cloud scans</p>
+                        </div>
+
+                        <div class="control-group">
+                            <button id="load-dataset-btn" class="btn btn-primary full-width">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                    <polyline points="17 8 12 3 7 8"/>
+                                    <line x1="12" y1="3" x2="12" y2="15"/>
+                                </svg>
+                                Load Dataset
+                            </button>
+                        </div>
+
+                        <div class="control-group">
+                            <label>
+                                <input type="checkbox" id="show-colors" checked>
+                                Show Point Colors
+                            </label>
+                        </div>
+
+                        <div class="control-group">
+                            <label for="point-size">
+                                Point Size: <span id="point-size-value">2.0</span>
+                            </label>
+                            <input type="range" id="point-size" min="0.5" max="5.0" value="2.0" step="0.5">
+                        </div>
+                    </div>
+
+                    <!-- Downsampling Tab -->
+                    <div class="tab-content" data-tab="downsampling">
+                        <h3 class="controls-title">Downsampling Techniques</h3>
+                        
+                        <div class="control-group">
+                            <label for="downsample-method">Method:</label>
+                            <select id="downsample-method">
+                                <option value="none">None (Original)</option>
+                                <option value="uniform">Uniform Sampling</option>
+                                <option value="random">Random Sampling</option>
+                                <option value="voxel">Voxel Grid</option>
+                                <option value="distance-aware">Distance-Aware (Research)</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group" id="target-points-group">
+                            <label for="target-points">
+                                Target Points: <span id="target-points-value">5000</span>
+                            </label>
+                            <input type="range" id="target-points" min="500" max="20000" value="5000" step="500">
+                            <p class="control-hint">For uniform and random sampling</p>
+                        </div>
+
+                        <div class="control-group" id="voxel-size-group" style="display: none;">
+                            <label for="voxel-size">
+                                Voxel Size: <span id="voxel-size-value">0.05</span>m
+                            </label>
+                            <input type="range" id="voxel-size" min="0.01" max="0.5" value="0.05" step="0.01">
+                            <p class="control-hint">Larger = more aggressive downsampling</p>
+                        </div>
+
+                        <div class="control-group" id="distance-aware-group" style="display: none;">
+                            <label for="distance-threshold">
+                                Distance Threshold: <span id="distance-threshold-value">0.1</span>m
+                            </label>
+                            <input type="range" id="distance-threshold" min="0.01" max="1.0" value="0.1" step="0.01">
+                            <p class="control-hint">Preserves geometric features based on local density</p>
+                        </div>
+
+                        <div class="control-group">
+                            <button id="apply-downsample-btn" class="btn btn-primary full-width">
+                                Apply Downsampling
+                            </button>
+                        </div>
+
+                        <div class="info-box">
+                            <h4>Distance-Aware Downsampling</h4>
+                            <p>This technique, featured in research papers, adaptively samples points based on local geometry. It preserves more points in areas with high geometric variation (edges, corners) while aggressively downsampling flat regions.</p>
+                        </div>
+                    </div>
+
+                    <!-- Segmentation Tab -->
+                    <div class="tab-content" data-tab="segmentation">
+                        <h3 class="controls-title">Segmentation Techniques</h3>
+                        
+                        <div class="control-group">
+                            <label for="segment-method">Method:</label>
+                            <select id="segment-method">
+                                <option value="none">None</option>
+                                <option value="ransac-plane">RANSAC Plane Detection</option>
+                                <option value="ransac-multi">RANSAC Multi-Plane</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group" id="ransac-params">
+                            <label for="ransac-iterations">
+                                RANSAC Iterations: <span id="ransac-iterations-value">100</span>
+                            </label>
+                            <input type="range" id="ransac-iterations" min="50" max="500" value="100" step="50">
+                        </div>
+
+                        <div class="control-group" id="ransac-threshold-group">
+                            <label for="ransac-threshold">
+                                Distance Threshold: <span id="ransac-threshold-value">0.05</span>m
+                            </label>
+                            <input type="range" id="ransac-threshold" min="0.01" max="0.2" value="0.05" step="0.01">
+                            <p class="control-hint">Points within this distance are considered inliers</p>
+                        </div>
+
+                        <div class="control-group" id="num-planes-group" style="display: none;">
+                            <label for="num-planes">
+                                Number of Planes: <span id="num-planes-value">3</span>
+                            </label>
+                            <input type="range" id="num-planes" min="1" max="5" value="3" step="1">
+                        </div>
+
+                        <div class="control-group">
+                            <button id="apply-segment-btn" class="btn btn-primary full-width">
+                                Apply Segmentation
+                            </button>
+                        </div>
+
+                        <div class="info-box">
+                            <h4>RANSAC Algorithm</h4>
+                            <p>Random Sample Consensus (RANSAC) is a robust method for fitting geometric models. It iteratively selects random subsets of points, fits a model, and counts inliers to find the best-fitting plane or shape.</p>
+                        </div>
+                    </div>
+
+                    <!-- Clustering Tab -->
+                    <div class="tab-content" data-tab="clustering">
+                        <h3 class="controls-title">Clustering Methods</h3>
+                        
+                        <div class="control-group">
+                            <label for="cluster-method">Method:</label>
+                            <select id="cluster-method">
+                                <option value="none">None</option>
+                                <option value="kmeans">K-Means</option>
+                                <option value="dbscan">DBSCAN</option>
+                            </select>
+                        </div>
+
+                        <div class="control-group" id="kmeans-params" style="display: none;">
+                            <label for="num-clusters">
+                                Number of Clusters (K): <span id="num-clusters-value">5</span>
+                            </label>
+                            <input type="range" id="num-clusters" min="2" max="10" value="5" step="1">
+                        </div>
+
+                        <div class="control-group" id="dbscan-params" style="display: none;">
+                            <label for="dbscan-eps">
+                                Epsilon (ε): <span id="dbscan-eps-value">0.1</span>m
+                            </label>
+                            <input type="range" id="dbscan-eps" min="0.05" max="0.5" value="0.1" step="0.01">
+                            <p class="control-hint">Maximum distance between two points in a cluster</p>
+                        </div>
+
+                        <div class="control-group" id="dbscan-minpts-group" style="display: none;">
+                            <label for="dbscan-minpts">
+                                Min Points: <span id="dbscan-minpts-value">10</span>
+                            </label>
+                            <input type="range" id="dbscan-minpts" min="5" max="50" value="10" step="5">
+                            <p class="control-hint">Minimum points to form a dense region</p>
+                        </div>
+
+                        <div class="control-group">
+                            <button id="apply-cluster-btn" class="btn btn-primary full-width">
+                                Apply Clustering
+                            </button>
+                        </div>
+
+                        <div class="info-box">
+                            <h4>Clustering Algorithms</h4>
+                            <p><strong>K-Means:</strong> Partitions points into K clusters by minimizing within-cluster variance.</p>
+                            <p><strong>DBSCAN:</strong> Density-based clustering that can find arbitrarily-shaped clusters and identify noise points.</p>
+                        </div>
+                    </div>
+
+                    <!-- Performance Tab -->
+                    <div class="tab-content" data-tab="performance">
+                        <h3 class="controls-title">Performance Metrics</h3>
+                        
+                        <div id="performance-chart" class="performance-chart">
+                            <canvas id="perf-canvas" width="300" height="200"></canvas>
+                        </div>
+
+                        <div class="metrics-table">
+                            <table id="metrics-table">
+                                <thead>
+                                    <tr>
+                                        <th>Method</th>
+                                        <th>Time (ms)</th>
+                                        <th>Points</th>
+                                        <th>Reduction</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="metrics-tbody">
+                                    <tr>
+                                        <td colspan="4" class="no-data">No performance data yet. Apply methods to see metrics.</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div class="control-group">
+                            <button id="clear-metrics-btn" class="btn btn-secondary full-width">
+                                Clear Metrics
+                            </button>
+                        </div>
+
+                        <div class="info-box">
+                            <h4>Performance Comparison</h4>
+                            <p>Compare the execution time and point reduction of different downsampling methods. Distance-aware downsampling typically provides the best quality-to-reduction ratio for geometric features.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Information Section -->
+            <div class="info-section">
+                <div class="info-card">
+                    <h3>About Point Cloud Processing</h3>
+                    <p>
+                        Point clouds are 3D representations of physical objects or environments, typically captured using 
+                        LiDAR sensors or depth cameras. Processing these massive datasets efficiently is crucial for 
+                        applications in autonomous driving, robotics, and 3D reconstruction.
+                    </p>
+                    <p>
+                        This interactive demo showcases various techniques for point cloud processing, including 
+                        distance-aware downsampling (featured in research papers), RANSAC-based segmentation, and 
+                        clustering algorithms.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Implemented Techniques</h3>
+                    <ul>
+                        <li><strong>Downsampling:</strong> Uniform, Random, Voxel Grid, Distance-Aware</li>
+                        <li><strong>Segmentation:</strong> RANSAC plane detection (single and multi-plane)</li>
+                        <li><strong>Clustering:</strong> K-Means and DBSCAN algorithms</li>
+                        <li><strong>Visualization:</strong> Real-time 3D rendering with WebGL</li>
+                        <li><strong>Performance:</strong> Live metrics and comparison charts</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>Distance-Aware Downsampling</h3>
+                    <p>
+                        This advanced technique, featured in research publications, adaptively samples points based on 
+                        local geometric complexity. Unlike uniform methods, it preserves critical features (edges, corners) 
+                        while aggressively reducing points in flat or redundant regions.
+                    </p>
+                    <p>
+                        The algorithm computes local curvature or normal variation for each point and adjusts sampling 
+                        density accordingly, resulting in better preservation of geometric details with lower point counts.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Technical Details</h3>
+                    <ul>
+                        <li><strong>Rendering:</strong> HTML5 Canvas with WebGL acceleration</li>
+                        <li><strong>Language:</strong> Pure JavaScript (ES6+)</li>
+                        <li><strong>Datasets:</strong> Synthetic point clouds (indoor, outdoor, object)</li>
+                        <li><strong>Performance:</strong> Optimized for real-time processing in browser</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 Sumesh Thakur. Built with care in Halifax.</p>
+                <div class="footer-links">
+                    <a href="index.html">Portfolio</a>
+                    <a href="cornell-box.html">Cornell Box</a>
+                    <a href="https://github.com/sumeshthakr" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="pointcloud.js"></script>
+</body>
+</html>
