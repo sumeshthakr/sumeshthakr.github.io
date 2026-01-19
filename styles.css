@@ -948,3 +948,474 @@ button:focus-visible {
     outline-offset: 3px;
     box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.2);
 }
+
+/* ========================================
+   Reactive Point Cloud Background
+   ======================================== */
+.pointcloud-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.4;
+}
+
+/* ========================================
+   Hero Graph Visualization
+   ======================================== */
+.hero-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: center;
+}
+
+.hero-graph-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-graph {
+    width: 100%;
+    max-width: 320px;
+    height: auto;
+    filter: drop-shadow(0 4px 12px rgba(59, 130, 246, 0.15));
+}
+
+.graph-edge {
+    stroke: var(--border-color);
+    stroke-width: 2;
+    transition: stroke 0.3s ease, stroke-width 0.3s ease;
+}
+
+.graph-edge.active {
+    stroke: url(#node-gradient);
+    stroke-width: 3;
+}
+
+.graph-node {
+    fill: url(#node-gradient);
+    filter: url(#glow);
+    transition: r 0.3s ease, opacity 0.3s ease;
+}
+
+.graph-node.highlight {
+    r: 14;
+}
+
+.attention-pulse {
+    fill: none;
+    stroke: var(--primary-color);
+    stroke-width: 2;
+    opacity: 0;
+    animation: pulse-ring 2s ease-out infinite;
+}
+
+@keyframes pulse-ring {
+    0% {
+        transform: scale(0.8);
+        opacity: 0.6;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+.attention-pulse:nth-child(1) { animation-delay: 0s; }
+.attention-pulse:nth-child(2) { animation-delay: 0.7s; }
+.attention-pulse:nth-child(3) { animation-delay: 1.4s; }
+
+.graph-caption {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 16px;
+    text-align: center;
+}
+
+/* ========================================
+   GNN Pipeline Visualization Section
+   ======================================== */
+.pipeline-section {
+    padding: 80px 0;
+    background: linear-gradient(180deg, var(--background-color) 0%, #f0f4ff 100%);
+    overflow-x: auto;
+}
+
+.pipeline-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 8px;
+    padding: 24px 0;
+    min-width: max-content;
+}
+
+.pipeline-stage {
+    background: var(--surface-color);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    padding: 20px;
+    width: 160px;
+    text-align: center;
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+.pipeline-stage:hover,
+.pipeline-stage.active {
+    border-color: var(--primary-color);
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-xl);
+}
+
+.pipeline-stage.active::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    z-index: -1;
+    opacity: 0.2;
+}
+
+.stage-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stage-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Point Cloud SVG styles */
+.point-cloud-svg .point {
+    fill: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.pipeline-stage:hover .point-cloud-svg .point {
+    animation: point-scatter 1.5s ease-in-out infinite;
+}
+
+/* Point scatter animation with grid-based displacement */
+@keyframes point-scatter {
+    0%, 100% { transform: translate(0, 0); }
+    /* Points scatter based on grid position (--i, --j) relative to center (4,4) */
+    50% { transform: translate(calc((var(--i, 0) - var(--scatter-center, 4)) * var(--scatter-distance, 2px)), calc((var(--j, 0) - var(--scatter-center, 4)) * var(--scatter-distance, 2px))); }
+}
+
+/* Grid positions for each point (1-6 range, centered at 4) */
+.point-cloud-svg .point:nth-child(1) { --i: 1; --j: 2; }
+.point-cloud-svg .point:nth-child(2) { --i: 3; --j: 1; }
+.point-cloud-svg .point:nth-child(3) { --i: 5; --j: 2; }
+.point-cloud-svg .point:nth-child(4) { --i: 2; --j: 4; }
+.point-cloud-svg .point:nth-child(5) { --i: 4; --j: 3; }
+.point-cloud-svg .point:nth-child(6) { --i: 6; --j: 4; }
+.point-cloud-svg .point:nth-child(7) { --i: 2; --j: 6; }
+.point-cloud-svg .point:nth-child(8) { --i: 5; --j: 5; }
+.point-cloud-svg .point:nth-child(9) { --i: 1; --j: 5; }
+
+/* Graph SVG styles */
+.graph-svg .edge {
+    stroke: var(--border-color);
+    stroke-width: 1.5;
+    transition: stroke 0.3s ease;
+}
+
+.graph-svg .node {
+    fill: var(--primary-color);
+    transition: all 0.3s ease;
+}
+
+.pipeline-stage:hover .graph-svg .edge {
+    stroke: var(--primary-light);
+}
+
+.pipeline-stage:hover .graph-svg .node {
+    fill: var(--secondary-color);
+}
+
+/* Attention SVG styles */
+.attention-svg .attention-edge {
+    stroke-width: 3;
+    transition: all 0.3s ease;
+}
+
+.attention-svg .attention-edge.high {
+    stroke: var(--primary-color);
+    stroke-width: 4;
+}
+
+.attention-svg .attention-edge.medium {
+    stroke: var(--primary-light);
+    stroke-width: 3;
+}
+
+.attention-svg .attention-edge.low {
+    stroke: var(--border-color);
+    stroke-width: 2;
+}
+
+.attention-svg .center-node {
+    fill: url(#attention-gradient);
+}
+
+.attention-svg .neighbor-node {
+    fill: var(--primary-light);
+}
+
+.pipeline-stage:hover .attention-svg .center-node {
+    animation: attention-glow 1s ease-in-out infinite;
+}
+
+@keyframes attention-glow {
+    0%, 100% { filter: drop-shadow(0 0 4px rgba(59, 130, 246, 0.5)); }
+    50% { filter: drop-shadow(0 0 12px rgba(139, 92, 246, 0.8)); }
+}
+
+/* Aggregate SVG styles */
+.aggregate-svg .feature-block {
+    fill: none;
+    stroke: var(--border-color);
+    stroke-width: 2;
+}
+
+.aggregate-svg .feature-line {
+    stroke: var(--border-light);
+    stroke-width: 1;
+}
+
+.aggregate-svg .feature-bar {
+    fill: var(--primary-color);
+    transition: width 0.5s ease;
+}
+
+.pipeline-stage:hover .aggregate-svg .feature-bar {
+    animation: bar-fill 1.5s ease-in-out infinite;
+}
+
+@keyframes bar-fill {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.6; }
+}
+
+/* Output SVG styles */
+.output-svg .bbox {
+    fill: none;
+    stroke: var(--success-color);
+    stroke-width: 2;
+    stroke-dasharray: 4 2;
+}
+
+.output-svg .label-text {
+    font-size: 14px;
+    font-weight: 600;
+    fill: var(--text-primary);
+}
+
+.output-svg .confidence-text {
+    font-size: 10px;
+    fill: var(--success-color);
+    font-weight: 500;
+}
+
+.pipeline-stage:hover .output-svg .bbox {
+    stroke-dasharray: none;
+    animation: bbox-pulse 1s ease-in-out infinite;
+}
+
+@keyframes bbox-pulse {
+    0%, 100% { stroke-width: 2; }
+    50% { stroke-width: 3; }
+}
+
+.pipeline-stage h3 {
+    font-size: 0.95rem;
+    margin-bottom: 6px;
+    color: var(--text-primary);
+}
+
+.pipeline-stage p {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+    line-height: 1.4;
+}
+
+.stage-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    justify-content: center;
+}
+
+.detail-badge {
+    display: inline-block;
+    padding: 3px 8px;
+    background: var(--background-color);
+    color: var(--text-muted);
+    font-size: 0.7rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+}
+
+.detail-badge.success {
+    background: rgba(5, 150, 105, 0.1);
+    color: var(--success-color);
+    border-color: rgba(5, 150, 105, 0.2);
+}
+
+/* Pipeline Arrow */
+.pipeline-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding-top: 36px;
+}
+
+.arrow-svg {
+    width: 32px;
+    height: 16px;
+    color: var(--text-muted);
+}
+
+.arrow-label {
+    font-size: 0.65rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    white-space: nowrap;
+}
+
+/* Pipeline Info Section */
+.pipeline-info {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 32px;
+    margin-top: 48px;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.info-card {
+    background: var(--surface-color);
+    padding: 24px;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-color);
+}
+
+.info-card h4 {
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.info-card p {
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+    margin: 0;
+    line-height: 1.6;
+}
+
+.info-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.info-stat {
+    background: var(--surface-color);
+    padding: 16px 20px;
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    text-align: center;
+}
+
+.info-number {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    line-height: 1.2;
+}
+
+.info-label {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+}
+
+/* Responsive adjustments for pipeline */
+@media (max-width: 1200px) {
+    .pipeline-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .pipeline-arrow {
+        transform: rotate(0deg);
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .hero-graph-container {
+        order: -1;
+    }
+    
+    .hero-graph {
+        max-width: 240px;
+    }
+    
+    .pipeline-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .pipeline-stage {
+        width: 200px;
+    }
+    
+    .pipeline-arrow {
+        transform: rotate(90deg);
+        padding: 12px 0;
+    }
+    
+    .pipeline-info {
+        grid-template-columns: 1fr;
+    }
+    
+    .info-stats {
+        flex-direction: row;
+        justify-content: center;
+    }
+    
+    .info-stat {
+        flex: 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .info-stats {
+        flex-direction: column;
+    }
+}
