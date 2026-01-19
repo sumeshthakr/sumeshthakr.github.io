@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Cornell Box Raytracer | Sumesh Thakur</title>
+    <meta name="description" content="Interactive browser-based raytracing Cornell box with adjustable parameters. Inspired by Ray Tracing: The Rest of Your Life.">
+    
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="cornell-box.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="nav-logo">Sumesh Thakur</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">← Back to Portfolio</a></li>
+                <li><a href="https://raytracing.github.io/books/RayTracingTheRestOfYourLife.html" target="_blank" class="nav-link">Inspiration</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Cornell Box Section -->
+    <section class="cornell-section">
+        <div class="cornell-container">
+            <div class="cornell-header">
+                <h1 class="cornell-title">Interactive Cornell Box Raytracer</h1>
+                <p class="cornell-subtitle">
+                    Real-time path tracing in your browser. Inspired by 
+                    <a href="https://raytracing.github.io/books/RayTracingTheRestOfYourLife.html" target="_blank">
+                        Ray Tracing: The Rest of Your Life
+                    </a>
+                </p>
+            </div>
+
+            <div class="cornell-content">
+                <!-- Canvas Area -->
+                <div class="canvas-container">
+                    <canvas id="cornell-canvas" width="600" height="600"></canvas>
+                    <div class="render-info">
+                        <div class="info-item">
+                            <span class="info-label">Render Progress:</span>
+                            <span id="progress-text" class="info-value">0%</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Render Time:</span>
+                            <span id="render-time" class="info-value">0.0s</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Status:</span>
+                            <span id="status-text" class="info-value">Ready</span>
+                        </div>
+                    </div>
+                    <div class="canvas-controls">
+                        <button id="render-btn" class="btn btn-primary">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M8 5v14l11-7z"/>
+                            </svg>
+                            Start Render
+                        </button>
+                        <button id="stop-btn" class="btn btn-secondary" disabled>
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                <rect x="6" y="6" width="12" height="12"/>
+                            </svg>
+                            Stop
+                        </button>
+                        <button id="save-btn" class="btn btn-secondary">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                                <polyline points="7 10 12 15 17 10"/>
+                                <line x1="12" y1="15" x2="12" y2="3"/>
+                            </svg>
+                            Save Image
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Controls Panel -->
+                <div class="controls-panel">
+                    <h3 class="controls-title">Rendering Parameters</h3>
+                    
+                    <div class="control-group">
+                        <label for="samples">
+                            Samples Per Pixel: <span id="samples-value">10</span>
+                        </label>
+                        <input type="range" id="samples" min="1" max="100" value="10" step="1">
+                        <p class="control-hint">Higher values = better quality, slower render</p>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="max-depth">
+                            Max Ray Depth: <span id="depth-value">5</span>
+                        </label>
+                        <input type="range" id="max-depth" min="1" max="20" value="5" step="1">
+                        <p class="control-hint">Maximum number of ray bounces</p>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="resolution">
+                            Resolution: <span id="resolution-value">600x600</span>
+                        </label>
+                        <select id="resolution">
+                            <option value="300">300x300 (Fast)</option>
+                            <option value="400">400x400</option>
+                            <option value="600" selected>600x600 (Default)</option>
+                            <option value="800">800x800 (High Quality)</option>
+                        </select>
+                    </div>
+
+                    <h3 class="controls-title">Camera Settings</h3>
+
+                    <div class="control-group">
+                        <label for="camera-angle">
+                            Camera Angle: <span id="angle-value">40</span>°
+                        </label>
+                        <input type="range" id="camera-angle" min="10" max="120" value="40" step="5">
+                    </div>
+
+                    <div class="control-group">
+                        <label for="camera-distance">
+                            Camera Distance: <span id="distance-value">15</span>
+                        </label>
+                        <input type="range" id="camera-distance" min="10" max="25" value="15" step="0.5">
+                    </div>
+
+                    <h3 class="controls-title">Scene Objects</h3>
+
+                    <div class="control-group">
+                        <label>
+                            <input type="checkbox" id="show-boxes" checked>
+                            Show Boxes
+                        </label>
+                    </div>
+
+                    <div class="control-group">
+                        <label>
+                            <input type="checkbox" id="show-light" checked>
+                            Show Light Source
+                        </label>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="light-intensity">
+                            Light Intensity: <span id="light-value">15</span>
+                        </label>
+                        <input type="range" id="light-intensity" min="5" max="30" value="15" step="1">
+                    </div>
+
+                    <h3 class="controls-title">Box Materials</h3>
+
+                    <div class="control-group">
+                        <label for="left-box-material">Left Box Material:</label>
+                        <select id="left-box-material">
+                            <option value="lambertian">Diffuse (Lambertian)</option>
+                            <option value="metal">Metal</option>
+                            <option value="glass">Glass (Dielectric)</option>
+                        </select>
+                    </div>
+
+                    <div class="control-group">
+                        <label for="right-box-material">Right Box Material:</label>
+                        <select id="right-box-material">
+                            <option value="lambertian" selected>Diffuse (Lambertian)</option>
+                            <option value="metal">Metal</option>
+                            <option value="glass">Glass (Dielectric)</option>
+                        </select>
+                    </div>
+
+                    <div class="presets">
+                        <h3 class="controls-title">Presets</h3>
+                        <button class="preset-btn btn btn-secondary" data-preset="fast">Fast Preview</button>
+                        <button class="preset-btn btn btn-secondary" data-preset="balanced">Balanced</button>
+                        <button class="preset-btn btn btn-secondary" data-preset="quality">High Quality</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Information Section -->
+            <div class="info-section">
+                <div class="info-card">
+                    <h3>About This Raytracer</h3>
+                    <p>
+                        This is a browser-based implementation of a Cornell box raytracer, inspired by Peter Shirley's 
+                        "Ray Tracing: The Rest of Your Life" book series. The Cornell box is a classic test scene in 
+                        computer graphics used to validate rendering algorithms.
+                    </p>
+                    <p>
+                        The implementation uses Monte Carlo path tracing with importance sampling to simulate realistic 
+                        light transport. Each pixel traces multiple rays through the scene, accumulating light samples 
+                        to produce the final image.
+                    </p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Features</h3>
+                    <ul>
+                        <li>Real-time progressive rendering</li>
+                        <li>Multiple material types (Lambertian, Metal, Glass)</li>
+                        <li>Adjustable camera parameters</li>
+                        <li>Customizable light intensity</li>
+                        <li>Configurable sample counts and ray depths</li>
+                        <li>Interactive scene controls</li>
+                    </ul>
+                </div>
+
+                <div class="info-card">
+                    <h3>Technical Details</h3>
+                    <ul>
+                        <li><strong>Rendering Algorithm:</strong> Monte Carlo Path Tracing</li>
+                        <li><strong>Language:</strong> Pure JavaScript (ES6+)</li>
+                        <li><strong>Canvas API:</strong> HTML5 Canvas for pixel manipulation</li>
+                        <li><strong>Materials:</strong> Lambertian diffuse, Metal with roughness, Dielectric (glass)</li>
+                        <li><strong>Scene:</strong> Classic Cornell box with colored walls and area light</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p>&copy; 2026 Sumesh Thakur. Built with care in Halifax.</p>
+                <div class="footer-links">
+                    <a href="index.html">Portfolio</a>
+                    <a href="https://raytracing.github.io/" target="_blank">Ray Tracing Series</a>
+                    <a href="https://github.com/sumeshthakr" target="_blank">GitHub</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="cornell-box.js"></script>
+</body>
+</html>
