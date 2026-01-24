@@ -1,3 +1,8 @@
+const MAX_SEED = 9999;
+const NOISE_OFFSET = 1.2;
+const NOISE_FREQUENCY = 1.5;
+const HEIGHT_BASE_OFFSET = 0.35;
+
 class SeededRandom {
     constructor(seed) {
         this.seed = seed % 2147483647;
@@ -236,7 +241,7 @@ class TerrainApp {
         });
 
         document.getElementById('random-seed-btn').addEventListener('click', () => {
-            this.seed = Math.floor(Math.random() * 9999);
+            this.seed = Math.floor(Math.random() * MAX_SEED);
             seedInput.value = this.seed;
             this.perlin.setSeed(this.seed);
             this.generateTerrain();
@@ -282,8 +287,8 @@ class TerrainApp {
                 const nx = x / size - 0.5;
                 const nz = z / size - 0.5;
                 const elevation = this.perlin.fbm(
-                    (nx * scale + 1.2) * 1.5,
-                    (nz * scale + 1.2) * 1.5,
+                    (nx * scale + NOISE_OFFSET) * NOISE_FREQUENCY,
+                    (nz * scale + NOISE_OFFSET) * NOISE_FREQUENCY,
                     this.settings.octaves
                 );
                 row.push(elevation);
@@ -325,7 +330,7 @@ class TerrainApp {
     createPoint(x, z, height, scale, heightScale, size) {
         return {
             x: (x - size / 2) * scale,
-            y: (height - 0.35) * heightScale,
+            y: (height - HEIGHT_BASE_OFFSET) * heightScale,
             z: (z - size / 2) * scale,
             height
         };
