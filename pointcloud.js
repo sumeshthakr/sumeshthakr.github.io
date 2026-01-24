@@ -628,7 +628,7 @@ class PointCloudRenderer {
         
         // Camera settings
         this.camera = {
-            pos: new Vec3(0, 0, 15),
+            pos: new Vec3(0, 0, -15),
             rotation: { x: 0, y: 0 },
             fov: 60,
             near: 0.1,
@@ -642,6 +642,11 @@ class PointCloudRenderer {
         this.showColors = true;
         
         this.setupEvents();
+    }
+
+    setSize(width, height) {
+        this.width = width;
+        this.height = height;
     }
 
     setupEvents() {
@@ -669,12 +674,12 @@ class PointCloudRenderer {
         this.canvas.addEventListener('wheel', (e) => {
             e.preventDefault();
             this.camera.pos.z += e.deltaY * 0.01;
-            this.camera.pos.z = Math.max(5, Math.min(30, this.camera.pos.z));
+            this.camera.pos.z = Math.max(-30, Math.min(-5, this.camera.pos.z));
         });
     }
 
     resetView() {
-        this.camera.pos = new Vec3(0, 0, 15);
+        this.camera.pos = new Vec3(0, 0, -15);
         this.camera.rotation = { x: 0, y: 0 };
     }
 
@@ -713,7 +718,7 @@ class PointCloudRenderer {
 
     render(points) {
         // Clear canvas
-        this.ctx.fillStyle = '#0f172a';
+        this.ctx.fillStyle = '#f8fafc';
         this.ctx.fillRect(0, 0, this.width, this.height);
         
         if (!points || points.length === 0) return;
@@ -784,11 +789,13 @@ class PointCloudApp {
         this.canvas = document.getElementById('pointcloud-canvas');
         this.renderer = new PointCloudRenderer(this.canvas);
         this.performanceTracker = new PerformanceTracker();
+        this.pixelRatio = window.devicePixelRatio || 1;
         
         this.originalPoints = [];
         this.processedPoints = [];
         
         this.setupUI();
+        this.resizeCanvas();
         this.loadDefaultDataset();
     }
 
@@ -914,6 +921,18 @@ class PointCloudApp {
             this.updateMetricsTable();
             this.drawPerformanceChart();
         });
+
+        window.addEventListener('resize', () => {
+            this.resizeCanvas();
+            this.render();
+        });
+    }
+
+    resizeCanvas() {
+        const rect = this.canvas.getBoundingClientRect();
+        this.canvas.width = Math.round(rect.width * this.pixelRatio);
+        this.canvas.height = Math.round(rect.height * this.pixelRatio);
+        this.renderer.setSize(this.canvas.width, this.canvas.height);
     }
 
     loadDefaultDataset() {
@@ -1115,7 +1134,7 @@ class PointCloudApp {
         const ctx = canvas.getContext('2d');
         const metrics = this.performanceTracker.getMetrics();
         
-        ctx.fillStyle = '#0f172a';
+        ctx.fillStyle = '#f8fafc';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         
         if (metrics.length === 0) {
@@ -1141,7 +1160,7 @@ class PointCloudApp {
             ctx.fillRect(x + 5, y, barWidth - 10, barHeight);
             
             // Draw label
-            ctx.fillStyle = '#94a3b8';
+            ctx.fillStyle = '#64748b';
             ctx.font = '10px Inter';
             ctx.textAlign = 'center';
             ctx.save();
@@ -1151,12 +1170,12 @@ class PointCloudApp {
             ctx.restore();
             
             // Draw value
-            ctx.fillStyle = '#fff';
+            ctx.fillStyle = '#1e293b';
             ctx.fillText(m.time + 'ms', x + barWidth / 2, y - 5);
         });
         
         // Draw title
-        ctx.fillStyle = '#e2e8f0';
+        ctx.fillStyle = '#1e293b';
         ctx.font = '12px Inter';
         ctx.textAlign = 'left';
         ctx.fillText('Processing Time Comparison', 10, 15);
