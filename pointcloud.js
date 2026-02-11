@@ -271,58 +271,106 @@ class DownsamplingAlgorithms {
 
     static distanceAwareSampling(points, threshold) {
         if (points.length === 0) return [];
-        
-        // Constants for distance-aware sampling
-        const K_NEIGHBORS = 10;
-        const BASE_KEEP_PROBABILITY = 0.1;
-        const MAX_CURVATURE_BONUS = 0.9;
-        const MAX_REDUCTION_FACTOR = 0.5;
-        
-        // Compute local curvature/density for each point
-        const curvatures = new Array(points.length).fill(0);
-        
+
+        const clampedThreshold = Math.max(0.01, Math.min(1.0, threshold));
+        const cellSize = Math.max(0.03, clampedThreshold * 2);
+        const targetNeighbors = 10;
+        const maxKeepRatio = Math.max(0.35, Math.min(0.75, 0.8 - clampedThreshold * 0.35));
+        const minKeepProb = Math.max(0.04, Math.min(0.22, clampedThreshold * 0.4));
+        const maxKeepProb = Math.max(0.45, Math.min(0.96, 1.02 - clampedThreshold * 0.25));
+
+        const grid = new Map();
+        const getCellKey = (position) => {
+            const gx = Math.floor(position.x / cellSize);
+            const gy = Math.floor(position.y / cellSize);
+            const gz = Math.floor(position.z / cellSize);
+            return `${gx},${gy},${gz}`;
+        };
+
         for (let i = 0; i < points.length; i++) {
-            // Find k nearest neighbors
-            const distances = points.map((p, idx) => ({
-                idx: idx,
-                dist: points[i].position.distanceTo(p.position)
-            }));
-            
-            distances.sort((a, b) => a.dist - b.dist);
-            const neighbors = distances.slice(1, K_NEIGHBORS + 1);
-            
-            // Compute variance of distances (proxy for curvature)
-            if (neighbors.length > 0) {
-                const avgDist = neighbors.reduce((sum, n) => sum + n.dist, 0) / neighbors.length;
-                const variance = neighbors.reduce((sum, n) => sum + Math.pow(n.dist - avgDist, 2), 0) / neighbors.length;
-                curvatures[i] = variance;
+            const key = getCellKey(points[i].position);
+            if (!grid.has(key)) {
+                grid.set(key, []);
+            }
+            grid.get(key).push(i);
+        }
+
+        const neighborOffsets = [];
+        for (let x = -1; x <= 1; x++) {
+            for (let y = -1; y <= 1; y++) {
+                for (let z = -1; z <= 1; z++) {
+                    neighborOffsets.push([x, y, z]);
+                }
             }
         }
-        
-        // Normalize curvatures
-        const maxCurvature = Math.max(...curvatures);
+
+        const curvatures = new Array(points.length).fill(0);
+        let maxCurvature = 0;
+
+        for (let i = 0; i < points.length; i++) {
+            const position = points[i].position;
+            const gx = Math.floor(position.x / cellSize);
+            const gy = Math.floor(position.y / cellSize);
+            const gz = Math.floor(position.z / cellSize);
+            const neighborDistances = [];
+
+            for (const [ox, oy, oz] of neighborOffsets) {
+                const key = `${gx + ox},${gy + oy},${gz + oz}`;
+                const cellIndices = grid.get(key);
+                if (!cellIndices) continue;
+
+                for (const idx of cellIndices) {
+                    if (idx === i) continue;
+                    const dist = position.distanceTo(points[idx].position);
+                    if (dist <= cellSize * 2.2) {
+                        neighborDistances.push(dist);
+                    }
+                }
+            }
+
+            if (neighborDistances.length === 0) {
+                curvatures[i] = 1;
+                maxCurvature = Math.max(maxCurvature, 1);
+                continue;
+            }
+
+            neighborDistances.sort((a, b) => a - b);
+            const neighbors = neighborDistances.slice(0, targetNeighbors);
+            const mean = neighbors.reduce((sum, value) => sum + value, 0) / neighbors.length;
+            const variance = neighbors.reduce((sum, value) => {
+                const delta = value - mean;
+                return sum + delta * delta;
+            }, 0) / neighbors.length;
+
+            // Weight by distance so dense smooth regions are downsampled harder.
+            const score = variance * (1 + mean / (cellSize + 1e-6));
+            curvatures[i] = score;
+            maxCurvature = Math.max(maxCurvature, score);
+        }
+
         if (maxCurvature > 0) {
             for (let i = 0; i < curvatures.length; i++) {
                 curvatures[i] /= maxCurvature;
             }
         }
-        
-        // Sample based on curvature - keep high curvature areas, downsample low curvature
+
         const sampled = [];
         for (let i = 0; i < points.length; i++) {
-            // Probability of keeping point based on curvature
-            const keepProb = BASE_KEEP_PROBABILITY + curvatures[i] * MAX_CURVATURE_BONUS;
-            
+            const keepProb = minKeepProb + (maxKeepProb - minKeepProb) * curvatures[i];
             if (Math.random() < keepProb) {
                 sampled.push(points[i]);
             }
         }
-        
-        // Ensure we don't keep too many points
-        if (sampled.length > points.length * MAX_REDUCTION_FACTOR) {
-            return this.randomSampling(sampled, Math.floor(points.length * MAX_REDUCTION_FACTOR));
+
+        const maxKeepCount = Math.max(200, Math.floor(points.length * maxKeepRatio));
+        if (sampled.length > maxKeepCount) {
+            return this.randomSampling(sampled, maxKeepCount);
         }
-        
+
+        if (sampled.length < 80) {
+            return this.randomSampling(points, Math.min(points.length, 80));
+        }
+
         return sampled;
     }
 }
@@ -818,6 +866,10 @@ class PointCloudApp {
             this.loadDataset();
         });
 
+        document.getElementById('reset-processing-btn').addEventListener('click', () => {
+            this.resetProcessingState();
+        });
+
         document.getElementById('show-colors').addEventListener('change', (e) => {
             this.renderer.showColors = e.target.checked;
             this.render();
@@ -926,6 +978,17 @@ class PointCloudApp {
             this.resizeCanvas();
             this.render();
         });
+
+        document.addEventListener('keydown', (event) => {
+            const activeTag = document.activeElement?.tagName?.toLowerCase();
+            if (activeTag === 'input' || activeTag === 'select' || activeTag === 'textarea') {
+                return;
+            }
+
+            if (event.key.toLowerCase() === 'l') {
+                this.loadDataset();
+            }
+        });
     }
 
     resizeCanvas() {
@@ -959,6 +1022,15 @@ class PointCloudApp {
         
         this.processedPoints = [...this.originalPoints];
         this.updateInfo();
+        this.render();
+    }
+
+    resetProcessingState() {
+        this.processedPoints = this.originalPoints.map(p => new Point(p.position, p.color));
+        this.performanceTracker.clear();
+        this.updateInfo();
+        this.updateMetricsTable();
+        this.drawPerformanceChart();
         this.render();
     }
 

@@ -3,39 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sumesh Thakur | ML Engineer (3D Vision, GNNs)</title>
-    <meta name="description" content="Machine Learning Engineer specializing in 3D perception, Point Clouds, and Graph Neural Networks. Building production CV systems with 5+ years experience and 8+ publications.">
-    
-    <!-- Open Graph / Social Media -->
+    <title>Sumesh Thakur | Applied ML and 3D Perception</title>
+    <meta name="description" content="Applied ML researcher-engineer focused on 3D perception, point clouds, and production computer vision systems.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Sumesh Thakur | ML Engineer (3D Vision, GNNs)">
-    <meta property="og:description" content="Machine Learning Engineer specializing in 3D perception, Point Clouds, and Graph Neural Networks.">
+    <meta property="og:title" content="Sumesh Thakur | Applied ML and 3D Perception">
+    <meta property="og:description" content="Applied ML and CV engineer shipping real-time 3D perception systems and research-backed demos.">
     <meta property="og:url" content="https://sumeshthakr.github.io">
-    
-    <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Reactive Point Cloud Background -->
-    <canvas id="pointcloud-bg" class="pointcloud-canvas"></canvas>
-    
-    <!-- Navigation -->
+    <div class="site-bg" aria-hidden="true"></div>
+
     <nav class="navbar">
         <div class="nav-container">
             <a href="#home" class="nav-logo">Sumesh Thakur</a>
-            <ul class="nav-menu">
-                <li><a href="#about" class="nav-link">About</a></li>
-                <li><a href="#experience" class="nav-link">Experience</a></li>
-                <li><a href="#projects" class="nav-link">Projects</a></li>
-                <li><a href="#publications" class="nav-link">Publications</a></li>
-                <li><a href="cornell-box.html" class="nav-link">Cornell Box</a></li>
-                <li><a href="pointcloud.html" class="nav-link">Point Cloud</a></li>
-                <li><a href="terrain-gen.html" class="nav-link">Terrain Gen</a></li>
+            <ul class="nav-menu" id="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#work" class="nav-link">Work</a></li>
+                <li><a href="#demos" class="nav-link">Demos</a></li>
+                <li><a href="#resume" class="nav-link">Resume</a></li>
                 <li><a href="#contact" class="nav-link">Contact</a></li>
             </ul>
-            <button class="hamburger" aria-label="Toggle menu">
+            <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu">
                 <span class="bar"></span>
                 <span class="bar"></span>
                 <span class="bar"></span>
@@ -43,721 +35,218 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container hero-container">
-            <div class="hero-content">
-                <p class="hero-eyebrow">Machine Learning Engineer</p>
-                <h1 class="hero-title">Sumesh Thakur</h1>
-                <p class="hero-headline">
-                    <strong>ML Engineer focused on 3D Perception</strong> (Point Clouds + Graph Neural Nets).<br>
-                    Building production CV systems. Currently Research &amp; Technology Advisor at CRA.
-                </p>
-                
-                <ul class="hero-highlights">
-                    <li>5+ years ML/CV Engineering experience</li>
-                    <li>8+ research papers including IEEE publications</li>
-                    <li>Specialization: 3D point clouds, GNNs, LiDAR detection</li>
-                    <li>M.Sc. Computer Science, Saint Mary's University</li>
-                </ul>
-
-                <div class="hero-cta">
-                    <a href="mailto:sumeshthkr@gmail.com" class="btn btn-primary">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                            <polyline points="22,6 12,13 2,6"/>
-                        </svg>
-                        Email Me
-                    </a>
-                    <a href="https://www.linkedin.com/in/sumeshthkr/" target="_blank" class="btn btn-secondary">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
-                        LinkedIn
-                    </a>
-                    <a href="https://github.com/sumeshthakr" target="_blank" class="btn btn-secondary">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                        </svg>
-                        GitHub
-                    </a>
-                    <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&amp;hl=en" target="_blank" class="btn btn-secondary">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M5.242 13.769L0 9.5 12 0l12 9.5-5.242 4.269C17.548 11.249 14.978 9.5 12 9.5c-2.977 0-5.548 1.748-6.758 4.269zM12 10a7 7 0 1 0 0 14 7 7 0 0 0 0-14z"/>
-                        </svg>
-                        Scholar
-                    </a>
+    <main>
+        <section id="home" class="hero section">
+            <div class="container hero-grid">
+                <div class="hero-copy reveal">
+                    <p class="eyebrow">Applied ML Researcher-Engineer</p>
+                    <h1>Building production 3D perception systems with research-grade rigor.</h1>
+                    <p class="hero-text">
+                        I work across LiDAR point clouds, graph neural networks, and real-time deployment.
+                        My focus is high-impact applied ML: better pipelines, better evaluation, and systems that run under real constraints.
+                    </p>
+                    <div class="hero-cta">
+                        <a href="#demos" class="btn btn-primary">Explore Live Demos</a>
+                        <a href="assets/Sumesh_Thakur_CV.pdf" target="_blank" rel="noopener" class="btn btn-secondary">View Resume (PDF)</a>
+                    </div>
+                    <div class="inline-links">
+                        <a href="https://github.com/sumeshthakr" target="_blank" rel="noopener">GitHub</a>
+                        <a href="https://www.linkedin.com/in/sumeshthkr/" target="_blank" rel="noopener">LinkedIn</a>
+                        <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&amp;hl=en" target="_blank" rel="noopener">Google Scholar</a>
+                        <a href="mailto:sumeshthkr@gmail.com">sumeshthkr@gmail.com</a>
+                    </div>
                 </div>
-
-                <p class="hero-location">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                        <circle cx="12" cy="10" r="3"/>
-                    </svg>
-                    Halifax, Nova Scotia, Canada
-                </p>
+                <aside class="hero-panel reveal" data-delay="80">
+                    <p class="panel-kicker">Most Important GitHub Project</p>
+                    <h2>PointCloudSampling</h2>
+                    <p>
+                        Practical point cloud downsampling utilities for 3D dataset preprocessing and rapid perception prototyping.
+                    </p>
+                    <ul>
+                        <li>Uniform and Poisson sampling workflows</li>
+                        <li>Useful for data reduction benchmarks</li>
+                        <li>Used as a foundation for demo and research pipelines</li>
+                    </ul>
+                    <a href="https://github.com/sumeshthakr/PointCloudSampling" target="_blank" rel="noopener" class="text-link">Open on GitHub</a>
+                </aside>
             </div>
-            
-            <!-- Scroll-Reactive Graph Visualization -->
-            <div class="hero-graph-container">
-                <svg id="hero-graph" class="hero-graph" viewBox="0 0 300 300">
-                    <defs>
-                        <linearGradient id="node-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                            <stop offset="0%" style="stop-color:#3b82f6"/>
-                            <stop offset="100%" style="stop-color:#8b5cf6"/>
-                        </linearGradient>
-                        <filter id="glow">
-                            <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
-                            <feMerge>
-                                <feMergeNode in="coloredBlur"/>
-                                <feMergeNode in="SourceGraphic"/>
-                            </feMerge>
-                        </filter>
-                    </defs>
-                    <!-- Graph edges (will be animated) -->
-                    <g class="graph-edges">
-                        <line class="graph-edge" x1="150" y1="60" x2="80" y2="120"/>
-                        <line class="graph-edge" x1="150" y1="60" x2="220" y2="120"/>
-                        <line class="graph-edge" x1="80" y1="120" x2="60" y2="200"/>
-                        <line class="graph-edge" x1="80" y1="120" x2="120" y2="180"/>
-                        <line class="graph-edge" x1="220" y1="120" x2="180" y2="180"/>
-                        <line class="graph-edge" x1="220" y1="120" x2="250" y2="200"/>
-                        <line class="graph-edge" x1="120" y1="180" x2="180" y2="180"/>
-                        <line class="graph-edge" x1="60" y1="200" x2="100" y2="260"/>
-                        <line class="graph-edge" x1="120" y1="180" x2="150" y2="240"/>
-                        <line class="graph-edge" x1="180" y1="180" x2="150" y2="240"/>
-                        <line class="graph-edge" x1="250" y1="200" x2="200" y2="260"/>
-                    </g>
-                    <!-- Graph nodes -->
-                    <g class="graph-nodes">
-                        <circle class="graph-node" cx="150" cy="60" r="12"/>
-                        <circle class="graph-node" cx="80" cy="120" r="10"/>
-                        <circle class="graph-node" cx="220" cy="120" r="10"/>
-                        <circle class="graph-node" cx="60" cy="200" r="8"/>
-                        <circle class="graph-node" cx="120" cy="180" r="9"/>
-                        <circle class="graph-node" cx="180" cy="180" r="9"/>
-                        <circle class="graph-node" cx="250" cy="200" r="8"/>
-                        <circle class="graph-node" cx="100" cy="260" r="7"/>
-                        <circle class="graph-node" cx="150" cy="240" r="8"/>
-                        <circle class="graph-node" cx="200" cy="260" r="7"/>
-                    </g>
-                    <!-- Attention indicators -->
-                    <g class="attention-pulses">
-                        <circle class="attention-pulse" cx="150" cy="60" r="16"/>
-                        <circle class="attention-pulse" cx="120" cy="180" r="14"/>
-                        <circle class="attention-pulse" cx="180" cy="180" r="14"/>
-                    </g>
-                </svg>
-                <p class="graph-caption">Interactive GNN visualization — scroll to see activation flow</p>
-            </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Impact Highlights Section -->
-    <section id="about" class="impact-section">
-        <div class="container">
-            <h2 class="section-title">Impact Highlights</h2>
-            <div class="impact-grid">
-                <div class="impact-card">
-                    <div class="impact-icon">🎯</div>
-                    <h3>ML Pipeline Optimization</h3>
-                    <p>Built and optimized 3D mesh reconstruction pipelines at Falkbuilt, improving processing efficiency for production CV systems.</p>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-icon">🔬</div>
-                    <h3>Research Leadership</h3>
-                    <p>Published 8+ papers on GNN-based point cloud detection. GAGAT architecture achieved 15% accuracy improvement over baselines.</p>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-icon">♿</div>
-                    <h3>Assistive Technology</h3>
-                    <p>Led development of "6by6" - India's first currency detection app for visually impaired, deployed on Android with TensorFlow.</p>
-                </div>
-                <div class="impact-card">
-                    <div class="impact-icon">🚗</div>
-                    <h3>Autonomous Systems</h3>
-                    <p>Developed real-time LiDAR object detection systems at JCA Technologies for autonomous vehicle perception.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Experience Section -->
-    <section id="experience" class="experience-section">
-        <div class="container">
-            <h2 class="section-title">Experience</h2>
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>Research &amp; Technology Advisor</h3>
-                            <span class="timeline-company">Canada Revenue Agency (SR&amp;ED Division)</span>
-                        </div>
-                        <span class="timeline-date">2023 - Present</span>
-                        <ul class="timeline-details">
-                            <li>Conducting in-depth technical reviews of AI/ML R&amp;D claims for the Scientific Research &amp; Experimental Development (SR&amp;ED) tax incentive program</li>
-                            <li>Assessing technological uncertainties and systematic investigation in computer vision, deep learning, and advanced ML projects</li>
-                            <li>Collaborating with financial reviewers to determine eligibility of scientific advancements for federal tax credits</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>Machine Learning Developer</h3>
-                            <span class="timeline-company">Falkbuilt Inc.</span>
-                        </div>
-                        <span class="timeline-date">2022 - 2023</span>
-                        <ul class="timeline-details">
-                            <li>Built 3D mesh reconstruction and visualization pipelines</li>
-                            <li>Developed ETL processes for processing 3D data from MongoDB</li>
-                            <li>Implemented texture mapping algorithms for architectural visualization</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>Perception Software Engineer</h3>
-                            <span class="timeline-company">JCA Technologies</span>
-                        </div>
-                        <span class="timeline-date">2020 - 2022</span>
-                        <ul class="timeline-details">
-                            <li>Developed real-time LiDAR object detection for autonomous vehicles</li>
-                            <li>Implemented point cloud processing algorithms using ROS/ROS2</li>
-                            <li>Optimized perception pipelines for edge deployment</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="timeline-item">
-                    <div class="timeline-marker"></div>
-                    <div class="timeline-content">
-                        <div class="timeline-header">
-                            <h3>M.Sc. Computer Science</h3>
-                            <span class="timeline-company">Saint Mary's University, Halifax</span>
-                        </div>
-                        <span class="timeline-date">2019 - 2021</span>
-                        <ul class="timeline-details">
-                            <li>Thesis: Graph Neural Networks for 3D Point Cloud Processing</li>
-                            <li>Focus: Deep Learning, Computer Vision, GNNs</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section class="skills-section">
-        <div class="container">
-            <h2 class="section-title">Technical Skills</h2>
-            <div class="skills-grid">
-                <div class="skill-category">
-                    <h3>Machine Learning</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Graph Neural Networks</span>
-                        <span class="skill-tag">Deep Learning</span>
-                        <span class="skill-tag">Computer Vision</span>
-                        <span class="skill-tag">Point Cloud Processing</span>
-                        <span class="skill-tag">3D Object Detection</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Languages &amp; Frameworks</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">Python</span>
-                        <span class="skill-tag">C++</span>
-                        <span class="skill-tag">PyTorch</span>
-                        <span class="skill-tag">TensorFlow</span>
-                        <span class="skill-tag">OpenCV</span>
-                    </div>
-                </div>
-                <div class="skill-category">
-                    <h3>Tools &amp; Platforms</h3>
-                    <div class="skill-tags">
-                        <span class="skill-tag">ROS/ROS2</span>
-                        <span class="skill-tag">Docker</span>
-                        <span class="skill-tag">MongoDB</span>
-                        <span class="skill-tag">Git</span>
-                        <span class="skill-tag">Linux</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Featured Projects Section -->
-    <section id="projects" class="projects-section">
-        <div class="container">
-            <h2 class="section-title">Featured Projects</h2>
-            <div class="projects-grid">
-                <article class="project-card">
-                    <div class="project-header">
-                        <h3>Interactive Cornell Box Raytracer</h3>
-                        <span class="project-tag">Computer Graphics</span>
-                    </div>
-                    <div class="project-body">
-                        <p><strong>Problem:</strong> Understanding light transport and raytracing algorithms in an interactive way.</p>
-                        <p><strong>Approach:</strong> Built a browser-based Monte Carlo path tracer implementing the Cornell box scene with adjustable parameters for materials, lighting, and camera settings.</p>
-                        <p><strong>Results:</strong> Real-time progressive rendering with Lambertian, metal, and glass materials. Inspired by "Ray Tracing: The Rest of Your Life".</p>
-                    </div>
-                    <div class="project-tech">
-                        <span>JavaScript</span>
-                        <span>Canvas API</span>
-                        <span>Path Tracing</span>
-                        <span>Monte Carlo</span>
-                    </div>
-                    <a href="cornell-box.html" class="project-link">Try Interactive Demo →</a>
+        <section class="section stats-section">
+            <div class="container stats-grid">
+                <article class="stat-card reveal">
+                    <p class="stat-value" data-counter="5" data-suffix="+">0</p>
+                    <p class="stat-label">Years in applied ML and CV</p>
                 </article>
-
-                <article class="project-card">
-                    <div class="project-header">
-                        <h3>Point Cloud Processing Demo</h3>
-                        <span class="project-tag">3D Vision</span>
-                    </div>
-                    <div class="project-body">
-                        <p><strong>Problem:</strong> Demonstrating advanced point cloud processing techniques including distance-aware downsampling from research papers.</p>
-                        <p><strong>Approach:</strong> Implemented multiple downsampling algorithms (uniform, random, voxel, distance-aware), RANSAC segmentation, and clustering methods (K-means, DBSCAN) with real-time visualization and performance metrics.</p>
-                        <p><strong>Results:</strong> Interactive browser-based demo with controllable parameters, showcasing the effectiveness of distance-aware downsampling for preserving geometric features.</p>
-                    </div>
-                    <div class="project-tech">
-                        <span>JavaScript</span>
-                        <span>WebGL</span>
-                        <span>RANSAC</span>
-                        <span>DBSCAN</span>
-                    </div>
-                    <a href="pointcloud.html" class="project-link">Try Interactive Demo →</a>
+                <article class="stat-card reveal" data-delay="60">
+                    <p class="stat-value" data-counter="8" data-suffix="+">0</p>
+                    <p class="stat-label">Publications and technical papers</p>
                 </article>
-
-                <article class="project-card">
-                    <div class="project-header">
-                        <h3>Procedural Terrain Generation</h3>
-                        <span class="project-tag">3D Graphics</span>
-                    </div>
-                    <div class="project-body">
-                        <p><strong>Problem:</strong> Showcasing procedural 3D skills with controllable terrain synthesis.</p>
-                        <p><strong>Approach:</strong> Built a Perlin noise terrain generator with adjustable octaves, elevation, and camera controls rendered directly on canvas.</p>
-                        <p><strong>Results:</strong> Real-time interactive terrain exploration with layered shading and water-level controls.</p>
-                    </div>
-                    <div class="project-tech">
-                        <span>Perlin Noise</span>
-                        <span>Canvas</span>
-                        <span>Procedural Mesh</span>
-                        <span>3D Projection</span>
-                    </div>
-                    <a href="terrain-gen.html" class="project-link">Try Interactive Demo →</a>
+                <article class="stat-card reveal" data-delay="120">
+                    <p class="stat-value" data-counter="100" data-suffix="K+">0</p>
+                    <p class="stat-label">Images curated in production dataset work</p>
                 </article>
-
-                <article class="project-card">
-                    <div class="project-header">
-                        <h3>3D Mesh Reconstruction Pipeline</h3>
-                        <span class="project-tag">Production</span>
-                    </div>
-                    <div class="project-body">
-                        <p><strong>Problem:</strong> Processing and visualizing complex 3D architectural meshes from raw database records.</p>
-                        <p><strong>Approach:</strong> Built an end-to-end ETL pipeline that reconstructs meshes from MongoDB, applies texture mapping, and generates interactive 3D visualizations.</p>
-                        <p><strong>Results:</strong> Enabled real-time 3D visualization for architectural design reviews, processing thousands of mesh elements.</p>
-                    </div>
-                    <div class="project-tech">
-                        <span>Python</span>
-                        <span>MongoDB</span>
-                        <span>Three.js</span>
-                        <span>OpenGL</span>
-                    </div>
-                </article>
-
-                <article class="project-card">
-                    <div class="project-header">
-                        <h3>6by6 - Currency Detection for Visually Impaired</h3>
-                        <span class="project-tag">Accessibility</span>
-                    </div>
-                    <div class="project-body">
-                        <p><strong>Problem:</strong> Visually impaired individuals in India struggle to identify currency denominations.</p>
-                        <p><strong>Approach:</strong> Developed an Android app using InceptionNet-based ML model for real-time currency detection with audio feedback.</p>
-                        <p><strong>Results:</strong> India's first currency detection app for visually impaired, deployed on Android with offline capability.</p>
-                    </div>
-                    <div class="project-tech">
-                        <span>Android</span>
-                        <span>TensorFlow</span>
-                        <span>InceptionNet</span>
-                        <span>Java</span>
-                    </div>
-                </article>
-
-                <article class="project-card">
-                    <div class="project-header">
-                        <h3>LiDAR Object Detection with GNNs</h3>
-                        <span class="project-tag">Research</span>
-                    </div>
-                    <div class="project-body">
-                        <p><strong>Problem:</strong> Traditional voxelization loses geometric details in point cloud processing.</p>
-                        <p><strong>Approach:</strong> Developed Graph Attention Network that operates directly on raw LiDAR point clouds without preprocessing.</p>
-                        <p><strong>Results:</strong> Published in IEEE IGARSS. Achieved real-time detection with improved accuracy for autonomous driving.</p>
-                    </div>
-                    <div class="project-tech">
-                        <span>PyTorch</span>
-                        <span>PyG</span>
-                        <span>KITTI</span>
-                        <span>ROS</span>
-                    </div>
-                    <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&amp;hl=en" target="_blank" class="project-link">View Publication →</a>
-                </article>
-
-                <article class="project-card">
-                    <div class="project-header">
-                        <h3>Video Subtitle Generation</h3>
-                        <span class="project-tag">NLP</span>
-                    </div>
-                    <div class="project-body">
-                        <p><strong>Problem:</strong> Manual video captioning is time-consuming for medical training content.</p>
-                        <p><strong>Approach:</strong> Developed Seq2Seq model combining CNN for visual features and LSTM for temporal caption generation.</p>
-                        <p><strong>Results:</strong> Automated subtitle generation for medical assistant training videos with high accuracy.</p>
-                    </div>
-                    <div class="project-tech">
-                        <span>CNN-LSTM</span>
-                        <span>Seq2Seq</span>
-                        <span>TensorFlow</span>
-                        <span>NLP</span>
-                    </div>
+                <article class="stat-card reveal" data-delay="180">
+                    <p class="stat-value" data-counter="3" data-suffix="+">0</p>
+                    <p class="stat-label">Real-time systems shipped</p>
                 </article>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Interactive GNN Pipeline Visualization Section -->
-    <section id="pipeline-viz" class="pipeline-section">
-        <div class="container">
-            <h2 class="section-title">Graph Neural Network Pipeline</h2>
-            <p class="section-subtitle">Interactive visualization of how GNNs process 3D point cloud data for object detection</p>
-            
-            <div class="pipeline-container">
-                <div class="pipeline-stage" data-stage="input">
-                    <div class="stage-icon">
-                        <svg viewBox="0 0 60 60" class="point-cloud-svg">
-                            <circle cx="15" cy="20" r="3" class="point"/>
-                            <circle cx="30" cy="15" r="3" class="point"/>
-                            <circle cx="45" cy="22" r="3" class="point"/>
-                            <circle cx="20" cy="35" r="3" class="point"/>
-                            <circle cx="35" cy="30" r="3" class="point"/>
-                            <circle cx="50" cy="38" r="3" class="point"/>
-                            <circle cx="25" cy="48" r="3" class="point"/>
-                            <circle cx="40" cy="45" r="3" class="point"/>
-                            <circle cx="12" cy="45" r="3" class="point"/>
-                        </svg>
-                    </div>
-                    <h3>Raw Point Cloud</h3>
-                    <p>3D LiDAR points (x, y, z, intensity)</p>
-                    <div class="stage-details">
-                        <span class="detail-badge">~100K points</span>
-                        <span class="detail-badge">4 features</span>
-                    </div>
+        <section id="work" class="section">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">Work Snapshot</p>
+                    <h2>Experience that spans research and deployment</h2>
                 </div>
-                
-                <div class="pipeline-arrow">
-                    <svg viewBox="0 0 40 20" class="arrow-svg">
-                        <path d="M0 10 L30 10 M25 5 L30 10 L25 15" stroke="currentColor" fill="none" stroke-width="2"/>
-                    </svg>
-                    <span class="arrow-label">KNN Graph</span>
+                <div class="work-grid">
+                    <article class="work-card reveal">
+                        <h3>Research and Technology Advisor</h3>
+                        <p class="meta">Canada Revenue Agency | 2023 - Present</p>
+                        <p>
+                            Evaluating AI and software R&amp;D work for scientific novelty, experimental rigor, and engineering feasibility.
+                        </p>
+                    </article>
+                    <article class="work-card reveal" data-delay="60">
+                        <h3>Machine Learning Developer</h3>
+                        <p class="meta">Falkbuilt Inc. | 2022 - 2023</p>
+                        <p>
+                            Built 3D mesh ETL and reconstruction workflows with Python, MongoDB, and Trimesh, then benchmarked model variants with MLflow and Airflow.
+                        </p>
+                    </article>
+                    <article class="work-card reveal" data-delay="120">
+                        <h3>Perception Software Engineer</h3>
+                        <p class="meta">JCA Technologies | 2020 - 2022</p>
+                        <p>
+                            Delivered LiDAR-camera fusion, SLAM, and visual odometry modules for embedded real-time autonomy platforms.
+                        </p>
+                    </article>
                 </div>
-                
-                <div class="pipeline-stage" data-stage="graph">
-                    <div class="stage-icon">
-                        <svg viewBox="0 0 60 60" class="graph-svg">
-                            <line x1="15" y1="20" x2="30" y2="15" class="edge"/>
-                            <line x1="30" y1="15" x2="45" y2="22" class="edge"/>
-                            <line x1="15" y1="20" x2="20" y2="35" class="edge"/>
-                            <line x1="30" y1="15" x2="35" y2="30" class="edge"/>
-                            <line x1="45" y1="22" x2="50" y2="38" class="edge"/>
-                            <line x1="20" y1="35" x2="35" y2="30" class="edge"/>
-                            <line x1="35" y1="30" x2="50" y2="38" class="edge"/>
-                            <line x1="20" y1="35" x2="25" y2="48" class="edge"/>
-                            <line x1="35" y1="30" x2="40" y2="45" class="edge"/>
-                            <circle cx="15" cy="20" r="4" class="node"/>
-                            <circle cx="30" cy="15" r="4" class="node"/>
-                            <circle cx="45" cy="22" r="4" class="node"/>
-                            <circle cx="20" cy="35" r="4" class="node"/>
-                            <circle cx="35" cy="30" r="4" class="node"/>
-                            <circle cx="50" cy="38" r="4" class="node"/>
-                            <circle cx="25" cy="48" r="4" class="node"/>
-                            <circle cx="40" cy="45" r="4" class="node"/>
-                        </svg>
-                    </div>
-                    <h3>Graph Construction</h3>
-                    <p>K-nearest neighbor connectivity</p>
-                    <div class="stage-details">
-                        <span class="detail-badge">K=16</span>
-                        <span class="detail-badge">Dynamic edges</span>
-                    </div>
-                </div>
-                
-                <div class="pipeline-arrow">
-                    <svg viewBox="0 0 40 20" class="arrow-svg">
-                        <path d="M0 10 L30 10 M25 5 L30 10 L25 15" stroke="currentColor" fill="none" stroke-width="2"/>
-                    </svg>
-                    <span class="arrow-label">Message Passing</span>
-                </div>
-                
-                <div class="pipeline-stage active" data-stage="attention">
-                    <div class="stage-icon">
-                        <svg viewBox="0 0 60 60" class="attention-svg">
-                            <defs>
-                                <linearGradient id="attention-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                                    <stop offset="0%" style="stop-color:#3b82f6"/>
-                                    <stop offset="100%" style="stop-color:#8b5cf6"/>
-                                </linearGradient>
-                            </defs>
-                            <line x1="30" y1="30" x2="15" y2="15" class="attention-edge high"/>
-                            <line x1="30" y1="30" x2="45" y2="15" class="attention-edge medium"/>
-                            <line x1="30" y1="30" x2="15" y2="45" class="attention-edge low"/>
-                            <line x1="30" y1="30" x2="45" y2="45" class="attention-edge high"/>
-                            <circle cx="30" cy="30" r="8" class="center-node"/>
-                            <circle cx="15" cy="15" r="5" class="neighbor-node"/>
-                            <circle cx="45" cy="15" r="5" class="neighbor-node"/>
-                            <circle cx="15" cy="45" r="5" class="neighbor-node"/>
-                            <circle cx="45" cy="45" r="5" class="neighbor-node"/>
-                        </svg>
-                    </div>
-                    <h3>Graph Attention</h3>
-                    <p>Learn attention weights between nodes</p>
-                    <div class="stage-details">
-                        <span class="detail-badge">Multi-head</span>
-                        <span class="detail-badge">4 heads</span>
-                    </div>
-                </div>
-                
-                <div class="pipeline-arrow">
-                    <svg viewBox="0 0 40 20" class="arrow-svg">
-                        <path d="M0 10 L30 10 M25 5 L30 10 L25 15" stroke="currentColor" fill="none" stroke-width="2"/>
-                    </svg>
-                    <span class="arrow-label">Aggregation</span>
-                </div>
-                
-                <div class="pipeline-stage" data-stage="aggregate">
-                    <div class="stage-icon">
-                        <svg viewBox="0 0 60 60" class="aggregate-svg">
-                            <rect x="10" y="10" width="40" height="40" rx="4" class="feature-block"/>
-                            <line x1="10" y1="22" x2="50" y2="22" class="feature-line"/>
-                            <line x1="10" y1="34" x2="50" y2="34" class="feature-line"/>
-                            <line x1="10" y1="46" x2="50" y2="46" class="feature-line"/>
-                            <rect x="14" y="14" width="12" height="5" class="feature-bar"/>
-                            <rect x="14" y="26" width="20" height="5" class="feature-bar"/>
-                            <rect x="14" y="38" width="8" height="5" class="feature-bar"/>
-                        </svg>
-                    </div>
-                    <h3>Feature Aggregation</h3>
-                    <p>Weighted sum of neighbor features</p>
-                    <div class="stage-details">
-                        <span class="detail-badge">256 dims</span>
-                        <span class="detail-badge">Global pooling</span>
-                    </div>
-                </div>
-                
-                <div class="pipeline-arrow">
-                    <svg viewBox="0 0 40 20" class="arrow-svg">
-                        <path d="M0 10 L30 10 M25 5 L30 10 L25 15" stroke="currentColor" fill="none" stroke-width="2"/>
-                    </svg>
-                    <span class="arrow-label">Classification</span>
-                </div>
-                
-                <div class="pipeline-stage" data-stage="output">
-                    <div class="stage-icon">
-                        <svg viewBox="0 0 60 60" class="output-svg">
-                            <rect x="8" y="15" width="44" height="30" rx="3" class="bbox"/>
-                            <text x="30" y="35" text-anchor="middle" class="label-text">Car</text>
-                            <text x="30" y="52" text-anchor="middle" class="confidence-text">97.3%</text>
-                        </svg>
-                    </div>
-                    <h3>Detection Output</h3>
-                    <p>3D bounding boxes + class labels</p>
-                    <div class="stage-details">
-                        <span class="detail-badge success">High accuracy</span>
-                        <span class="detail-badge">Real-time</span>
-                    </div>
+
+                <div class="repo-grid reveal" data-delay="140">
+                    <article class="repo-card feature">
+                        <p class="chip">Featured Repo</p>
+                        <h3>PointCloudSampling</h3>
+                        <p>Point cloud sampling toolkit for practical 3D preprocessing and benchmarking.</p>
+                        <a href="https://github.com/sumeshthakr/PointCloudSampling" target="_blank" rel="noopener" class="text-link">github.com/sumeshthakr/PointCloudSampling</a>
+                    </article>
+                    <article class="repo-card">
+                        <h3>MiniTen</h3>
+                        <p>Mini deep learning framework to explain the internal mechanics of ML libraries.</p>
+                        <a href="https://github.com/sumeshthakr/MiniTen" target="_blank" rel="noopener" class="text-link">View Repository</a>
+                    </article>
+                    <article class="repo-card">
+                        <h3>MinRust</h3>
+                        <p>A compact deep learning library in Rust focused on core tensor and optimization concepts.</p>
+                        <a href="https://github.com/sumeshthakr/MinRust" target="_blank" rel="noopener" class="text-link">View Repository</a>
+                    </article>
                 </div>
             </div>
-            
-            <div class="pipeline-info">
-                <div class="info-card">
-                    <h4>How it works</h4>
-                    <p>This pipeline shows how Graph Attention Networks (GATs) process raw LiDAR point clouds for 3D object detection without requiring voxelization, preserving geometric details for better accuracy.</p>
+        </section>
+
+        <section id="demos" class="section demos-section">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">Live Demos</p>
+                    <h2>Kept and improved interactive demos</h2>
                 </div>
-                <div class="info-stats">
-                    <div class="info-stat">
-                        <span class="info-number">15%</span>
-                        <span class="info-label">Accuracy improvement</span>
-                    </div>
-                    <div class="info-stat">
-                        <span class="info-number">30fps</span>
-                        <span class="info-label">Real-time inference</span>
-                    </div>
-                    <div class="info-stat">
-                        <span class="info-number">KITTI</span>
-                        <span class="info-label">Benchmark dataset</span>
-                    </div>
+                <div class="demo-grid">
+                    <article class="demo-card reveal">
+                        <h3>Cornell Box Path Tracer</h3>
+                        <p>
+                            Browser-based Monte Carlo path tracing demo with improved usability controls, presets, and reset flow.
+                        </p>
+                        <a href="cornell-box.html" class="btn btn-primary">Open Demo</a>
+                    </article>
+                    <article class="demo-card reveal" data-delay="60">
+                        <h3>Point Cloud Processing</h3>
+                        <p>
+                            Real-time downsampling, segmentation, and clustering. Distance-aware logic now uses meaningful threshold behavior and faster neighborhood lookup.
+                        </p>
+                        <a href="pointcloud.html" class="btn btn-primary">Open Demo</a>
+                    </article>
+                    <article class="demo-card reveal" data-delay="120">
+                        <h3>Procedural Terrain Generator</h3>
+                        <p>
+                            Perlin-noise terrain generation with added drag camera controls, keyboard shortcuts, and snapshot export.
+                        </p>
+                        <a href="terrain-gen.html" class="btn btn-primary">Open Demo</a>
+                    </article>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Publications Section -->
-    <section id="publications" class="publications-section">
-        <div class="container">
-            <h2 class="section-title">Publications</h2>
-            <div class="publications-stats">
-                <div class="stat">
-                    <span class="stat-number">8+</span>
-                    <span class="stat-label">Publications</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">50+</span>
-                    <span class="stat-label">Citations</span>
-                </div>
-                <div class="stat">
-                    <span class="stat-number">3</span>
-                    <span class="stat-label">IEEE Papers</span>
-                </div>
-            </div>
-            
-            <div class="publications-list">
-                <article class="publication-item">
-                    <div class="publication-year">2023</div>
-                    <div class="publication-content">
-                        <h4>GAGAT: A Global Aware Graph Attention Network for 3D Classification and Segmentation</h4>
-                        <p class="publication-venue">IEEE IGARSS 2023</p>
-                        <p class="publication-summary">Advanced graph attention mechanism with global context awareness. Improved classification accuracy by 15% over baseline methods.</p>
-                        <div class="publication-tags">
-                            <span>Graph Attention</span>
-                            <span>3D Segmentation</span>
-                            <span>Point Clouds</span>
-                        </div>
-                        <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&amp;hl=en" target="_blank" class="publication-link">View on Scholar →</a>
-                    </div>
-                </article>
-
-                <article class="publication-item">
-                    <div class="publication-year">2022</div>
-                    <div class="publication-content">
-                        <h4>A Graph Attention Network for Object Detection from Raw LiDAR Data</h4>
-                        <p class="publication-venue">IEEE IGARSS 2022</p>
-                        <p class="publication-summary">Novel approach eliminating voxelization preprocessing for real-time 3D object detection in autonomous driving applications.</p>
-                        <div class="publication-tags">
-                            <span>LiDAR</span>
-                            <span>Object Detection</span>
-                            <span>GNN</span>
-                        </div>
-                        <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&amp;hl=en" target="_blank" class="publication-link">View on Scholar →</a>
-                    </div>
-                </article>
-
-                <article class="publication-item">
-                    <div class="publication-year">2020</div>
-                    <div class="publication-content">
-                        <h4>Dynamic Edge Weights in Graph Neural Networks for 3D Object Detection</h4>
-                        <p class="publication-venue">ArXiv Preprint</p>
-                        <p class="publication-summary">Comprehensive study of adaptive edge weight computation methods improving 3D detection across multiple datasets.</p>
-                        <div class="publication-tags">
-                            <span>Dynamic Weights</span>
-                            <span>3D Detection</span>
-                            <span>Optimization</span>
-                        </div>
-                        <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&amp;hl=en" target="_blank" class="publication-link">View on Scholar →</a>
-                    </div>
-                </article>
-
-                <article class="publication-item">
-                    <div class="publication-year">2020</div>
-                    <div class="publication-content">
-                        <h4>Towards Video based Collective Motion Analysis through Shape Tracking and Matching</h4>
-                        <p class="publication-venue">IET Electronics Letters</p>
-                        <p class="publication-summary">Robust shape tracking algorithms for surveillance and behavior analysis, improving tracking accuracy by 20% in crowded scenarios.</p>
-                        <div class="publication-tags">
-                            <span>Video Analysis</span>
-                            <span>Shape Tracking</span>
-                            <span>Motion Analysis</span>
-                        </div>
-                        <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&amp;hl=en" target="_blank" class="publication-link">View on Scholar →</a>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <h2 class="section-title">Get In Touch</h2>
-            <p class="section-subtitle">Open to collaborations in perception, spatial computing, and applied ML systems.</p>
-            
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                            <polyline points="22,6 12,13 2,6"/>
-                        </svg>
-                        <div>
-                            <span class="contact-label">Email</span>
-                            <a href="mailto:sumeshthkr@gmail.com" class="contact-value">sumeshthkr@gmail.com</a>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
-                        <div>
-                            <span class="contact-label">LinkedIn</span>
-                            <a href="https://www.linkedin.com/in/sumeshthkr/" target="_blank" class="contact-value">linkedin.com/in/sumeshthkr</a>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
-                        </svg>
-                        <div>
-                            <span class="contact-label">GitHub</span>
-                            <a href="https://github.com/sumeshthakr" target="_blank" class="contact-value">github.com/sumeshthakr</a>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
-                            <circle cx="12" cy="10" r="3"/>
-                        </svg>
-                        <div>
-                            <span class="contact-label">Location</span>
-                            <span class="contact-value">Halifax, Nova Scotia, Canada</span>
-                        </div>
+        <section id="resume" class="section">
+            <div class="container resume-grid">
+                <div class="resume-copy reveal">
+                    <p class="eyebrow">Resume</p>
+                    <h2>Current CV integrated into the presentation</h2>
+                    <p>
+                        This resume reflects recent work across AI/ML R&amp;D assessment, 3D mesh pipelines, and real-time perception deployment on embedded systems.
+                    </p>
+                    <ul class="resume-points">
+                        <li>Applied ML / CV with 3D perception and graph-based modeling</li>
+                        <li>Production experience with Python, C++, CUDA, ROS2, and MLOps tooling</li>
+                        <li>Publication record across IEEE IGARSS, arXiv, and IET venues</li>
+                    </ul>
+                    <div class="hero-cta">
+                        <a href="assets/Sumesh_Thakur_CV.pdf" target="_blank" rel="noopener" class="btn btn-primary">View Resume</a>
+                        <a href="assets/Sumesh_Thakur_CV.pdf" download class="btn btn-secondary">Download Resume</a>
                     </div>
                 </div>
-                
-                <div class="contact-cta">
-                    <p>Interested in working together? Let's connect!</p>
-                    <a href="mailto:sumeshthkr@gmail.com" class="btn btn-primary btn-large">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
-                            <polyline points="22,6 12,13 2,6"/>
-                        </svg>
-                        Send Email
-                    </a>
+                <div class="resume-preview reveal" data-delay="80">
+                    <iframe src="assets/Sumesh_Thakur_CV.pdf#view=FitH" title="Sumesh Thakur Resume PDF"></iframe>
+                    <p class="resume-note">If preview is blocked by your browser, use the buttons to view or download directly.</p>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer -->
+        <section class="section">
+            <div class="container">
+                <div class="section-heading reveal">
+                    <p class="eyebrow">Research</p>
+                    <h2>Selected publications</h2>
+                </div>
+                <div class="pub-list">
+                    <article class="pub-item reveal">
+                        <h3>GAGAT for 3D Classification and Segmentation</h3>
+                        <p>IEEE IGARSS 2023</p>
+                    </article>
+                    <article class="pub-item reveal" data-delay="60">
+                        <h3>Graph Attention for Object Detection from Raw LiDAR Data</h3>
+                        <p>IEEE IGARSS 2022</p>
+                    </article>
+                    <article class="pub-item reveal" data-delay="120">
+                        <h3>Dynamic Edge Weights in GNNs for 3D Object Detection</h3>
+                        <p>arXiv 2020</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section contact-section">
+            <div class="container contact-wrap reveal">
+                <div>
+                    <p class="eyebrow">Contact</p>
+                    <h2>Open to collaboration in 3D perception and applied ML systems.</h2>
+                </div>
+                <div class="contact-actions">
+                    <a href="mailto:sumeshthkr@gmail.com" class="btn btn-primary">Email</a>
+                    <a href="https://www.linkedin.com/in/sumeshthkr/" target="_blank" rel="noopener" class="btn btn-secondary">LinkedIn</a>
+                    <a href="https://github.com/sumeshthakr" target="_blank" rel="noopener" class="btn btn-secondary">GitHub</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
     <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <p>&copy; 2026 Sumesh Thakur. Built with care in Halifax.</p>
-                <div class="footer-links">
-                    <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&amp;hl=en" target="_blank">Google Scholar</a>
-                    <a href="https://www.linkedin.com/in/sumeshthkr/" target="_blank">LinkedIn</a>
-                    <a href="https://github.com/sumeshthakr" target="_blank">GitHub</a>
-                    <a href="mailto:sumeshthkr@gmail.com">Email</a>
-                </div>
+        <div class="container footer-content">
+            <p>&copy; <span id="year">2026</span> Sumesh Thakur</p>
+            <div class="footer-links">
+                <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
+                <a href="https://www.linkedin.com/in/sumeshthkr/" target="_blank" rel="noopener">LinkedIn</a>
+                <a href="https://github.com/sumeshthakr" target="_blank" rel="noopener">GitHub</a>
+                <a href="assets/Sumesh_Thakur_CV.pdf" target="_blank" rel="noopener">Resume</a>
             </div>
         </div>
     </footer>

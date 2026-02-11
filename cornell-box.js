@@ -637,17 +637,65 @@ document.addEventListener('DOMContentLoaded', () => {
     const renderBtn = document.getElementById('render-btn');
     const stopBtn = document.getElementById('stop-btn');
     const saveBtn = document.getElementById('save-btn');
+    const resetSettingsBtn = document.getElementById('reset-settings-btn');
 
     // Initialize raytracer
     window.raytracer = new Raytracer(canvas);
     window.raytracer.setupCamera();
 
-    // Settings
-    window.raytracer.showBoxes = true;
-    window.raytracer.showLight = true;
-    window.raytracer.lightIntensity = 15;
-    window.raytracer.leftBoxMaterial = 'lambertian';
-    window.raytracer.rightBoxMaterial = 'lambertian';
+    const defaultSettings = {
+        samples: 10,
+        maxDepth: 5,
+        resolution: 600,
+        cameraAngle: 40,
+        cameraDistance: 15,
+        showBoxes: true,
+        showLight: true,
+        lightIntensity: 15,
+        leftBoxMaterial: 'lambertian',
+        rightBoxMaterial: 'lambertian'
+    };
+
+    function applySettings(settings) {
+        document.getElementById('samples').value = settings.samples;
+        document.getElementById('samples-value').textContent = settings.samples;
+        document.getElementById('max-depth').value = settings.maxDepth;
+        document.getElementById('depth-value').textContent = settings.maxDepth;
+        document.getElementById('resolution').value = String(settings.resolution);
+        document.getElementById('resolution-value').textContent = `${settings.resolution}x${settings.resolution}`;
+        document.getElementById('camera-angle').value = settings.cameraAngle;
+        document.getElementById('angle-value').textContent = settings.cameraAngle;
+        document.getElementById('camera-distance').value = settings.cameraDistance;
+        document.getElementById('distance-value').textContent = settings.cameraDistance;
+        document.getElementById('show-boxes').checked = settings.showBoxes;
+        document.getElementById('show-light').checked = settings.showLight;
+        document.getElementById('light-intensity').value = settings.lightIntensity;
+        document.getElementById('light-value').textContent = settings.lightIntensity;
+        document.getElementById('left-box-material').value = settings.leftBoxMaterial;
+        document.getElementById('right-box-material').value = settings.rightBoxMaterial;
+
+        window.raytracer.samplesPerPixel = settings.samples;
+        window.raytracer.maxDepth = settings.maxDepth;
+        window.raytracer.showBoxes = settings.showBoxes;
+        window.raytracer.showLight = settings.showLight;
+        window.raytracer.lightIntensity = settings.lightIntensity;
+        window.raytracer.leftBoxMaterial = settings.leftBoxMaterial;
+        window.raytracer.rightBoxMaterial = settings.rightBoxMaterial;
+        window.raytracer.resize(settings.resolution, settings.resolution);
+        window.raytracer.setupCamera(settings.cameraAngle, settings.cameraDistance);
+        window.raytracer.setupScene();
+    }
+
+    function startRender() {
+        if (window.raytracer.isRendering) return;
+        renderBtn.disabled = true;
+        stopBtn.disabled = false;
+        window.raytracer.setupScene();
+        window.raytracer.render().then(() => {
+            renderBtn.disabled = false;
+            stopBtn.disabled = true;
+        });
+    }
 
     // Control handlers
     document.getElementById('samples').addEventListener('input', (e) => {
@@ -715,15 +763,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Render button
-    renderBtn.addEventListener('click', () => {
-        renderBtn.disabled = true;
-        stopBtn.disabled = false;
-        window.raytracer.setupScene();
-        window.raytracer.render().then(() => {
-            renderBtn.disabled = false;
-            stopBtn.disabled = true;
-        });
-    });
+    renderBtn.addEventListener('click', startRender);
 
     // Stop button
     stopBtn.addEventListener('click', () => {
@@ -746,41 +786,52 @@ document.addEventListener('DOMContentLoaded', () => {
             const preset = btn.dataset.preset;
             
             if (preset === 'fast') {
-                document.getElementById('samples').value = 5;
-                document.getElementById('samples-value').textContent = '5';
-                document.getElementById('max-depth').value = 3;
-                document.getElementById('depth-value').textContent = '3';
-                document.getElementById('resolution').value = '300';
-                document.getElementById('resolution-value').textContent = '300x300';
-                window.raytracer.samplesPerPixel = 5;
-                window.raytracer.maxDepth = 3;
-                window.raytracer.resize(300, 300);
+                applySettings({
+                    ...defaultSettings,
+                    samples: 5,
+                    maxDepth: 3,
+                    resolution: 300
+                });
             } else if (preset === 'balanced') {
-                document.getElementById('samples').value = 10;
-                document.getElementById('samples-value').textContent = '10';
-                document.getElementById('max-depth').value = 5;
-                document.getElementById('depth-value').textContent = '5';
-                document.getElementById('resolution').value = '600';
-                document.getElementById('resolution-value').textContent = '600x600';
-                window.raytracer.samplesPerPixel = 10;
-                window.raytracer.maxDepth = 5;
-                window.raytracer.resize(600, 600);
+                applySettings(defaultSettings);
             } else if (preset === 'quality') {
-                document.getElementById('samples').value = 50;
-                document.getElementById('samples-value').textContent = '50';
-                document.getElementById('max-depth').value = 10;
-                document.getElementById('depth-value').textContent = '10';
-                document.getElementById('resolution').value = '800';
-                document.getElementById('resolution-value').textContent = '800x800';
-                window.raytracer.samplesPerPixel = 50;
-                window.raytracer.maxDepth = 10;
-                window.raytracer.resize(800, 800);
+                applySettings({
+                    ...defaultSettings,
+                    samples: 50,
+                    maxDepth: 10,
+                    resolution: 800
+                });
             }
-            
-            window.raytracer.setupCamera(
-                parseInt(document.getElementById('camera-angle').value),
-                parseFloat(document.getElementById('camera-distance').value)
-            );
         });
     });
+
+    if (resetSettingsBtn) {
+        resetSettingsBtn.addEventListener('click', () => {
+            window.raytracer.stop();
+            renderBtn.disabled = false;
+            stopBtn.disabled = true;
+            applySettings(defaultSettings);
+            window.raytracer.updateProgress(0, 0, 'Ready');
+        });
+    }
+
+    document.addEventListener('keydown', (event) => {
+        const activeTag = document.activeElement?.tagName?.toLowerCase();
+        if (activeTag === 'input' || activeTag === 'select' || activeTag === 'textarea') {
+            return;
+        }
+
+        const key = event.key.toLowerCase();
+        if (key === 'r') {
+            startRender();
+        } else if (key === 'x') {
+            window.raytracer.stop();
+            renderBtn.disabled = false;
+            stopBtn.disabled = true;
+        } else if (key === 'p') {
+            saveBtn.click();
+        }
+    });
+
+    applySettings(defaultSettings);
 });

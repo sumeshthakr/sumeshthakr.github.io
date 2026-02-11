@@ -195,6 +195,11 @@ class TerrainApp {
             pitch: 35 * Math.PI / 180,
             zoom: 6
         };
+        this.dragState = {
+            active: false,
+            x: 0,
+            y: 0
+        };
 
         this.setupUI();
         this.resizeCanvas();
@@ -211,6 +216,7 @@ class TerrainApp {
         const yaw = document.getElementById('yaw');
         const pitch = document.getElementById('pitch');
         const seedInput = document.getElementById('seed');
+        const saveBtn = document.getElementById('save-terrain-btn');
 
         gridSize.addEventListener('input', () => this.updateSetting('gridSize', parseInt(gridSize.value)));
         noiseScale.addEventListener('input', () => this.updateSetting('noiseScale', parseFloat(noiseScale.value)));
@@ -234,28 +240,92 @@ class TerrainApp {
         seedInput.addEventListener('change', () => {
             const value = parseInt(seedInput.value, 10);
             if (!Number.isNaN(value)) {
-                this.seed = value;
+                this.seed = Math.max(0, Math.min(MAX_SEED, value));
+                seedInput.value = this.seed;
                 this.perlin.setSeed(this.seed);
                 this.generateTerrain();
             }
         });
 
         document.getElementById('random-seed-btn').addEventListener('click', () => {
-            this.seed = Math.floor(Math.random() * MAX_SEED);
+            this.seed = Math.floor(Math.random() * (MAX_SEED + 1));
             seedInput.value = this.seed;
             this.perlin.setSeed(this.seed);
             this.generateTerrain();
         });
 
         document.getElementById('regenerate-btn').addEventListener('click', () => {
-            this.perlin.setSeed(this.seed);
-            this.generateTerrain();
+            this.regenerateTerrain();
+        });
+
+        if (saveBtn) {
+            saveBtn.addEventListener('click', () => this.saveSnapshot());
+        }
+
+        this.canvas.addEventListener('mousedown', (event) => {
+            this.dragState.active = true;
+            this.dragState.x = event.clientX;
+            this.dragState.y = event.clientY;
+        });
+
+        window.addEventListener('mousemove', (event) => {
+            if (!this.dragState.active) return;
+            const deltaX = event.clientX - this.dragState.x;
+            const deltaY = event.clientY - this.dragState.y;
+            this.dragState.x = event.clientX;
+            this.dragState.y = event.clientY;
+
+            const nextYawDeg = ((this.camera.yaw * 180 / Math.PI) + deltaX * 0.3 + 360) % 360;
+            const rawPitch = (this.camera.pitch * 180 / Math.PI) + deltaY * 0.2;
+            const nextPitchDeg = Math.max(20, Math.min(70, rawPitch));
+
+            yaw.value = String(Math.round(nextYawDeg));
+            pitch.value = String(Math.round(nextPitchDeg));
+            this.camera.yaw = nextYawDeg * Math.PI / 180;
+            this.camera.pitch = nextPitchDeg * Math.PI / 180;
+            document.getElementById('yaw-value').textContent = yaw.value;
+            document.getElementById('pitch-value').textContent = pitch.value;
+            this.draw();
+        });
+
+        window.addEventListener('mouseup', () => {
+            this.dragState.active = false;
+        });
+
+        this.canvas.addEventListener('mouseleave', () => {
+            this.dragState.active = false;
+        });
+
+        document.addEventListener('keydown', (event) => {
+            const activeTag = document.activeElement?.tagName?.toLowerCase();
+            if (activeTag === 'input' || activeTag === 'select' || activeTag === 'textarea') {
+                return;
+            }
+
+            const key = event.key.toLowerCase();
+            if (key === 'r') {
+                this.regenerateTerrain();
+            } else if (key === 's') {
+                this.saveSnapshot();
+            }
         });
 
         window.addEventListener('resize', () => {
             this.resizeCanvas();
             this.draw();
         });
+    }
+
+    regenerateTerrain() {
+        this.perlin.setSeed(this.seed);
+        this.generateTerrain();
+    }
+
+    saveSnapshot() {
+        const link = document.createElement('a');
+        link.download = `terrain-${this.seed}.png`;
+        link.href = this.canvas.toDataURL('image/png');
+        link.click();
     }
 
     updateSetting(key, value) {
