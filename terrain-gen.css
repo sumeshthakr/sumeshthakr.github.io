@@ -3,7 +3,7 @@
 .terrain-section {
     min-height: 100vh;
     padding: 100px 0 60px;
-    background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
+    background: var(--background-color);
 }
 
 .terrain-container {
@@ -47,7 +47,7 @@
     background: var(--surface-color);
     border-radius: var(--radius-lg);
     padding: 20px;
-    border: 1px solid var(--border-color);
+    border: 2px solid var(--secondary-color);
     box-shadow: var(--shadow-lg);
 }
 
@@ -66,9 +66,9 @@
     gap: 12px;
     margin-top: 18px;
     padding: 14px;
-    background: var(--background-color);
+    background: var(--surface-color);
     border-radius: var(--radius-md);
-    border: 1px solid var(--border-light);
+    border: 2px solid var(--border-color);
 }
 
 .info-item {
@@ -95,7 +95,7 @@
     background: rgba(255, 255, 255, 0.96);
     border-radius: var(--radius-lg);
     padding: 24px;
-    border: 1px solid var(--border-color);
+    border: 2px solid var(--secondary-color);
     box-shadow: var(--shadow-lg);
     backdrop-filter: blur(12px);
     max-height: calc(100vh - 200px);
@@ -108,7 +108,7 @@
     color: var(--text-primary);
     margin-bottom: 16px;
     padding-bottom: 10px;
-    border-bottom: 2px solid var(--border-light);
+    border-bottom: 2px solid var(--secondary-color);
 }
 
 .controls-title:not(:first-child) {
@@ -244,16 +244,16 @@
 }
 
 .info-card li::before {
-    content: "→";
+    content: "🍄";
     position: absolute;
     left: 0;
-    color: var(--primary-color);
+    color: var(--secondary-color);
     font-weight: 700;
 }
 
 .info-box {
-    background: rgba(37, 99, 235, 0.08);
-    border-left: 3px solid var(--primary-color);
+    background: rgba(255, 215, 0, 0.1);
+    border-left: 3px solid var(--secondary-color);
     padding: 12px;
     border-radius: 6px;
     margin-top: 16px;
@@ -261,7 +261,7 @@
 
 .info-box h4 {
     font-size: 0.9rem;
-    color: var(--primary-color);
+    color: var(--primary-dark);
     margin-bottom: 8px;
 }
 
