@@ -3,267 +3,418 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sumesh Thakur | Applied ML and 3D Perception</title>
-    <meta name="description" content="Applied ML engineer focused on 3D perception, point clouds, and production-ready vision systems.">
+    <title>Sumesh Thakur | Applied ML & 3D Perception Engineer</title>
+    <meta name="description" content="Applied ML engineer bridging research depth and production discipline. Specializing in 3D perception, point clouds, and production-ready vision systems.">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Sumesh Thakur | Applied ML and 3D Perception">
+    <meta property="og:title" content="Sumesh Thakur | Applied ML & 3D Perception">
     <meta property="og:description" content="Research-backed, production-first ML engineering for perception and spatial systems.">
     <meta property="og:url" content="https://sumeshthakr.github.io">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Exo+2:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Exo+2:wght@500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="orbital-grid" aria-hidden="true"></div>
+    <!-- Starfield Background Canvas -->
+    <canvas id="starfield" aria-hidden="true"></canvas>
 
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#home" class="nav-logo">Sumesh Thakur</a>
-            <ul class="nav-menu collapsible" id="nav-menu">
-                <li><a href="#home" class="nav-link">Mission</a></li>
-                <li><a href="#fit" class="nav-link">Hiring Fit</a></li>
-                <li><a href="#systems" class="nav-link">Systems</a></li>
-                <li><a href="#research" class="nav-link">Research</a></li>
-                <li><a href="#lab" class="nav-link">Lab</a></li>
-                <li><a href="#contact" class="nav-link">Contact</a></li>
-            </ul>
-            <button class="hamburger" aria-label="Toggle navigation" aria-expanded="false" aria-controls="nav-menu">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </button>
+    <!-- Galaxy Navigation -->
+    <nav class="galaxy-nav" role="navigation" aria-label="Main navigation">
+        <div class="nav-constellation">
+            <a href="#hero" class="nav-cluster active" data-cluster="Command" aria-label="Go to hero">
+                <span class="cluster-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                    </svg>
+                </span>
+                <span class="cluster-label">Command</span>
+            </a>
+            <a href="#systems" class="nav-cluster" data-cluster="Systems" aria-label="Go to deployed systems">
+                <span class="cluster-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18l6.9 3.45L12 11.09 5.1 7.63 12 4.18zM4 8.82l7 3.5v7.36l-7-3.5V8.82zm9 10.86v-7.36l7-3.5v7.36l-7 3.5z"/>
+                    </svg>
+                </span>
+                <span class="cluster-label">Systems</span>
+            </a>
+            <a href="#research" class="nav-cluster" data-cluster="Research" aria-label="Go to research">
+                <span class="cluster-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/>
+                    </svg>
+                </span>
+                <span class="cluster-label">Research</span>
+            </a>
+            <a href="#lab" class="nav-cluster" data-cluster="Lab" aria-label="Go to interactive lab">
+                <span class="cluster-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/>
+                    </svg>
+                </span>
+                <span class="cluster-label">Lab</span>
+            </a>
+            <a href="#contact" class="nav-cluster" data-cluster="Comms" aria-label="Go to contact">
+                <span class="cluster-icon">
+                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
+                </span>
+                <span class="cluster-label">Comms</span>
+            </a>
         </div>
+
+        <!-- Audio Toggle -->
+        <button class="audio-toggle" id="audioToggle" aria-label="Toggle audio" aria-pressed="false">
+            <svg class="audio-icon audio-on" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+            </svg>
+            <svg class="audio-icon audio-off" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" style="display: none;">
+                <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+            </svg>
+        </button>
     </nav>
 
+    <!-- Cluster Transition Indicator -->
+    <div class="cluster-transition" aria-hidden="true">
+        <span class="transition-from">COMMAND CLUSTER</span>
+        <span class="transition-arrow">→</span>
+        <span class="transition-to">SYSTEMS CLUSTER</span>
+    </div>
+
     <main>
-        <section id="home" class="hero section">
-            <div class="container hero-layout">
-                <div class="hero-primary reveal">
-                    <p class="eyebrow">Applied ML Engineer | 3D Perception | Graph Learning</p>
-                    <h1>Mission-ready ML systems, built with research depth and production discipline.</h1>
-                    <p class="hero-lead">
-                        I design and ship perception pipelines that work under real constraints, from point-cloud research to embedded deployment.
-                        The goal is simple: measurable outcomes, reliable systems, and clear technical communication.
+        <!-- Hero Section: Command Center -->
+        <section id="hero" class="hero section" data-cluster="Command">
+            <div class="container">
+                <div class="hero-content">
+                    <p class="eyebrow">Applied ML Engineer | 3D Perception | Production Systems</p>
+
+                    <h1 class="hero-title">
+                        <span class="title-line">Sumesh Thakur</span>
+                        <span class="title-tagline">Mission-ready ML systems, built with research depth and production discipline.</span>
+                    </h1>
+
+                    <p class="hero-description">
+                        I design and ship perception pipelines that work under real constraints—from point-cloud research to embedded deployment.
+                        Measurable outcomes, reliable systems, clear communication.
                     </p>
+
                     <div class="hero-cta">
-                        <a href="#systems" class="btn btn-primary">View Impact Work</a>
-                        <a href="assets/Sumesh_Thakur_CV.pdf" target="_blank" rel="noopener" class="btn btn-secondary">Open Resume</a>
+                        <a href="#systems" class="btn btn-primary">
+                            <span>Explore Deployed Systems</span>
+                            <svg class="btn-arrow" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                            </svg>
+                        </a>
+                        <a href="assets/Sumesh_Thakur_CV.pdf" target="_blank" rel="noopener" class="btn btn-secondary">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/>
+                            </svg>
+                            <span>Full Manifest</span>
+                        </a>
                     </div>
+
                     <div class="hero-links">
                         <a href="https://github.com/sumeshthakr" target="_blank" rel="noopener">GitHub</a>
+                        <span class="link-divider">|</span>
                         <a href="https://www.linkedin.com/in/sumeshthkr/" target="_blank" rel="noopener">LinkedIn</a>
-                        <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
-                        <a href="mailto:sumeshthkr@gmail.com">sumeshthkr@gmail.com</a>
+                        <span class="link-divider">|</span>
+                        <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&hl=en" target="_blank" rel="noopener">Scholar</a>
+                        <span class="link-divider">|</span>
+                        <a href="mailto:sumeshthkr@gmail.com">Email</a>
                     </div>
                 </div>
 
-                <aside class="mission-panel reveal" data-delay="80">
-                    <p class="panel-title">Command Profile</p>
-                    <div class="meter-row">
-                        <span>Production Delivery</span>
-                        <div class="meter"><span style="width: 94%"></span></div>
+                <!-- Holographic Stats -->
+                <div class="holo-stats">
+                    <div class="stat-holo">
+                        <span class="stat-value">5+</span>
+                        <span class="stat-label">Years in ML & CV</span>
                     </div>
-                    <div class="meter-row">
-                        <span>Research Rigor</span>
-                        <div class="meter"><span style="width: 91%"></span></div>
+                    <div class="stat-holo">
+                        <span class="stat-value">3</span>
+                        <span class="stat-label">Peer-Reviewed Works</span>
                     </div>
-                    <div class="meter-row">
-                        <span>3D Perception Depth</span>
-                        <div class="meter"><span style="width: 96%"></span></div>
+                    <div class="stat-holo">
+                        <span class="stat-value">3+</span>
+                        <span class="stat-label">Production Systems Shipped</span>
                     </div>
-                    <ul class="quick-facts">
-                        <li><strong>5+ years</strong> in applied ML and CV</li>
-                        <li><strong>8+ publications</strong> including IEEE IGARSS</li>
-                        <li><strong>100K+</strong> images managed for production workflows</li>
-                    </ul>
-                </aside>
+                    <div class="stat-holo">
+                        <span class="stat-value">2</span>
+                        <span class="stat-label">Domains: Research + Industry</span>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <section class="section stats-section">
-            <div class="container stats-grid">
-                <article class="stat-card reveal">
-                    <p class="stat-value" data-counter="5" data-suffix="+">0</p>
-                    <p class="stat-label">Years in ML engineering</p>
-                </article>
-                <article class="stat-card reveal" data-delay="60">
-                    <p class="stat-value" data-counter="8" data-suffix="+">0</p>
-                    <p class="stat-label">Publications and technical papers</p>
-                </article>
-                <article class="stat-card reveal" data-delay="120">
-                    <p class="stat-value" data-counter="3" data-suffix="+">0</p>
-                    <p class="stat-label">Production perception systems shipped</p>
-                </article>
-                <article class="stat-card reveal" data-delay="180">
-                    <p class="stat-value" data-counter="2" data-suffix="">0</p>
-                    <p class="stat-label">Domains balanced: research + industry</p>
-                </article>
-            </div>
-        </section>
-
-        <section id="fit" class="section">
+        <!-- Systems Deployed Section -->
+        <section id="systems" class="systems section" data-cluster="Systems">
             <div class="container">
-                <div class="section-heading reveal">
-                    <p class="eyebrow">Hiring Fit</p>
-                    <h2>What a hiring team gets on day one</h2>
+                <div class="section-header reveal">
+                    <p class="eyebrow">Systems Deployed</p>
+                    <h2>Production perception systems with measurable impact</h2>
                 </div>
-                <div class="fit-grid">
-                    <article class="fit-card reveal">
-                        <h3>Execution under constraints</h3>
-                        <p>
-                            Strong at converting messy requirements into concrete experiments, measurable metrics, and deployable pipelines.
-                        </p>
-                    </article>
-                    <article class="fit-card reveal" data-delay="70">
-                        <h3>Research-backed decisions</h3>
-                        <p>
-                            Comfortable with ablations, benchmarking, and publication-style rigor, while still optimizing for delivery timelines.
-                        </p>
-                    </article>
-                    <article class="fit-card reveal" data-delay="140">
-                        <h3>Cross-functional clarity</h3>
-                        <p>
-                            Communicates with engineering, product, and non-technical stakeholders using clean tradeoff framing and practical next steps.
-                        </p>
-                    </article>
-                </div>
-            </div>
-        </section>
 
-        <section id="systems" class="section systems-section">
-            <div class="container">
-                <div class="section-heading reveal">
-                    <p class="eyebrow">Systems Built</p>
-                    <h2>Selected work with direct business and technical impact</h2>
-                </div>
                 <div class="systems-grid">
+                    <!-- Featured System -->
                     <article class="system-card featured reveal">
-                        <p class="chip">Most Important GitHub Project</p>
-                        <h3>PointCloudSampling</h3>
-                        <p>
+                        <div class="card-header">
+                            <span class="card-badge">Featured Repository</span>
+                            <h3>PointCloudSampling</h3>
+                        </div>
+                        <p class="card-description">
                             Utility library for uniform and Poisson-based downsampling, built for practical 3D preprocessing and rapid experimentation.
                         </p>
-                        <ul>
+                        <ul class="card-features">
                             <li>Faster iteration for perception data pipelines</li>
                             <li>Clear baseline comparisons for sampling quality</li>
                             <li>Reusable foundation for research and demo workflows</li>
                         </ul>
-                        <a class="text-link" href="https://github.com/sumeshthakr/PointCloudSampling" target="_blank" rel="noopener">Open Repository</a>
+                        <div class="card-actions">
+                            <a href="https://github.com/sumeshthakr/PointCloudSampling" target="_blank" rel="noopener" class="btn-link">
+                                <span>Open Repository</span>
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
+                                </svg>
+                            </a>
+                        </div>
                     </article>
 
-                    <article class="system-card reveal" data-delay="60">
-                        <h3>3D Mesh Reconstruction Pipeline</h3>
-                        <p>
+                    <!-- System 2 -->
+                    <article class="system-card reveal" data-delay="100">
+                        <div class="card-header">
+                            <span class="card-company">Falkbuilt</span>
+                            <h3>3D Mesh Reconstruction Pipeline</h3>
+                        </div>
+                        <p class="card-description">
                             Built ETL and reconstruction workflows for architectural mesh assets using Python, MongoDB, and Trimesh.
                         </p>
-                        <p class="meta">Falkbuilt | Production CV pipeline</p>
+                        <p class="card-impact">Production CV pipeline</p>
                     </article>
 
-                    <article class="system-card reveal" data-delay="120">
-                        <h3>Embedded Perception Stack</h3>
-                        <p>
-                            Delivered LiDAR-camera fusion, SLAM, and visual odometry modules on NVIDIA Jetson and related autonomy platforms.
+                    <!-- System 3 -->
+                    <article class="system-card reveal" data-delay="200">
+                        <div class="card-header">
+                            <span class="card-company">JCA Technologies</span>
+                            <h3>Embedded Perception Stack</h3>
+                        </div>
+                        <p class="card-description">
+                            Delivered LiDAR-camera fusion, SLAM, and visual odometry modules on NVIDIA Jetson and autonomy platforms.
                         </p>
-                        <p class="meta">JCA Technologies | Real-time deployment</p>
+                        <p class="card-impact">Real-time deployment</p>
                     </article>
 
-                    <article class="system-card reveal" data-delay="180">
-                        <h3>6 by 6 Accessibility App</h3>
-                        <p>
+                    <!-- System 4 -->
+                    <article class="system-card reveal" data-delay="300">
+                        <div class="card-header">
+                            <span class="card-company">BarrierBreak Solutions</span>
+                            <h3>6 by 6 Accessibility App</h3>
+                        </div>
+                        <p class="card-description">
                             Led Android currency-detection deployment using TensorFlow Lite and large-scale dataset curation for robust edge inference.
                         </p>
-                        <p class="meta">BarrierBreak Solutions | Assistive AI</p>
+                        <p class="card-impact">Assistive AI</p>
                     </article>
                 </div>
             </div>
         </section>
 
-        <section id="research" class="section">
-            <div class="container research-layout">
-                <div class="research-main reveal">
+        <!-- Research Section -->
+        <section id="research" class="research section" data-cluster="Research">
+            <div class="container">
+                <div class="section-header reveal">
                     <p class="eyebrow">Research Depth</p>
-                    <h2>Peer-reviewed work grounded in 3D learning systems</h2>
-                    <div class="pub-list">
-                        <article class="pub-item">
-                            <h3>GAGAT: Global-Aware Graph Attention for 3D Classification and Segmentation</h3>
-                            <p>IEEE IGARSS 2023</p>
-                        </article>
-                        <article class="pub-item">
-                            <h3>Graph Attention Network for Object Detection from Raw LiDAR Data</h3>
-                            <p>IEEE IGARSS 2022</p>
-                        </article>
-                        <article class="pub-item">
-                            <h3>Dynamic Edge Weights in GNNs for 3D Object Detection</h3>
-                            <p>arXiv 2020</p>
-                        </article>
-                    </div>
-                    <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&amp;hl=en" target="_blank" rel="noopener" class="text-link">View Full Publication Record</a>
+                    <h2>Peer-reviewed work in 3D learning and graph systems</h2>
                 </div>
-                <aside class="research-side reveal" data-delay="90">
-                    <h3>Core Stack</h3>
-                    <ul>
-                        <li>Python, C++, CUDA</li>
-                        <li>PyTorch, TensorFlow, OpenCV</li>
-                        <li>ROS2, Docker, MLflow, Airflow</li>
-                        <li>Point clouds, LiDAR fusion, graph models</li>
-                    </ul>
-                </aside>
+
+                <div class="research-layout">
+                    <!-- Publications -->
+                    <div class="research-main">
+                        <div class="pub-list">
+                            <article class="pub-card reveal">
+                                <div class="pub-header">
+                                    <span class="pub-venue">IEEE IGARSS 2023</span>
+                                </div>
+                                <h3>GAGAT: Global-Aware Graph Attention for 3D Classification and Segmentation</h3>
+                                <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&hl=en" target="_blank" rel="noopener" class="pub-link">
+                                    <span>View Paper</span>
+                                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
+                                    </svg>
+                                </a>
+                            </article>
+
+                            <article class="pub-card reveal" data-delay="100">
+                                <div class="pub-header">
+                                    <span class="pub-venue">IEEE IGARSS 2022</span>
+                                </div>
+                                <h3>Graph Attention Network for Object Detection from Raw LiDAR Data</h3>
+                                <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&hl=en" target="_blank" rel="noopener" class="pub-link">
+                                    <span>View Paper</span>
+                                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
+                                    </svg>
+                                </a>
+                            </article>
+
+                            <article class="pub-card reveal" data-delay="200">
+                                <div class="pub-header">
+                                    <span class="pub-venue">arXiv 2020</span>
+                                </div>
+                                <h3>Dynamic Edge Weights in GNNs for 3D Object Detection</h3>
+                                <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&hl=en" target="_blank" rel="noopener" class="pub-link">
+                                    <span>View Preprint</span>
+                                    <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                        <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
+                                    </svg>
+                                </a>
+                            </article>
+                        </div>
+
+                        <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&hl=en" target="_blank" rel="noopener" class="btn-link secondary-link">
+                            <span>View Full Scholar Profile</span>
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z"/>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <!-- Tech Stack -->
+                    <aside class="tech-stack reveal" data-delay="150">
+                        <h3>Core Capabilities</h3>
+                        <ul class="tech-list">
+                            <li>Python, C++, CUDA</li>
+                            <li>PyTorch, TensorFlow, OpenCV</li>
+                            <li>ROS2, Docker, MLflow, Airflow</li>
+                            <li>Point Clouds, LiDAR Fusion, Graph Models</li>
+                        </ul>
+                    </aside>
+                </div>
             </div>
         </section>
 
-        <section id="lab" class="section lab-section">
+        <!-- Interactive Lab Section -->
+        <section id="lab" class="lab section" data-cluster="Lab">
             <div class="container">
-                <div class="section-heading reveal">
+                <div class="section-header reveal">
                     <p class="eyebrow">Interactive Lab</p>
-                    <h2>Hands-on demos that show implementation fluency</h2>
+                    <h2>Hands-on implementations demonstrating technical depth</h2>
                 </div>
+
                 <div class="lab-grid">
                     <article class="lab-card reveal">
-                        <h3>Cornell Box Path Tracer</h3>
-                        <p>Interactive Monte Carlo rendering demo with controllable sampling, depth, lighting, and camera parameters.</p>
-                        <a href="cornell-box.html" class="btn btn-primary">Open Demo</a>
+                        <div class="lab-preview">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M12 2l-5.5 9h11L12 2zm0 3.84L13.93 9h-3.87L12 5.84zM17.5 13c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5zm0 7c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5zM3 21.5h8v-8H3v8zm2-6h4v4H5v-4z"/>
+                            </svg>
+                        </div>
+                        <div class="lab-content">
+                            <h3>Cornell Box Path Tracer</h3>
+                            <p>Interactive Monte Carlo rendering demo with controllable sampling, depth, lighting, and camera parameters.</p>
+                            <a href="cornell-box.html" class="btn-link">
+                                <span>Launch Demo</span>
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                </svg>
+                            </a>
+                        </div>
                     </article>
-                    <article class="lab-card reveal" data-delay="60">
-                        <h3>Point Cloud Processing</h3>
-                        <p>Browser-based downsampling, segmentation, and clustering workflow with performance instrumentation.</p>
-                        <a href="pointcloud.html" class="btn btn-primary">Open Demo</a>
+
+                    <article class="lab-card reveal" data-delay="100">
+                        <div class="lab-preview">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M4 4h16v16H4V4zm2 2v12h12V6H6zm2 2h8v2H8V8zm0 4h5v2H8v-2z"/>
+                            </svg>
+                        </div>
+                        <div class="lab-content">
+                            <h3>Point Cloud Processing</h3>
+                            <p>Browser-based downsampling, segmentation, and clustering workflow with performance instrumentation.</p>
+                            <a href="pointcloud.html" class="btn-link">
+                                <span>Launch Demo</span>
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                </svg>
+                            </a>
+                        </div>
                     </article>
-                    <article class="lab-card reveal" data-delay="120">
-                        <h3>Procedural Terrain Generator</h3>
-                        <p>Realtime procedural 3D terrain synthesis with adjustable noise and camera controls.</p>
-                        <a href="terrain-gen.html" class="btn btn-primary">Open Demo</a>
+
+                    <article class="lab-card reveal" data-delay="200">
+                        <div class="lab-preview">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d="M14 6l-3.75 5 2.85 3.8-1.6 1.2C9.81 13.75 7 10 7 10l-6 8h22L14 6z"/>
+                            </svg>
+                        </div>
+                        <div class="lab-content">
+                            <h3>Procedural Terrain Generator</h3>
+                            <p>Realtime procedural 3D terrain synthesis with adjustable noise and camera controls.</p>
+                            <a href="terrain-gen.html" class="btn-link">
+                                <span>Launch Demo</span>
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+                                </svg>
+                            </a>
+                        </div>
                     </article>
                 </div>
             </div>
         </section>
 
-        <section id="contact" class="section contact-section">
-            <div class="container contact-shell reveal">
-                <div class="contact-copy">
-                    <p class="eyebrow">Contact and Resume</p>
-                    <h2>Open to ML engineer and perception roles.</h2>
-                    <p>
-                        If your team needs someone who can bridge rigorous research and production reliability, I am available for conversation.
-                    </p>
-                </div>
-                <div class="contact-actions">
-                    <a href="assets/Sumesh_Thakur_CV.pdf" target="_blank" rel="noopener" class="btn btn-primary">View Resume</a>
-                    <a href="assets/Sumesh_Thakur_CV.pdf" download class="btn btn-secondary">Download Resume</a>
-                    <a href="mailto:sumeshthkr@gmail.com" class="btn btn-secondary">Email</a>
+        <!-- Contact Section: Comms Link -->
+        <section id="contact" class="contact section" data-cluster="Comms">
+            <div class="container">
+                <div class="contact-wrapper reveal">
+                    <div class="contact-connection">
+                        <div class="connection-status">
+                            <span class="status-indicator"></span>
+                            <span class="status-text">ESTABLISHING CONNECTION...</span>
+                        </div>
+                    </div>
+
+                    <div class="contact-card">
+                        <div class="contact-content">
+                            <p class="eyebrow">Open to New Missions</p>
+                            <h2>Available for ML engineer and perception roles</h2>
+                            <p>
+                                If your team needs someone who bridges rigorous research and production reliability,
+                                I'm available for conversation. Let's discuss how I can contribute to your mission.
+                            </p>
+                        </div>
+
+                        <div class="contact-actions">
+                            <a href="assets/Sumesh_Thakur_CV.pdf" target="_blank" rel="noopener" class="btn btn-primary">
+                                <span>View Resume</span>
+                            </a>
+                            <a href="assets/Sumesh_Thakur_CV.pdf" download class="btn btn-secondary">
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+                                </svg>
+                                <span>Download</span>
+                            </a>
+                            <a href="mailto:sumeshthkr@gmail.com" class="btn btn-secondary">
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                                </svg>
+                                <span>Email</span>
+                            </a>
+                        </div>
+
+                        <div class="contact-links">
+                            <a href="https://github.com/sumeshthakr" target="_blank" rel="noopener">GitHub</a>
+                            <a href="https://www.linkedin.com/in/sumeshthkr/" target="_blank" rel="noopener">LinkedIn</a>
+                            <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&hl=en" target="_blank" rel="noopener">Google Scholar</a>
+                            <a href="assets/Sumesh_Thakur_CV.pdf" target="_blank" rel="noopener">Resume</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
+    <!-- Footer -->
     <footer class="footer">
-        <div class="container footer-content">
-            <p>&copy; <span id="year">2026</span> Sumesh Thakur</p>
-            <div class="footer-links">
-                <a href="https://github.com/sumeshthakr" target="_blank" rel="noopener">GitHub</a>
-                <a href="https://www.linkedin.com/in/sumeshthkr/" target="_blank" rel="noopener">LinkedIn</a>
-                <a href="https://scholar.google.com/citations?user=i9FRNTAAAAAJ&amp;hl=en" target="_blank" rel="noopener">Scholar</a>
-                <a href="assets/Sumesh_Thakur_CV.pdf" target="_blank" rel="noopener">Resume</a>
+        <div class="container">
+            <div class="footer-content">
+                <p class="footer-copyright">&copy; <span id="year">2026</span> Sumesh Thakur</p>
+                <p class="footer-status">All systems nominal</p>
             </div>
         </div>
     </footer>
