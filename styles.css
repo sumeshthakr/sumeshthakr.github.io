@@ -1,35 +1,40 @@
 :root {
-    --primary-color: #0f766e;
-    --primary-light: #14b8a6;
-    --primary-dark: #115e59;
-    --secondary-color: #f97316;
-    --accent-color: #0369a1;
+    --primary-color: #E52521;
+    --primary-light: #FF6F00;
+    --primary-dark: #B71C1C;
+    --secondary-color: #FFD700;
+    --accent-color: #43A047;
 
-    --background-color: #f4f3ee;
-    --surface-color: #fffef9;
-    --surface-strong: #ffffff;
+    --background-color: #E3F2FD;
+    --surface-color: #FFFDE7;
+    --surface-strong: #FFF8E1;
 
-    --text-primary: #102a2c;
-    --text-secondary: #375154;
-    --text-muted: #5d7275;
+    --text-primary: #3E2723;
+    --text-secondary: #5D4037;
+    --text-muted: #8D6E63;
 
-    --border-color: #d8dfdb;
-    --border-light: #e8eeea;
+    --border-color: #D7CCC8;
+    --border-light: #EFEBE9;
 
-    --success-color: #18794e;
-    --warning-color: #b7791f;
+    --success-color: #43A047;
+    --warning-color: #FF6F00;
 
     --radius-sm: 8px;
     --radius-md: 12px;
     --radius-lg: 20px;
 
-    --shadow-sm: 0 2px 8px rgba(16, 42, 44, 0.08);
-    --shadow-md: 0 12px 30px rgba(16, 42, 44, 0.1);
-    --shadow-lg: 0 24px 60px rgba(16, 42, 44, 0.14);
+    --shadow-sm: 0 2px 8px rgba(62, 39, 35, 0.1);
+    --shadow-md: 0 12px 30px rgba(62, 39, 35, 0.12);
+    --shadow-lg: 0 24px 60px rgba(62, 39, 35, 0.16);
 
     --font-body: "Source Sans 3", "Segoe UI", sans-serif;
-    --font-heading: "Space Grotesk", "Segoe UI", sans-serif;
+    --font-heading: "Press Start 2P", "Space Grotesk", sans-serif;
     --font-mono: "IBM Plex Mono", "SFMono-Regular", monospace;
+
+    --mario-brick: #8B4513;
+    --mario-brick-light: #A0522D;
+    --mario-underground: #1A1A2E;
+    --mario-castle: #2C1810;
 }
 
 * {
@@ -83,10 +88,53 @@ ul {
     z-index: -1;
     pointer-events: none;
     background:
-        radial-gradient(1200px 800px at 8% -5%, rgba(15, 118, 110, 0.2), transparent 65%),
-        radial-gradient(800px 600px at 92% 8%, rgba(249, 115, 22, 0.17), transparent 60%),
-        radial-gradient(1000px 700px at 20% 110%, rgba(3, 105, 161, 0.12), transparent 65%),
-        linear-gradient(180deg, #f7f6f1 0%, #f4f3ee 58%, #efeee9 100%);
+        linear-gradient(180deg, #87CEEB 0%, #63C5DA 40%, #B0E0E6 70%, #98D8C8 100%);
+}
+
+.site-bg::before {
+    content: "";
+    position: absolute;
+    top: 8%;
+    left: 5%;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background:
+        /* Cloud 1 */
+        radial-gradient(ellipse 80px 40px at 10% 12%, rgba(255,255,255,0.85) 60%, transparent 61%),
+        radial-gradient(ellipse 60px 35px at 7% 13%, rgba(255,255,255,0.85) 60%, transparent 61%),
+        radial-gradient(ellipse 60px 35px at 13% 13%, rgba(255,255,255,0.85) 60%, transparent 61%),
+        /* Cloud 2 */
+        radial-gradient(ellipse 90px 45px at 55% 8%, rgba(255,255,255,0.8) 60%, transparent 61%),
+        radial-gradient(ellipse 65px 38px at 52% 9%, rgba(255,255,255,0.8) 60%, transparent 61%),
+        radial-gradient(ellipse 65px 38px at 58% 9%, rgba(255,255,255,0.8) 60%, transparent 61%),
+        /* Cloud 3 */
+        radial-gradient(ellipse 70px 35px at 85% 18%, rgba(255,255,255,0.75) 60%, transparent 61%),
+        radial-gradient(ellipse 50px 30px at 82% 19%, rgba(255,255,255,0.75) 60%, transparent 61%),
+        radial-gradient(ellipse 50px 30px at 88% 19%, rgba(255,255,255,0.75) 60%, transparent 61%);
+    animation: floatCloud 30s ease-in-out infinite alternate;
+    will-change: transform;
+}
+
+.site-bg::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -10%;
+    width: 120%;
+    height: 100%;
+    pointer-events: none;
+    background:
+        /* Cloud 4 */
+        radial-gradient(ellipse 100px 50px at 30% 35%, rgba(255,255,255,0.6) 60%, transparent 61%),
+        radial-gradient(ellipse 70px 40px at 27% 36%, rgba(255,255,255,0.6) 60%, transparent 61%),
+        radial-gradient(ellipse 70px 40px at 33% 36%, rgba(255,255,255,0.6) 60%, transparent 61%),
+        /* Cloud 5 */
+        radial-gradient(ellipse 75px 38px at 72% 28%, rgba(255,255,255,0.65) 60%, transparent 61%),
+        radial-gradient(ellipse 55px 32px at 69% 29%, rgba(255,255,255,0.65) 60%, transparent 61%),
+        radial-gradient(ellipse 55px 32px at 75% 29%, rgba(255,255,255,0.65) 60%, transparent 61%);
+    animation: floatCloud 40s ease-in-out infinite alternate-reverse;
+    will-change: transform;
 }
 
 .container {
@@ -137,9 +185,25 @@ ul {
     position: sticky;
     top: 0;
     z-index: 1100;
-    border-bottom: 1px solid rgba(216, 223, 219, 0.8);
-    background: rgba(255, 254, 249, 0.88);
+    border-bottom: 3px solid var(--secondary-color);
+    background:
+        repeating-linear-gradient(
+            90deg,
+            var(--mario-brick) 0px,
+            var(--mario-brick) 48px,
+            #6B3410 48px,
+            #6B3410 50px
+        ),
+        repeating-linear-gradient(
+            0deg,
+            var(--mario-brick) 0px,
+            var(--mario-brick) 22px,
+            #6B3410 22px,
+            #6B3410 24px
+        );
+    background-color: var(--mario-brick);
     backdrop-filter: blur(12px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 }
 
 .nav-container {
@@ -157,7 +221,8 @@ ul {
     font-weight: 700;
     letter-spacing: -0.02em;
     font-size: 1.12rem;
-    color: var(--text-primary);
+    color: #fff;
+    text-shadow: 2px 2px 0 rgba(0,0,0,0.4);
 }
 
 .nav-menu {
@@ -174,13 +239,13 @@ ul {
     font-size: 0.78rem;
     letter-spacing: 0.07em;
     text-transform: uppercase;
-    color: var(--text-secondary);
+    color: rgba(255,255,255,0.85);
     transition: color 0.2s ease;
 }
 
 .nav-link:hover,
 .nav-link.active {
-    color: var(--primary-dark);
+    color: var(--secondary-color);
 }
 
 .hamburger {
@@ -197,7 +262,7 @@ ul {
     width: 22px;
     height: 2px;
     border-radius: 10px;
-    background: var(--text-primary);
+    background: #fff;
     transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
@@ -228,34 +293,37 @@ ul {
 }
 
 .btn:hover {
-    transform: translateY(-1px);
+    animation: blockBounce 0.3s ease;
 }
 
 .btn:disabled {
     opacity: 0.6;
     cursor: not-allowed;
     transform: none;
+    animation: none;
 }
 
 .btn-primary {
     background: linear-gradient(130deg, var(--primary-color), var(--primary-dark));
     color: #fff;
     box-shadow: var(--shadow-sm);
+    border: 2px solid var(--secondary-color);
 }
 
 .btn-primary:hover {
-    box-shadow: var(--shadow-md);
+    box-shadow: 0 6px 20px rgba(229, 37, 33, 0.35);
 }
 
 .btn-secondary {
-    background: #fff;
-    color: var(--text-primary);
-    border: 1px solid var(--border-color);
+    background: var(--accent-color);
+    color: #fff;
+    border: 2px solid #2E7D32;
 }
 
 .btn-secondary:hover {
-    border-color: var(--primary-light);
-    color: var(--primary-dark);
+    background: #388E3C;
+    border-color: var(--secondary-color);
+    color: #fff;
 }
 
 .full-width {
@@ -275,10 +343,10 @@ ul {
 
 .hero-copy,
 .hero-panel {
-    background: rgba(255, 255, 255, 0.66);
-    border: 1px solid rgba(216, 223, 219, 0.95);
+    background: rgba(255, 253, 231, 0.88);
+    border: 3px solid var(--secondary-color);
     border-radius: var(--radius-lg);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-md), inset 0 0 0 1px rgba(255, 215, 0, 0.2);
 }
 
 .hero-copy {
@@ -317,7 +385,7 @@ ul {
 }
 
 .inline-links a:hover {
-    color: var(--primary-dark);
+    color: var(--primary-color);
 }
 
 .hero-panel {
@@ -325,6 +393,22 @@ ul {
     display: flex;
     flex-direction: column;
     gap: 12px;
+    position: relative;
+    background: linear-gradient(145deg, #FFD700, #FFC107);
+    border: 3px solid #B8860B;
+    box-shadow: var(--shadow-md), inset 0 2px 0 rgba(255,255,255,0.4), inset 0 -2px 0 rgba(0,0,0,0.15);
+}
+
+.hero-panel::before {
+    content: "?";
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    color: #8B6914;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+    opacity: 0.4;
 }
 
 .panel-kicker {
@@ -353,14 +437,15 @@ ul {
 }
 
 .hero-panel li::before {
-    content: "";
+    content: "🍄";
     position: absolute;
-    left: 0;
-    top: 0.55em;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--secondary-color);
+    left: -2px;
+    top: 0.15em;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    background: none;
+    font-size: 0.8rem;
 }
 
 .stats-section {
@@ -375,18 +460,35 @@ ul {
 
 .stat-card {
     background: var(--surface-color);
-    border: 1px solid var(--border-color);
+    border: 2px solid var(--secondary-color);
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-sm), inset 0 2px 0 rgba(255,255,255,0.5), inset 0 -2px 0 rgba(0,0,0,0.08);
     padding: 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: "🪙";
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    font-size: 1rem;
+    opacity: 0.5;
 }
 
 .stat-value {
-    color: var(--primary-dark);
+    color: var(--secondary-color);
     font-family: var(--font-heading);
     font-size: clamp(1.7rem, 4vw, 2.4rem);
     font-weight: 700;
     margin-bottom: 6px;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+}
+
+.stat-value:hover {
+    animation: coinSpin 0.6s ease;
 }
 
 .stat-label {
@@ -404,9 +506,18 @@ ul {
 .demo-card,
 .pub-item {
     background: var(--surface-color);
-    border: 1px solid var(--border-color);
+    border: 2px solid var(--border-color);
     border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,0.6);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.work-card:hover,
+.repo-card:hover,
+.demo-card:hover,
+.pub-item:hover {
+    border-color: var(--secondary-color);
+    box-shadow: var(--shadow-md), 0 0 0 1px rgba(255, 215, 0, 0.2);
 }
 
 .work-card {
@@ -446,15 +557,25 @@ ul {
 }
 
 .repo-card.feature {
-    border-color: rgba(15, 118, 110, 0.35);
-    background: linear-gradient(130deg, rgba(20, 184, 166, 0.1), rgba(255, 255, 255, 0.8));
+    border-color: var(--secondary-color);
+    background: linear-gradient(130deg, rgba(255, 215, 0, 0.15), rgba(255, 253, 231, 0.9));
+    position: relative;
+}
+
+.repo-card.feature::after {
+    content: "⭐";
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-size: 1.1rem;
+    animation: starPulse 2s ease-in-out infinite;
 }
 
 .chip {
     display: inline-flex;
     padding: 4px 10px;
     border-radius: 999px;
-    background: rgba(15, 118, 110, 0.14);
+    background: rgba(229, 37, 33, 0.14);
     color: var(--primary-dark);
     font-family: var(--font-mono);
     font-size: 0.74rem;
@@ -462,9 +583,30 @@ ul {
 }
 
 .demos-section {
-    background: rgba(255, 255, 255, 0.44);
-    border-top: 1px solid rgba(216, 223, 219, 0.72);
-    border-bottom: 1px solid rgba(216, 223, 219, 0.72);
+    background: linear-gradient(180deg, #1A1A2E 0%, #16213E 50%, #0F3460 100%);
+    border-top: 4px solid var(--accent-color);
+    border-bottom: 4px solid var(--accent-color);
+    position: relative;
+}
+
+.demos-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: repeating-linear-gradient(90deg, var(--accent-color) 0px, var(--accent-color) 30px, #2E7D32 30px, #2E7D32 32px);
+}
+
+.demos-section .eyebrow,
+.demos-section .section-heading h2,
+.demos-section p {
+    color: rgba(255,255,255,0.9);
+}
+
+.demos-section .text-link {
+    color: var(--secondary-color);
 }
 
 .demo-grid {
@@ -478,6 +620,9 @@ ul {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    background: linear-gradient(145deg, #FFFDE7, #FFF8E1);
+    border: 2px solid var(--secondary-color);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.8);
 }
 
 .demo-card h3 {
@@ -497,7 +642,7 @@ ul {
 
 .resume-copy {
     background: var(--surface-color);
-    border: 1px solid var(--border-color);
+    border: 2px solid var(--border-color);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
     padding: clamp(22px, 3vw, 30px);
@@ -522,19 +667,20 @@ ul {
 }
 
 .resume-points li::before {
-    content: "";
+    content: "⭐";
     position: absolute;
-    top: 0.5em;
-    left: 0;
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: var(--accent-color);
+    top: 0.15em;
+    left: -2px;
+    width: auto;
+    height: auto;
+    border-radius: 0;
+    background: none;
+    font-size: 0.7rem;
 }
 
 .resume-preview {
-    background: #f0f4f3;
-    border: 1px solid var(--border-color);
+    background: #FFF8E1;
+    border: 2px solid var(--border-color);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-sm);
     padding: 14px;
@@ -580,18 +726,32 @@ ul {
 
 .contact-section {
     padding-bottom: 96px;
+    position: relative;
+}
+
+.contact-section::before {
+    content: "";
+    display: block;
+    width: 80px;
+    height: 40px;
+    margin: 0 auto 30px;
+    background: var(--accent-color);
+    border: 3px solid #2E7D32;
+    border-radius: 8px 8px 0 0;
+    box-shadow: inset 0 4px 0 rgba(255,255,255,0.2), inset 0 -4px 0 rgba(0,0,0,0.15);
 }
 
 .contact-wrap {
     padding: clamp(22px, 3vw, 34px);
-    border: 1px solid var(--border-color);
-    background: linear-gradient(120deg, rgba(255, 255, 255, 0.86), rgba(255, 255, 255, 0.72));
+    border: 3px solid var(--accent-color);
+    background: linear-gradient(120deg, rgba(232, 245, 233, 0.92), rgba(200, 230, 201, 0.82));
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-md);
     display: flex;
     justify-content: space-between;
     align-items: center;
     gap: 18px;
+    position: relative;
 }
 
 .contact-wrap h2 {
@@ -606,9 +766,23 @@ ul {
 }
 
 .footer {
-    border-top: 1px solid rgba(216, 223, 219, 0.95);
-    background: rgba(255, 255, 255, 0.62);
-    backdrop-filter: blur(8px);
+    border-top: 4px solid var(--secondary-color);
+    background:
+        repeating-linear-gradient(
+            90deg,
+            var(--mario-castle) 0px,
+            var(--mario-castle) 48px,
+            #1A0F0A 48px,
+            #1A0F0A 50px
+        ),
+        repeating-linear-gradient(
+            0deg,
+            var(--mario-castle) 0px,
+            var(--mario-castle) 22px,
+            #1A0F0A 22px,
+            #1A0F0A 24px
+        );
+    background-color: var(--mario-castle);
 }
 
 .footer-content {
@@ -622,7 +796,7 @@ ul {
 .footer-content p {
     font-family: var(--font-mono);
     font-size: 0.78rem;
-    color: var(--text-muted);
+    color: rgba(255,255,255,0.6);
 }
 
 .footer-links {
@@ -636,24 +810,130 @@ ul {
     font-size: 0.75rem;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    color: var(--text-secondary);
+    color: rgba(255,255,255,0.5);
 }
 
 .footer-links a:hover {
-    color: var(--primary-dark);
+    color: var(--secondary-color);
 }
 
 .reveal {
     opacity: 0;
-    transform: translateY(18px);
-    transition: opacity 0.55s ease, transform 0.55s ease;
+    transform: translateY(24px) scale(0.95);
+    transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
     transition-delay: var(--reveal-delay, 0ms);
 }
 
 .reveal.is-visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
 }
+
+/* ── Mario Keyframe Animations ── */
+
+@keyframes coinSpin {
+    0% { transform: perspective(400px) rotateY(0deg); }
+    50% { transform: perspective(400px) rotateY(180deg); }
+    100% { transform: perspective(400px) rotateY(360deg); }
+}
+
+@keyframes blockBounce {
+    0% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+    50% { transform: translateY(-3px); }
+    70% { transform: translateY(-5px); }
+    100% { transform: translateY(0); }
+}
+
+@keyframes floatCloud {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(30px); }
+}
+
+@keyframes starPulse {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.2); filter: brightness(1.3); }
+}
+
+@keyframes pixelFadeIn {
+    0% { opacity: 0; }
+    25% { opacity: 0.25; }
+    50% { opacity: 0.5; }
+    75% { opacity: 0.75; }
+    100% { opacity: 1; }
+}
+
+/* ── Mario Special Element Classes ── */
+
+.mario-block {
+    background: linear-gradient(145deg, #FFD700, #FFC107);
+    border: 3px solid #B8860B;
+    border-radius: var(--radius-md);
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.4), inset 0 -2px 0 rgba(0,0,0,0.15);
+    position: relative;
+}
+
+.mario-block::before {
+    content: "?";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-heading);
+    font-size: 1.5rem;
+    color: #8B6914;
+    text-shadow: 1px 1px 0 rgba(255,255,255,0.5);
+}
+
+.mario-pipe {
+    width: 80px;
+    height: 50px;
+    margin: 20px auto;
+    background: var(--accent-color);
+    border: 3px solid #2E7D32;
+    border-radius: 8px 8px 0 0;
+    box-shadow: inset 0 4px 0 rgba(255,255,255,0.2), inset 0 -4px 0 rgba(0,0,0,0.15);
+    position: relative;
+}
+
+.mario-pipe::after {
+    content: "";
+    position: absolute;
+    bottom: -12px;
+    left: -6px;
+    right: -6px;
+    height: 12px;
+    background: var(--accent-color);
+    border: 3px solid #2E7D32;
+    border-radius: 4px;
+}
+
+.mario-coin {
+    display: inline-block;
+    animation: coinSpin 2s linear infinite;
+    color: var(--secondary-color);
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+.mario-star {
+    display: inline-block;
+    animation: starPulse 2s ease-in-out infinite;
+}
+
+/* ── Section pipe dividers ── */
+
+.section + .section::before {
+    content: "";
+    display: block;
+    width: 60px;
+    height: 8px;
+    margin: 0 auto 40px;
+    background: var(--accent-color);
+    border-radius: 4px;
+    box-shadow: inset 0 2px 0 rgba(255,255,255,0.3);
+}
+
+/* ── Mobile nav menu override for brick navbar ── */
 
 @media (max-width: 1060px) {
     .hero-grid,
@@ -690,8 +970,8 @@ ul {
         left: 15px;
         right: 15px;
         top: 64px;
-        background: #fff;
-        border: 1px solid var(--border-color);
+        background: var(--mario-brick);
+        border: 2px solid var(--secondary-color);
         border-radius: var(--radius-md);
         box-shadow: var(--shadow-md);
         padding: 14px;
@@ -754,5 +1034,34 @@ ul {
     .bar,
     .text-link::after {
         transition: none;
+    }
+
+    .reveal {
+        animation: none;
+    }
+
+    .btn:hover {
+        animation: none;
+    }
+
+    .stat-value:hover {
+        animation: none;
+    }
+
+    .site-bg::before,
+    .site-bg::after {
+        animation: none;
+    }
+
+    .mario-coin {
+        animation: none;
+    }
+
+    .mario-star {
+        animation: none;
+    }
+
+    .repo-card.feature::after {
+        animation: none;
     }
 }
