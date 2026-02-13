@@ -82,6 +82,20 @@ class MorphingParticleEngine {
 
             this.particleSystem.updateMorphProgress(eased);
 
+            // Apply boids flocking during transition
+            const velocities = this.particleSystem.getVelocities();
+            const positions = this.particleSystem.geometry.attributes.position.array;
+            const targetPositions = this.particleSystem.geometry.attributes.targetPosition.array;
+
+            const newVelocities = this.boidsFlocking.apply(
+                velocities,
+                positions,
+                targetPositions,
+                eased
+            );
+
+            this.particleSystem.setVelocities(newVelocities);
+
             if (progress >= 1.0) {
                 this.isMorphing = false;
                 this.lastFormationChange = currentTime;
@@ -214,6 +228,12 @@ class ParticleSystem {
         this.targetPositions = new Float32Array(this.particleCount * 3);
         this.colors = new Float32Array(this.particleCount * 3);
         this.isRepel = new Float32Array(this.particleCount);
+        this.velocities = new Float32Array(this.particleCount * 3);
+
+        // Initialize velocities to zero
+        for (let i = 0; i < this.particleCount * 3; i++) {
+            this.velocities[i] = 0;
+        }
 
         // Initialize colors to white
         for (let i = 0; i < this.particleCount * 3; i += 3) {
@@ -292,6 +312,14 @@ class ParticleSystem {
 
     setMousePosition(x, y) {
         this.material.uniforms.uMousePosition.value.set(x, y, 0);
+    }
+
+    getVelocities() {
+        return this.velocities;
+    }
+
+    setVelocities(velocities) {
+        this.velocities = velocities;
     }
 }
 
@@ -549,6 +577,17 @@ class BoidsFlocking {
             newVelocities[ix] = vx;
             newVelocities[iy] = vy;
             newVelocities[iz] = vz;
+        }
+
+        // Update positions based on new velocities
+        for (let i = 0; i < this.particleCount; i++) {
+            const ix = i * 3;
+            const iy = i * 3 + 1;
+            const iz = i * 3 + 2;
+
+            positions[ix] += newVelocities[ix];
+            positions[iy] += newVelocities[iy];
+            positions[iz] += newVelocities[iz];
         }
 
         return newVelocities;
