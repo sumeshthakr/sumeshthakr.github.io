@@ -206,3 +206,206 @@ class ParticleSystem {
         this.material.uniforms.uMousePosition.value.set(x, y, 0);
     }
 }
+
+class FormationController {
+    constructor(particleCount) {
+        this.particleCount = particleCount;
+        this.formations = this.defineFormations();
+    }
+
+    defineFormations() {
+        return {
+            spiralGalaxy: { colors: ['#9D4EDD', '#7B2CBF', '#E0AAFF', '#C77DFF'] },
+            ringedPlanet: { colors: ['#FF9500', '#FF6D00', '#FFB347', '#FFCC80'] },
+            nebulaCloud: { colors: ['#00D4FF', '#4A90E2', '#E0E7FF', '#B5C8D8'] },
+            orbitalSphere: { colors: ['#FFFFFF', '#EAF4FF', '#B5C8D8', '#5C748A'] },
+            geometricGrid: { colors: ['#00D4FF', '#4A90E2', '#00FFFF', '#008B8B'] },
+            dnaHelix: { colors: ['#00D4FF', '#4A90E2', '#E0E7FF', '#FFFFFF'] },
+            wormholeTunnel: { colors: ['#9D4EDD', '#E0AAFF', '#00D4FF', '#4A90E2'] },
+            constellationPattern: { colors: ['#EAF4FF', '#FFFFFF', '#B5C8D8', '#5C748A'] }
+        };
+    }
+
+    generateSpiralGalaxy() {
+        const positions = new Float32Array(this.particleCount * 3);
+        const colors = [];
+        const arms = 3;
+        const armSeparation = (Math.PI * 2) / arms;
+        for (let i = 0; i < this.particleCount; i++) {
+            const arm = i % arms;
+            const distance = Math.pow(Math.random(), 0.5) * 30;
+            const angle = arm * armSeparation + distance * 0.3;
+            const x = Math.cos(angle) * distance;
+            const y = Math.sin(angle) * distance * 0.3;
+            const z = (Math.random() - 0.5) * distance * 0.2;
+            positions[i * 3] = x;
+            positions[i * 3 + 1] = y;
+            positions[i * 3 + 2] = z;
+            colors.push(...this.getRandomColor('spiralGalaxy'));
+        }
+        return { positions, colors };
+    }
+
+    generateRingedPlanet() {
+        const positions = new Float32Array(this.particleCount * 3);
+        const colors = [];
+        const sphereCount = Math.floor(this.particleCount * 0.4);
+        const ringCount = this.particleCount - sphereCount;
+        for (let i = 0; i < sphereCount; i++) {
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos(2 * Math.random() - 1);
+            const r = 8;
+            positions[i * 3] = r * Math.sin(phi) * Math.cos(theta);
+            positions[i * 3 + 1] = r * Math.sin(phi) * Math.sin(theta);
+            positions[i * 3 + 2] = r * Math.cos(phi);
+            colors.push(...this.getRandomColor('ringedPlanet'));
+        }
+        for (let i = sphereCount; i < this.particleCount; i++) {
+            const ring = i % 3;
+            const radius = 15 + ring * 5 + Math.random() * 2;
+            const angle = Math.random() * Math.PI * 2;
+            positions[i * 3] = Math.cos(angle) * radius;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 0.5;
+            positions[i * 3 + 2] = Math.sin(angle) * radius;
+            colors.push(...this.getRandomColor('ringedPlanet'));
+        }
+        return { positions, colors };
+    }
+
+    generateNebulaCloud() {
+        const positions = new Float32Array(this.particleCount * 3);
+        const colors = [];
+        const clumps = 5;
+        for (let i = 0; i < this.particleCount; i++) {
+            const clump = i % clumps;
+            const clumpX = Math.cos(clump / clumps * Math.PI * 2) * 15;
+            const clumpY = Math.sin(clump / clumps * Math.PI * 2) * 15;
+            positions[i * 3] = clumpX + (Math.random() - 0.5) * 20;
+            positions[i * 3 + 1] = clumpY + (Math.random() - 0.5) * 20;
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 15;
+            colors.push(...this.getRandomColor('nebulaCloud'));
+        }
+        return { positions, colors };
+    }
+
+    generateOrbitalSphere() {
+        const positions = new Float32Array(this.particleCount * 3);
+        const colors = [];
+        const phi = Math.PI * (3 - Math.sqrt(5));
+        for (let i = 0; i < this.particleCount; i++) {
+            const y = 1 - (i / (this.particleCount - 1)) * 2;
+            const radius = Math.sqrt(1 - y * y);
+            const theta = phi * i;
+            const r = 20;
+            positions[i * 3] = Math.cos(theta) * radius * r;
+            positions[i * 3 + 1] = y * r;
+            positions[i * 3 + 2] = Math.sin(theta) * radius * r;
+            colors.push(...this.getRandomColor('orbitalSphere'));
+        }
+        return { positions, colors };
+    }
+
+    generateGeometricGrid() {
+        const positions = new Float32Array(this.particleCount * 3);
+        const colors = [];
+        const gridSize = Math.ceil(Math.pow(this.particleCount, 1/3));
+        const spacing = 3;
+        const offset = (gridSize * spacing) / 2;
+        let idx = 0;
+        for (let x = 0; x < gridSize && idx < this.particleCount; x++) {
+            for (let y = 0; y < gridSize && idx < this.particleCount; y++) {
+                for (let z = 0; z < gridSize && idx < this.particleCount; z++) {
+                    positions[idx * 3] = x * spacing - offset;
+                    positions[idx * 3 + 1] = y * spacing - offset;
+                    positions[idx * 3 + 2] = z * spacing - offset;
+                    colors.push(...this.getRandomColor('geometricGrid'));
+                    idx++;
+                }
+            }
+        }
+        while (idx < this.particleCount) {
+            positions[idx * 3] = (Math.random() - 0.5) * gridSize * spacing;
+            positions[idx * 3 + 1] = (Math.random() - 0.5) * gridSize * spacing;
+            positions[idx * 3 + 2] = (Math.random() - 0.5) * gridSize * spacing;
+            colors.push(...this.getRandomColor('geometricGrid'));
+            idx++;
+        }
+        return { positions, colors };
+    }
+
+    generateDNAHelix() {
+        const positions = new Float32Array(this.particleCount * 3);
+        const colors = [];
+        const strands = 2;
+        const height = 40;
+        const radius = 10;
+        const turns = 4;
+        for (let i = 0; i < this.particleCount; i++) {
+            const t = i / this.particleCount;
+            const y = (t - 0.5) * height;
+            const angle = t * turns * Math.PI * 2;
+            const strand = i % strands;
+            const strandAngle = strand * Math.PI;
+            positions[i * 3] = Math.cos(angle + strandAngle) * radius;
+            positions[i * 3 + 1] = y;
+            positions[i * 3 + 2] = Math.sin(angle + strandAngle) * radius;
+            colors.push(...this.getRandomColor('dnaHelix'));
+        }
+        return { positions, colors };
+    }
+
+    generateWormholeTunnel() {
+        const positions = new Float32Array(this.particleCount * 3);
+        const colors = [];
+        const radius = 15;
+        const length = 40;
+        for (let i = 0; i < this.particleCount; i++) {
+            const t = i / this.particleCount;
+            const y = (t - 0.5) * length;
+            const angle = t * Math.PI * 4;
+            const x = Math.cos(angle) * radius;
+            const z = Math.sin(angle) * radius;
+            positions[i * 3] = x;
+            positions[i * 3 + 1] = y;
+            positions[i * 3 + 2] = z;
+            colors.push(...this.getRandomColor('wormholeTunnel'));
+        }
+        return { positions, colors };
+    }
+
+    generateConstellationPattern() {
+        const positions = new Float32Array(this.particleCount * 3);
+        const colors = [];
+        for (let i = 0; i < this.particleCount; i++) {
+            positions[i * 3] = (Math.random() - 0.5) * 50;
+            positions[i * 3 + 1] = (Math.random() - 0.5) * 50;
+            positions[i * 3 + 2] = (Math.random() - 0.5) * 20;
+            colors.push(...this.getRandomColor('constellationPattern'));
+        }
+        return { positions, colors };
+    }
+
+    getRandomColor(formation) {
+        const palette = this.formations[formation].colors;
+        return [palette[Math.floor(Math.random() * palette.length)]];
+    }
+
+    getFormation(name) {
+        switch (name) {
+            case 'spiralGalaxy': return this.generateSpiralGalaxy();
+            case 'ringedPlanet': return this.generateRingedPlanet();
+            case 'nebulaCloud': return this.generateNebulaCloud();
+            case 'orbitalSphere': return this.generateOrbitalSphere();
+            case 'geometricGrid': return this.generateGeometricGrid();
+            case 'dnaHelix': return this.generateDNAHelix();
+            case 'wormholeTunnel': return this.generateWormholeTunnel();
+            case 'constellationPattern': return this.generateConstellationPattern();
+            default: return this.generateSpiralGalaxy();
+        }
+    }
+
+    getFormationNames() {
+        return ['spiralGalaxy', 'ringedPlanet', 'nebulaCloud', 'orbitalSphere',
+                'geometricGrid', 'dnaHelix', 'wormholeTunnel', 'constellationPattern'];
+    }
+}
