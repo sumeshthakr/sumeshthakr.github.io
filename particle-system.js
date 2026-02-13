@@ -35,7 +35,8 @@ class MorphingParticleEngine {
     }
 
     init() {
-        // TODO: Initialize Three.js scene
+        this.particleSystem = new ParticleSystem(2000);
+        this.scene.add(this.particleSystem.init());
     }
 
     animate() {
@@ -106,3 +107,93 @@ void main() {
     gl_FragColor = vec4(vColor, alpha);
 }
 `;
+
+class ParticleSystem {
+    constructor(particleCount = 2000) {
+        this.particleCount = particleCount;
+        this.geometry = new THREE.BufferGeometry();
+        this.material = null;
+        this.points = null;
+        this.positions = null;
+        this.targetPositions = null;
+        this.colors = null;
+        this.isRepel = null;  // Repel/attract mode per particle
+    }
+
+    init() {
+        // Initialize arrays
+        this.positions = new Float32Array(this.particleCount * 3);
+        this.targetPositions = new Float32Array(this.particleCount * 3);
+        this.colors = new Float32Array(this.particleCount * 3);
+        this.isRepel = new Float32Array(this.particleCount);
+
+        // Random initial positions
+        for (let i = 0; i < this.particleCount; i++) {
+            this.positions[i * 3] = (Math.random() - 0.5) * 100;
+            this.positions[i * 3 + 1] = (Math.random() - 0.5) * 100;
+            this.positions[i * 3 + 2] = (Math.random() - 0.5) * 100;
+
+            // Random repel/attract mode
+            this.isRepel[i] = Math.random() > 0.5 ? 1.0 : 0.0;
+
+            // Initial target = current
+            this.targetPositions[i * 3] = this.positions[i * 3];
+            this.targetPositions[i * 3 + 1] = this.positions[i * 3 + 1];
+            this.targetPositions[i * 3 + 2] = this.positions[i * 3 + 2];
+        }
+
+        // Set attributes
+        this.geometry.setAttribute('position', new THREE.BufferAttribute(this.positions, 3));
+        this.geometry.setAttribute('targetPosition', new THREE.BufferAttribute(this.targetPositions, 3));
+        this.geometry.setAttribute('isRepel', new THREE.BufferAttribute(this.isRepel, 1));
+        this.geometry.setAttribute('morphProgress', new THREE.BufferAttribute(new Float32Array(this.particleCount), 1));
+
+        // Create material
+        this.material = new THREE.ShaderMaterial({
+            vertexShader: VERTEX_SHADER,
+            fragmentShader: FRAGMENT_SHADER,
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false,
+            uniforms: {
+                uTime: { value: 0 },
+                uMorphProgress: { value: 0 },
+                uMousePosition: { value: new THREE.Vector3(9999, 9999, 0) },
+                uMouseInfluence: { value: 150 }
+            }
+        });
+
+        this.points = new THREE.Points(this.geometry, this.material);
+        return this.points;
+    }
+
+    setTargetPositions(positions, colors) {
+        const targetAttr = this.geometry.attributes.targetPosition;
+        const colorAttr = this.geometry.attributes.color;
+
+        if (!colorAttr) {
+            this.geometry.setAttribute('color', new THREE.BufferAttribute(new Float32Array(this.particleCount * 3), 3));
+        }
+
+        for (let i = 0; i < this.particleCount; i++) {
+            targetAttr.setXYZ(i, positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
+
+            const r = parseInt(colors[i * 3].slice(1, 3), 16) / 255;
+            const g = parseInt(colors[i * 3 + 1].slice(1, 3), 16) / 255;
+            const b = parseInt(colors[i * 3 + 2].slice(1, 3), 16) / 255;
+
+            this.geometry.attributes.color.setXYZ(i, r, g, b);
+        }
+
+        targetAttr.needsUpdate = true;
+        this.geometry.attributes.color.needsUpdate = true;
+    }
+
+    updateMorphProgress(progress) {
+        this.material.uniforms.uMorphProgress.value = progress;
+    }
+
+    setMousePosition(x, y) {
+        this.material.uniforms.uMousePosition.value.set(x, y, 0);
+    }
+}
