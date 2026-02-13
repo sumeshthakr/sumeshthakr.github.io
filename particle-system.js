@@ -16,9 +16,16 @@ class MorphingParticleEngine {
             alpha: true
         });
         this.clock = new THREE.Clock();
-        this.particleSystems = [];
-        this.currentFormation = 0;
-        this.isTransitioning = false;
+
+        // Formation cycling properties
+        this.formationNames = ['spiralGalaxy', 'ringedPlanet', 'nebulaCloud', 'orbitalSphere',
+                               'geometricGrid', 'dnaHelix', 'wormholeTunnel', 'constellationPattern'];
+        this.currentFormationIndex = 0;
+        this.formationDisplayTime = 5000;  // 5 seconds
+        this.morphDuration = 1500;  // 1.5 seconds
+        this.lastFormationChange = 0;
+        this.isMorphing = false;
+        this.morphStartTime = 0;
 
         // Initial sizing
         this.updateRendererSize();
@@ -35,12 +42,92 @@ class MorphingParticleEngine {
     }
 
     init() {
-        this.particleSystem = new ParticleSystem(2000);
+        this.particleCount = 2000;
+        this.formationController = new FormationController(this.particleCount);
+        this.particleSystem = new ParticleSystem(this.particleCount);
         this.scene.add(this.particleSystem.init());
+
+        // Set initial formation
+        const initialFormation = this.formationController.getFormation(this.formationNames[0]);
+        this.particleSystem.setTargetPositions(initialFormation.positions, initialFormation.colors);
+
+        // Start animation
+        this.animate();
+
+        // Setup mouse interaction
+        this.setupMouseInteraction();
     }
 
     animate() {
-        // TODO: Animation loop
+        requestAnimationFrame(() => this.animate());
+
+        const time = this.clock.getElapsedTime();
+        const currentTime = Date.now();
+
+        // Check if it's time to change formation
+        if (!this.isMorphing && currentTime - this.lastFormationChange > this.formationDisplayTime) {
+            this.startMorph(currentTime);
+        }
+
+        // Update morph progress
+        if (this.isMorphing) {
+            const morphElapsed = currentTime - this.morphStartTime;
+            const progress = Math.min(morphElapsed / this.morphDuration, 1.0);
+
+            // Ease in-out cubic
+            const eased = progress < 0.5
+                ? 4 * progress * progress * progress
+                : 1 - Math.pow(-2 * progress + 2, 3) / 2;
+
+            this.particleSystem.updateMorphProgress(eased);
+
+            if (progress >= 1.0) {
+                this.isMorphing = false;
+                this.lastFormationChange = currentTime;
+            }
+        }
+
+        // Rotate entire system slowly
+        if (this.particleSystem.points) {
+            this.particleSystem.points.rotation.y = time * 0.05;
+        }
+
+        this.renderer.render(this.scene, this.camera);
+    }
+
+    setupMouseInteraction() {
+        this.mouse = new THREE.Vector2(9999, 9999);  // Start off-screen
+
+        document.addEventListener('mousemove', (e) => {
+            // Convert to normalized device coordinates
+            this.mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+            this.mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+            // Update particle system
+            this.particleSystem.setMousePosition(this.mouse.x * 50, this.mouse.y * 50);
+        });
+
+        document.addEventListener('mouseleave', () => {
+            this.mouse.set(9999, 9999);
+            this.particleSystem.setMousePosition(9999, 9999);
+        });
+    }
+
+    startMorph(currentTime) {
+        this.isMorphing = true;
+        this.morphStartTime = currentTime;
+
+        // Move to next formation
+        this.currentFormationIndex = (this.currentFormationIndex + 1) % this.formationNames.length;
+        const nextFormation = this.formationController.getFormation(
+            this.formationNames[this.currentFormationIndex]
+        );
+
+        // Set new targets
+        this.particleSystem.setTargetPositions(nextFormation.positions, nextFormation.colors);
+
+        // Reset morph progress
+        this.particleSystem.updateMorphProgress(0);
     }
 }
 
