@@ -15,23 +15,23 @@ class MorphingParticleEngine {
             antialias: true,
             alpha: true
         });
-        this.renderer.setSize(window.innerWidth, window.innerHeight);
-        this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
         this.clock = new THREE.Clock();
         this.particleSystems = [];
         this.currentFormation = 0;
         this.isTransitioning = false;
 
-        this.handleResize();
+        // Initial sizing
+        this.updateRendererSize();
+
+        // Bind resize handler once
+        this.resizeHandler = () => this.updateRendererSize();
+        window.addEventListener('resize', this.resizeHandler);
     }
 
-    handleResize() {
-        window.addEventListener('resize', () => {
-            this.camera.aspect = window.innerWidth / window.innerHeight;
-            this.camera.updateProjectionMatrix();
-            this.renderer.setSize(window.innerWidth, window.innerHeight);
-        });
+    updateRendererSize() {
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
     init() {
