@@ -42,3 +42,65 @@ class MorphingParticleEngine {
         // TODO: Animation loop
     }
 }
+
+const VERTEX_SHADER = `
+attribute vec3 targetPosition;
+attribute vec3 velocity;
+attribute float morphProgress;
+attribute vec3 color;
+
+varying vec3 vColor;
+varying float vMorphProgress;
+
+uniform float uTime;
+uniform float uMorphProgress;
+uniform vec3 uMousePosition;
+uniform float uMouseInfluence;
+uniform bool uIsRepel;  // Per-particle repel/attract mode
+
+void main() {
+    vColor = color;
+    vMorphProgress = morphProgress;
+
+    vec3 pos = position;
+    vec3 target = targetPosition;
+
+    // Morph interpolation
+    vec3 morphPos = mix(pos, target, uMorphProgress);
+
+    // Mouse interaction
+    float dist = distance(morphPos.xy, uMousePosition.xy);
+    float influence = smoothstep(200.0, 0.0, dist);
+
+    if (uIsRepel) {
+        morphPos.xy += normalize(morphPos.xy - uMousePosition.xy) * influence * uMouseInfluence;
+    } else {
+        morphPos.xy += normalize(uMousePosition.xy - morphPos.xy) * influence * uMouseInfluence * 0.6;
+    }
+
+    vec4 mvPosition = modelViewMatrix * vec4(morphPos, 1.0);
+    gl_PointSize = (300.0 / -mvPosition.z);
+    gl_Position = projectionMatrix * mvPosition;
+}
+`;
+
+const FRAGMENT_SHADER = `
+varying vec3 vColor;
+varying float vMorphProgress;
+
+void main() {
+    // Circular particle with glow
+    vec2 center = gl_PointCoord - vec2(0.5);
+    float dist = length(center);
+
+    if (dist > 0.5) {
+        discard;
+    }
+
+    // Glow effect
+    float alpha = 1.0 - smoothstep(0.0, 0.5, dist);
+    alpha *= 0.8 + vMorphProgress * 0.2;  // Slight brightening during morph
+
+    gl_FragColor = vec4(vColor, alpha);
+}
+`;
