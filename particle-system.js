@@ -127,6 +127,13 @@ class ParticleSystem {
         this.colors = new Float32Array(this.particleCount * 3);
         this.isRepel = new Float32Array(this.particleCount);
 
+        // Initialize colors to white
+        for (let i = 0; i < this.particleCount * 3; i += 3) {
+            this.colors[i] = 1.0;
+            this.colors[i + 1] = 1.0;
+            this.colors[i + 2] = 1.0;
+        }
+
         // Random initial positions
         for (let i = 0; i < this.particleCount; i++) {
             this.positions[i * 3] = (Math.random() - 0.5) * 100;
@@ -146,6 +153,7 @@ class ParticleSystem {
         this.geometry.setAttribute('position', new THREE.BufferAttribute(this.positions, 3));
         this.geometry.setAttribute('targetPosition', new THREE.BufferAttribute(this.targetPositions, 3));
         this.geometry.setAttribute('isRepel', new THREE.BufferAttribute(this.isRepel, 1));
+        this.geometry.setAttribute('color', new THREE.BufferAttribute(this.colors, 3));
         this.geometry.setAttribute('morphProgress', new THREE.BufferAttribute(new Float32Array(this.particleCount), 1));
 
         // Create material
@@ -159,7 +167,8 @@ class ParticleSystem {
                 uTime: { value: 0 },
                 uMorphProgress: { value: 0 },
                 uMousePosition: { value: new THREE.Vector3(9999, 9999, 0) },
-                uMouseInfluence: { value: 150 }
+                uMouseInfluence: { value: 150 },
+                uIsRepel: { value: false }
             }
         });
 
