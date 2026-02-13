@@ -44,9 +44,9 @@ class MorphingParticleEngine {
 }
 
 const VERTEX_SHADER = `
+precision mediump float;
+
 attribute vec3 targetPosition;
-attribute vec3 velocity;
-attribute float morphProgress;
 attribute vec3 color;
 
 varying vec3 vColor;
@@ -56,11 +56,11 @@ uniform float uTime;
 uniform float uMorphProgress;
 uniform vec3 uMousePosition;
 uniform float uMouseInfluence;
-uniform bool uIsRepel;  // Per-particle repel/attract mode
+uniform bool uIsRepel;
 
 void main() {
     vColor = color;
-    vMorphProgress = morphProgress;
+    vMorphProgress = 0.0; // Not used in vertex shader, but passed to fragment
 
     vec3 pos = position;
     vec3 target = targetPosition;
@@ -79,12 +79,14 @@ void main() {
     }
 
     vec4 mvPosition = modelViewMatrix * vec4(morphPos, 1.0);
-    gl_PointSize = (300.0 / -mvPosition.z);
+    gl_PointSize = max(1.0, 300.0 / max(-mvPosition.z, 0.1));
     gl_Position = projectionMatrix * mvPosition;
 }
 `;
 
 const FRAGMENT_SHADER = `
+precision mediump float;
+
 varying vec3 vColor;
 varying float vMorphProgress;
 
