@@ -45,6 +45,7 @@ class MorphingParticleEngine {
         this.particleCount = 2000;
         this.formationController = new FormationController(this.particleCount);
         this.particleSystem = new ParticleSystem(this.particleCount);
+        this.boidsFlocking = new BoidsFlocking(this.particleCount);
         this.scene.add(this.particleSystem.init());
 
         // Set initial formation
@@ -494,5 +495,155 @@ class FormationController {
     getFormationNames() {
         return ['spiralGalaxy', 'ringedPlanet', 'nebulaCloud', 'orbitalSphere',
                 'geometricGrid', 'dnaHelix', 'wormholeTunnel', 'constellationPattern'];
+    }
+}
+
+class BoidsFlocking {
+    constructor(particleCount, neighborRadius = 5) {
+        this.particleCount = particleCount;
+        this.neighborRadius = neighborRadius;
+        this.separationWeight = 1.5;
+        this.alignmentWeight = 1.0;
+        this.cohesionWeight = 1.0;
+        this.maxForce = 0.5;
+        this.maxSpeed = 2.0;
+    }
+
+    apply(velocities, positions, targetPositions, morphProgress) {
+        // Only apply during morph transition
+        if (morphProgress < 0.1 || morphProgress > 0.9) {
+            return velocities;
+        }
+
+        const newVelocities = new Float32Array(velocities.length);
+
+        for (let i = 0; i < this.particleCount; i++) {
+            const ix = i * 3;
+            const iy = i * 3 + 1;
+            const iz = i * 3 + 2;
+
+            // Calculate boids forces
+            const separation = this.calculateSeparation(i, positions);
+            const alignment = this.calculateAlignment(i, positions, velocities);
+            const cohesion = this.calculateCohesion(i, positions);
+
+            // Combine forces
+            let vx = velocities[ix] + separation.x * this.separationWeight
+                               + alignment.x * this.alignmentWeight
+                               + cohesion.x * this.cohesionWeight;
+            let vy = velocities[iy] + separation.y * this.separationWeight
+                               + alignment.y * this.alignmentWeight
+                               + cohesion.y * this.cohesionWeight;
+            let vz = velocities[iz] + separation.z * this.separationWeight
+                               + alignment.z * this.alignmentWeight
+                               + cohesion.z * this.cohesionWeight;
+
+            // Limit force
+            const speed = Math.sqrt(vx * vx + vy * vy + vz * vz);
+            if (speed > this.maxForce) {
+                vx = (vx / speed) * this.maxForce;
+                vy = (vy / speed) * this.maxForce;
+                vz = (vz / speed) * this.maxForce;
+            }
+
+            newVelocities[ix] = vx;
+            newVelocities[iy] = vy;
+            newVelocities[iz] = vz;
+        }
+
+        return newVelocities;
+    }
+
+    calculateSeparation(index, positions) {
+        let steerX = 0, steerY = 0, steerZ = 0;
+        let count = 0;
+
+        for (let i = 0; i < this.particleCount; i++) {
+            if (i === index) continue;
+
+            const dx = positions[index * 3] - positions[i * 3];
+            const dy = positions[index * 3 + 1] - positions[i * 3 + 1];
+            const dz = positions[index * 3 + 2] - positions[i * 3 + 2];
+            const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            if (dist < 2 && dist > 0) {
+                steerX += dx / dist;
+                steerY += dy / dist;
+                steerZ += dz / dist;
+                count++;
+            }
+        }
+
+        if (count > 0) {
+            steerX /= count;
+            steerY /= count;
+            steerZ /= count;
+        }
+
+        return { x: steerX, y: steerY, z: steerZ };
+    }
+
+    calculateAlignment(index, positions, velocities) {
+        let avgVx = 0, avgVy = 0, avgVz = 0;
+        let count = 0;
+
+        for (let i = 0; i < this.particleCount; i++) {
+            if (i === index) continue;
+
+            const dx = positions[index * 3] - positions[i * 3];
+            const dy = positions[index * 3 + 1] - positions[i * 3 + 1];
+            const dz = positions[index * 3 + 2] - positions[i * 3 + 2];
+            const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            if (dist < this.neighborRadius) {
+                avgVx += velocities[i * 3];
+                avgVy += velocities[i * 3 + 1];
+                avgVz += velocities[i * 3 + 2];
+                count++;
+            }
+        }
+
+        if (count > 0) {
+            avgVx /= count;
+            avgVy /= count;
+            avgVz /= count;
+        }
+
+        return { x: avgVx * 0.1, y: avgVy * 0.1, z: avgVz * 0.1 };
+    }
+
+    calculateCohesion(index, positions) {
+        let centerX = 0, centerY = 0, centerZ = 0;
+        let count = 0;
+
+        for (let i = 0; i < this.particleCount; i++) {
+            if (i === index) continue;
+
+            const dx = positions[index * 3] - positions[i * 3];
+            const dy = positions[index * 3 + 1] - positions[i * 3 + 1];
+            const dz = positions[index * 3 + 2] - positions[i * 3 + 2];
+            const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+            if (dist < this.neighborRadius) {
+                centerX += positions[i * 3];
+                centerY += positions[i * 3 + 1];
+                centerZ += positions[i * 3 + 2];
+                count++;
+            }
+        }
+
+        if (count > 0) {
+            centerX /= count;
+            centerY /= count;
+            centerZ /= count;
+
+            return {
+                x: (centerX - positions[index * 3]) * 0.01,
+                y: (centerY - positions[index * 3 + 1]) * 0.01,
+                z: (centerZ - positions[index * 3 + 2]) * 0.01
+            };
+        }
+
+        return { x: 0, y: 0, z: 0 };
     }
 }
