@@ -8,129 +8,9 @@
 // ============================================
 
 const CONFIG = {
-    starCount: 300,
-    starSpeed: 0.05,
-    warpSpeed: 2,
-    warpDuration: 800,
     audioEnabled: false,
     audioVolume: 0.2
 };
-
-// ============================================
-// Starfield Animation
-// ============================================
-
-class Starfield {
-    constructor(canvas) {
-        this.canvas = canvas;
-        this.ctx = canvas.getContext('2d');
-        this.stars = [];
-        this.isWarping = false;
-        this.resize();
-        this.initStars();
-        this.animate();
-
-        window.addEventListener('resize', () => this.resize());
-    }
-
-    resize() {
-        this.canvas.width = window.innerWidth;
-        this.canvas.height = window.innerHeight;
-        this.centerX = this.canvas.width / 2;
-        this.centerY = this.canvas.height / 2;
-    }
-
-    initStars() {
-        this.stars = [];
-        for (let i = 0; i < CONFIG.starCount; i++) {
-            this.stars.push(this.createStar());
-        }
-    }
-
-    createStar() {
-        return {
-            x: Math.random() * this.canvas.width - this.centerX,
-            y: Math.random() * this.canvas.height - this.centerY,
-            z: Math.random() * 1000,
-            size: Math.random() * 1.5 + 0.5
-        };
-    }
-
-    update(speed = CONFIG.starSpeed) {
-        this.stars.forEach(star => {
-            star.z -= speed * 10;
-
-            if (star.z <= 0) {
-                Object.assign(star, this.createStar());
-                star.z = 1000;
-            }
-        });
-    }
-
-    draw() {
-        this.ctx.fillStyle = '#0a0e1a';
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-        // Draw subtle nebula effect
-        const gradient = this.ctx.createRadialGradient(
-            this.centerX, this.centerY, 0,
-            this.centerX, this.centerY, Math.max(this.canvas.width, this.canvas.height)
-        );
-        gradient.addColorStop(0, 'rgba(10, 14, 26, 0)');
-        gradient.addColorStop(0.5, 'rgba(15, 20, 31, 0.3)');
-        gradient.addColorStop(1, 'rgba(10, 14, 26, 0)');
-
-        this.ctx.fillStyle = gradient;
-        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-
-        // Draw stars
-        this.stars.forEach(star => {
-            const scale = 1000 / star.z;
-            const x = star.x * scale + this.centerX;
-            const y = star.y * scale + this.centerY;
-            const size = star.size * scale;
-            const opacity = Math.min(1, (1000 - star.z) / 500);
-
-            if (x < 0 || x > this.canvas.width || y < 0 || y > this.canvas.height) {
-                return;
-            }
-
-            this.ctx.beginPath();
-
-            if (this.isWarping) {
-                // Draw star streak during warp
-                const prevScale = 1000 / (star.z + 50);
-                const prevX = star.x * prevScale + this.centerX;
-                const prevY = star.y * prevScale + this.centerY;
-
-                this.ctx.strokeStyle = `rgba(234, 244, 255, ${opacity * 0.8})`;
-                this.ctx.lineWidth = size * 0.5;
-                this.ctx.moveTo(prevX, prevY);
-                this.ctx.lineTo(x, y);
-                this.ctx.stroke();
-            } else {
-                // Draw normal star
-                this.ctx.fillStyle = `rgba(234, 244, 255, ${opacity})`;
-                this.ctx.arc(x, y, size, 0, Math.PI * 2);
-                this.ctx.fill();
-            }
-        });
-    }
-
-    animate() {
-        this.update(this.isWarping ? CONFIG.warpSpeed : CONFIG.starSpeed);
-        this.draw();
-        requestAnimationFrame(() => this.animate());
-    }
-
-    warp() {
-        if (this.isWarping) return;
-        this.isWarping = true;
-        setTimeout(() => {
-            this.isWarping = false;
-        }, CONFIG.warpDuration);
-    }
-}
 
 // ============================================
 // Navigation & Scroll
@@ -350,9 +230,12 @@ class AudioManager {
 // ============================================
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Initialize starfield
-    const starfieldCanvas = document.getElementById('starfield');
-    const starfield = new Starfield(starfieldCanvas);
+    // Initialize Morphing Particle System
+    const canvas = document.getElementById('starfield');
+    if (canvas && typeof MorphingParticleEngine !== 'undefined') {
+        window.particleEngine = new MorphingParticleEngine(canvas);
+        window.particleEngine.init();
+    }
 
     // Initialize navigation
     const nav = new Navigation();
@@ -364,31 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const audioToggle = document.getElementById('audioToggle');
     if (audioToggle) {
         const audioManager = new AudioManager(audioToggle);
-
-        // Warp effect on section transitions
-        const sections = document.querySelectorAll('.section[data-cluster]');
-        let currentSectionIndex = -1;
-
-        const observerOptions = {
-            root: null,
-            rootMargin: '-50% 0px -50% 0px',
-            threshold: 0
-        };
-
-        const sectionObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    const newIndex = Array.from(sections).indexOf(entry.target);
-                    if (newIndex !== currentSectionIndex && currentSectionIndex !== -1) {
-                        starfield.warp();
-                        audioManager.playTransitionSound();
-                    }
-                    currentSectionIndex = newIndex;
-                }
-            });
-        }, observerOptions);
-
-        sections.forEach(section => sectionObserver.observe(section));
+        audioManager.playTransitionSound = audioManager.playTransitionSound.bind(audioManager);
     }
 
     // Update copyright year
@@ -410,11 +269,5 @@ document.addEventListener('DOMContentLoaded', () => {
 // ============================================
 
 if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    CONFIG.starSpeed = 0.02;
-    CONFIG.warpDuration = 400;
-}
-
-// Detect low-end devices and reduce star count
-if (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) {
-    CONFIG.starCount = 150;
+    // Particle system will handle reduced motion
 }
