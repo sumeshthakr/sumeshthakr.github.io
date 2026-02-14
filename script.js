@@ -233,8 +233,15 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize Morphing Particle System
     const canvas = document.getElementById('starfield');
     if (canvas && typeof MorphingParticleEngine !== 'undefined') {
-        window.particleEngine = new MorphingParticleEngine(canvas);
-        window.particleEngine.init();
+        try {
+            window.particleEngine = new MorphingParticleEngine(canvas);
+            window.particleEngine.init();
+            console.log('Morphing particle system initialized successfully');
+        } catch (error) {
+            console.error('Failed to initialize morphing particle system:', error);
+        }
+    } else {
+        console.warn('Could not initialize morphing particle system - canvas or MorphingParticleEngine not available');
     }
 
     // Initialize navigation
