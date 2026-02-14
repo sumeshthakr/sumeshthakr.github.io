@@ -213,11 +213,16 @@ void main() {
         discard;
     }
 
-    // Glow effect
+    // Enhanced glow with falloff
     float alpha = 1.0 - smoothstep(0.0, 0.5, dist);
-    alpha *= 0.8 + vMorphProgress * 0.2;  // Slight brightening during morph
+    alpha = pow(alpha, 1.5);  // Sharper falloff
+    alpha *= 0.7 + vMorphProgress * 0.3;  // Brighten during morph
 
-    gl_FragColor = vec4(vColor, alpha);
+    // Add rim lighting effect
+    float rim = 1.0 - dist * 2.0;
+    vec3 finalColor = vColor + vec3(rim * 0.2);
+
+    gl_FragColor = vec4(finalColor, alpha * 0.9);
 }
 `;
 
