@@ -6,6 +6,18 @@
 class MorphingParticleEngine {
     constructor(canvas) {
         this.canvas = canvas;
+
+        // Detect device capability and adjust particle count
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        const cores = navigator.hardwareConcurrency || 4;
+
+        let particleCount = 2000;
+        if (isMobile || cores <= 2) {
+            particleCount = 1000;
+        }
+
+        this.particleCount = particleCount;
+
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.camera.position.z = 50;
@@ -42,7 +54,6 @@ class MorphingParticleEngine {
     }
 
     init() {
-        this.particleCount = 2000;
         this.formationController = new FormationController(this.particleCount);
         this.particleSystem = new ParticleSystem(this.particleCount);
         this.boidsFlocking = new BoidsFlocking(this.particleCount);
