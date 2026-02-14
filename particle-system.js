@@ -22,11 +22,19 @@ class MorphingParticleEngine {
         this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         this.camera.position.z = 50;
 
-        this.renderer = new THREE.WebGLRenderer({
-            canvas: canvas,
-            antialias: true,
-            alpha: true
-        });
+        try {
+            this.renderer = new THREE.WebGLRenderer({
+                canvas: canvas,
+                antialias: true,
+                alpha: true
+            });
+        } catch (e) {
+            console.error('WebGL not supported:', e);
+            // Fallback: hide canvas, show solid background
+            this.canvas.style.display = 'none';
+            document.body.style.background = 'var(--deep-space)';
+            return;
+        }
         this.clock = new THREE.Clock();
 
         // Formation cycling properties
