@@ -318,9 +318,10 @@ class ParticleSystem {
         for (let i = 0; i < this.particleCount; i++) {
             targetAttr.setXYZ(i, positions[i * 3], positions[i * 3 + 1], positions[i * 3 + 2]);
 
-            const r = parseInt(colors[i * 3].slice(1, 3), 16) / 255;
-            const g = parseInt(colors[i * 3 + 1].slice(1, 3), 16) / 255;
-            const b = parseInt(colors[i * 3 + 2].slice(1, 3), 16) / 255;
+            const color = colors[i];
+            const r = parseInt(color.slice(1, 3), 16) / 255;
+            const g = parseInt(color.slice(3, 5), 16) / 255;
+            const b = parseInt(color.slice(5, 7), 16) / 255;
 
             this.geometry.attributes.color.setXYZ(i, r, g, b);
         }
