@@ -42,7 +42,7 @@ class MorphingParticleEngine {
                                'geometricGrid', 'dnaHelix', 'wormholeTunnel', 'constellationPattern'];
         this.currentFormationIndex = 0;
         this.formationDisplayTime = 5000;  // 5 seconds
-        this.morphDuration = 1500;  // 1.5 seconds
+        this.morphDuration = 3000;  // 3 seconds for smoother transitions
         this.lastFormationChange = 0;
         this.isMorphing = false;
         this.morphStartTime = 0;
@@ -190,14 +190,20 @@ void main() {
     // Morph interpolation
     vec3 morphPos = mix(pos, target, uMorphProgress);
 
-    // Mouse interaction
+    // Add subtle organic floating movement
+    float floatAmount = 0.3;
+    morphPos.x += sin(uTime * 0.5 + pos.y * 0.1) * floatAmount;
+    morphPos.y += cos(uTime * 0.3 + pos.x * 0.1) * floatAmount;
+    morphPos.z += sin(uTime * 0.4 + pos.x * 0.05) * floatAmount;
+
+    // Mouse interaction - gentle, flowy movement
     float dist = distance(morphPos.xy, uMousePosition.xy);
-    float influence = smoothstep(200.0, 0.0, dist);
+    float influence = smoothstep(150.0, 0.0, dist);
 
     if (uIsRepel) {
-        morphPos.xy += normalize(morphPos.xy - uMousePosition.xy) * influence * uMouseInfluence;
+        morphPos.xy += normalize(morphPos.xy - uMousePosition.xy) * influence * uMouseInfluence * 0.5;
     } else {
-        morphPos.xy += normalize(uMousePosition.xy - morphPos.xy) * influence * uMouseInfluence * 0.6;
+        morphPos.xy += normalize(uMousePosition.xy - morphPos.xy) * influence * uMouseInfluence * 0.3;
     }
 
     vec4 mvPosition = modelViewMatrix * vec4(morphPos, 1.0);
@@ -298,7 +304,7 @@ class ParticleSystem {
                 uTime: { value: 0 },
                 uMorphProgress: { value: 0 },
                 uMousePosition: { value: new THREE.Vector3(9999, 9999, 0) },
-                uMouseInfluence: { value: 150 },
+                uMouseInfluence: { value: 50 },
                 uIsRepel: { value: false }
             }
         });
@@ -554,11 +560,11 @@ class BoidsFlocking {
     constructor(particleCount, neighborRadius = 5) {
         this.particleCount = particleCount;
         this.neighborRadius = neighborRadius;
-        this.separationWeight = 1.5;
-        this.alignmentWeight = 1.0;
-        this.cohesionWeight = 1.0;
-        this.maxForce = 0.5;
-        this.maxSpeed = 2.0;
+        this.separationWeight = 0.3;  // Gentler separation
+        this.alignmentWeight = 0.2;  // Gentler alignment
+        this.cohesionWeight = 0.2;  // Gentler cohesion
+        this.maxForce = 0.15;  // Much gentler force
+        this.maxSpeed = 0.8;  // Slower, smoother movement
     }
 
     apply(velocities, positions, targetPositions, morphProgress) {
